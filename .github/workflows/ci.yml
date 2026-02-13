@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Syntax check
+        run: node -c bin/create-koppajs.js
+
+      - name: CLI --help
+        run: node bin/create-koppajs.js --help
+
+      - name: CLI --version
+        run: node bin/create-koppajs.js --version
+
+      - name: Smoke test
+        run: node scripts/smoke-test.mjs

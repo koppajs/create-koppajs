@@ -7,17 +7,16 @@
 <br>
 
 <div align="center">
-	<a href="https://www.npmjs.com/package/create-koppajs"><img src="https://img.shields.io/npm/v/create-koppajs?style=flat-square" alt="npm version"></a>
-	<a href="./LICENSE"><img src="https://img.shields.io/github/license/koppajs/create-koppajs?style=flat-square" alt="License"></a>
+	<a href="./LICENSE"><img src="https://img.shields.io/github/license/koppajs/koppajs-example?style=flat-square" alt="License"></a>
 </div>
 
 <br>
 
 <div align="center">
-	<h1 align="center">create-koppajs</h1>
-	<h3 align="center">Scaffold a new Koppajs project in seconds</h3>
+	<h1 align="center">@koppajs/koppajs-example</h1>
+	<h3 align="center">Minimal starter template for Koppajs</h3>
 	<p align="center">
-		<i>The fastest way to start building with Koppajs.</i>
+		<i>Everything you need to start building — nothing you don't.</i>
 	</p>
 </div>
 
@@ -31,7 +30,7 @@
 		&middot;
 		<a href="https://github.com/koppajs/koppajs-vite-plugin">Vite Plugin</a>
 		&middot;
-		<a href="https://github.com/koppajs/create-koppajs/issues">Issues</a>
+		<a href="https://github.com/koppajs/koppajs-example/issues">Issues</a>
 	</p>
 </div>
 
@@ -41,9 +40,9 @@
 <summary>Table of Contents</summary>
 	<ol>
 		<li><a href="#what-is-this">What is this?</a></li>
-		<li><a href="#usage">Usage</a></li>
-		<li><a href="#what-gets-generated">What gets generated</a></li>
 		<li><a href="#requirements">Requirements</a></li>
+		<li><a href="#getting-started">Getting Started</a></li>
+		<li><a href="#project-structure">Project Structure</a></li>
 		<li><a href="#community--contribution">Community & Contribution</a></li>
 		<li><a href="#license">License</a></li>
 	</ol>
@@ -53,47 +52,62 @@
 
 ## What is this?
 
-`create-koppajs` is the **official project scaffolder** for Koppajs.
+This is the **official minimal starter template** for Koppajs.
 
-It creates a ready-to-run starter project with a single command — no configuration, no dependencies to install first, no boilerplate to write by hand.
+It provides a clean, ready-to-run project with:
+
+- a single app view with a counter component
+- Vite as dev server and bundler
+- TypeScript support
+- zero unnecessary dependencies
+
+Use it as a starting point for new Koppajs projects or as a reference for how components are registered and composed.
 
 ---
 
-## Usage
+## Requirements
+
+- Node.js >= 20
+- pnpm
+
+---
+
+## Getting Started
+
+**Install dependencies:**
 
 ```bash
-pnpm create koppajs my-app
-```
-
-```bash
-npm create koppajs my-app
-```
-
-```bash
-npx create-koppajs my-app
-```
-
-Then:
-
-```bash
-cd my-app
 pnpm install
+```
+
+**Start the dev server:**
+
+```bash
 pnpm dev
 ```
 
-If you omit the project name, the CLI will prompt you for one.
+**Build for production:**
+
+```bash
+pnpm build
+```
+
+**Preview the production build:**
+
+```bash
+pnpm serve
+```
 
 ---
 
-## What gets generated
+## Project Structure
 
 ```
-my-app/
+koppajs-example/
 ├── index.html
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.mjs
-├── .gitignore
 ├── public/
 │   └── favicon.svg
 └── src/
@@ -103,27 +117,16 @@ my-app/
     └── counter-component.kpa
 ```
 
-- **Vite** as dev server and bundler
-- **TypeScript** support out of the box
-- **Two sample components** (app view + counter) to get started
-- **Zero unnecessary dependencies**
-
----
-
-## Requirements
-
-- Node.js >= 20
-
 ---
 
 ## Community & Contribution
 
 Issues and pull requests are welcome:
 
-https://github.com/koppajs/create-koppajs/issues
+https://github.com/koppajs/koppajs-example/issues
 
 ---
 
 ## License
 
-MIT — © 2025 Koppajs, Bastian Bensch
+Apache License 2.0 — © 2025 Koppajs, Bastian Bensch

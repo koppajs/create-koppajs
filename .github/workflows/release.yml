@@ -1,0 +1,64 @@
+name: Release
+
+# Release workflow triggered by version tags.
+# Process:
+#   1. Merge develop → main via PR
+#   2. Ensure package.json version is updated
+#   3. Tag main with matching version: git tag v1.0.0 && git push origin v1.0.0
+#   4. This workflow runs checks, creates GitHub Release, and publishes to npm
+#
+# Required repository secrets:
+#   - NPM_TOKEN: npm access token with publish permissions
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  id-token: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Quality Gate
+        run: |
+          node -c bin/create-koppajs.js
+          node bin/create-koppajs.js --help
+          node bin/create-koppajs.js --version
+          node scripts/smoke-test.mjs
+
+      - name: Verify tag matches package.json
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          echo "Tag: $TAG_VERSION"
+          echo "Package: $PKG_VERSION"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "Version mismatch: tag v$TAG_VERSION != package.json $PKG_VERSION"
+            exit 1
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish --access public

@@ -1,0 +1,36 @@
+[template]
+  <div class="app-root">
+    <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="420" alt="Koppajs Logo" class="logo">
+    <p class="subtitle">Minimal Starter</p>
+    <counter-component></counter-component>
+  </div>
+[/template]
+
+[css]
+  .app-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #0f1117;
+    font-family: system-ui, -apple-system, sans-serif;
+    padding: 2rem;
+  }
+
+  .logo {
+    margin-bottom: .9rem;
+  }
+  
+  .subtitle {
+    color: #64dce8;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem 0;
+    opacity: 0.8;
+  }
+[/css]
+
+
+
