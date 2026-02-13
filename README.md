@@ -94,6 +94,8 @@ my-app/
 ├── tsconfig.json
 ├── vite.config.mjs
 ├── .gitignore
+├── LICENSE
+├── README.md
 ├── public/
 │   └── favicon.svg
 └── src/
