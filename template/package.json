@@ -2,7 +2,7 @@
   "name": "koppajs-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal starter example for Koppajs.",
+  "description": "Minimal starter example for KoppaJS.",
   "author": "Bastian Bensch",
   "license": "Apache-2.0",
   "scripts": {
@@ -16,6 +16,6 @@
   "devDependencies": {
     "@koppajs/koppajs-vite-plugin": "^1.0.0",
     "typescript": "^5.9.3",
-    "vite": "7.2.6"
+    "vite": "^7.2.6"
   }
 }

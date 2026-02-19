@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-	<img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="500" alt="Koppajs Logo">
+	<img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="500" alt="KoppaJS Logo">
 </div>
 
 <br>
@@ -15,9 +15,9 @@
 
 <div align="center">
 	<h1 align="center">create-koppajs</h1>
-	<h3 align="center">Scaffold a new Koppajs project in seconds</h3>
+	<h3 align="center">Scaffold a new KoppaJS project in seconds</h3>
 	<p align="center">
-		<i>The fastest way to start building with Koppajs.</i>
+		<i>The fastest way to start building with KoppaJS.</i>
 	</p>
 </div>
 
@@ -27,7 +27,7 @@
 	<p align="center">
 		<a href="https://github.com/koppajs/koppajs-documentation">Documentation</a>
 		&middot;
-		<a href="https://github.com/koppajs/koppajs-core">Koppajs Core</a>
+		<a href="https://github.com/koppajs/koppajs-core">KoppaJS Core</a>
 		&middot;
 		<a href="https://github.com/koppajs/koppajs-vite-plugin">Vite Plugin</a>
 		&middot;
@@ -53,7 +53,7 @@
 
 ## What is this?
 
-`create-koppajs` is the **official project scaffolder** for Koppajs.
+`create-koppajs` is the **official project scaffolder** for KoppaJS.
 
 It creates a ready-to-run starter project with a single command — no configuration, no dependencies to install first, no boilerplate to write by hand.
 
@@ -128,4 +128,4 @@ https://github.com/koppajs/create-koppajs/issues
 
 ## License
 
-MIT — © 2025 Koppajs, Bastian Bensch
+MIT — © 2025 KoppaJS, Bastian Bensch

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "type": "module",
-  "description": "Scaffold a new Koppajs project in seconds.",
+  "description": "Scaffold a new KoppaJS project in seconds.",
   "bin": {
     "create-koppajs": "./bin/create-koppajs.js"
   },

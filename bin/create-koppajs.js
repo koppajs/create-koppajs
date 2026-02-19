@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, copyFileSync, statSync } from "node:fs";
-import { join, dirname, resolve } from "node:path";
+import { basename, join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline";
 
@@ -27,7 +27,7 @@ function printHelp() {
   console.log(`
   create-koppajs v${CLI_PKG.version}
 
-  Scaffold a new Koppajs project.
+  Scaffold a new KoppaJS project.
 
   Usage:
     pnpm create koppajs [project-name]
@@ -50,9 +50,14 @@ function printVersion() {
 // ── Prompt ──────────────────────────────────────────────────────────
 
 function promptProjectName() {
-  return new Promise((res) => {
+  return new Promise((res, rej) => {
     const rl = createInterface({ input: process.stdin, output: process.stdout });
+    let answered = false;
+    rl.on("close", () => {
+      if (!answered) rej(new Error("Input closed before a project name was provided."));
+    });
     rl.question("  Project name: ", (answer) => {
+      answered = true;
       rl.close();
       res(answer.trim());
     });
@@ -80,8 +85,7 @@ function validateProjectName(name) {
 
 function ensureTargetDir(targetPath) {
   if (existsSync(targetPath) && readdirSync(targetPath).length > 0) {
-    const name = targetPath.split(/[/\\]/).pop();
-    console.error(`\n  Error: Directory "${name}" already exists and is not empty.\n`);
+    console.error(`\n  Error: Directory "${basename(targetPath)}" already exists and is not empty.\n`);
     process.exit(1);
   }
   mkdirSync(targetPath, { recursive: true });
@@ -89,11 +93,16 @@ function ensureTargetDir(targetPath) {
 
 // ── Copy ────────────────────────────────────────────────────────────
 
+// npm excludes .gitignore from published packages — ship as _gitignore
+// and rename during scaffolding (same approach as create-vite).
+const RENAME_FILES = { _gitignore: ".gitignore" };
+
 function copyDirRecursive(src, dest) {
   mkdirSync(dest, { recursive: true });
   for (const entry of readdirSync(src)) {
     const srcPath = join(src, entry);
-    const destPath = join(dest, entry);
+    const destName = RENAME_FILES[entry] || entry;
+    const destPath = join(dest, destName);
     if (statSync(srcPath).isDirectory()) {
       copyDirRecursive(srcPath, destPath);
     } else {
@@ -109,6 +118,15 @@ function patchPackageJson(destDir, projectName) {
   const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
   pkg.name = projectName;
   writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+}
+
+// ── Patch README ────────────────────────────────────────────────────
+
+function patchReadme(destDir, projectName) {
+  const readmePath = join(destDir, "README.md");
+  let content = readFileSync(readmePath, "utf-8");
+  content = content.replaceAll("__PROJECT_NAME__", projectName);
+  writeFileSync(readmePath, content);
 }
 
 // ── Final output ────────────────────────────────────────────────────
@@ -143,11 +161,15 @@ async function main() {
 
   ensureTargetDir(targetDir);
 
-  console.log(`\n  Scaffolding Koppajs project: ${projectName}\n`);
+  console.log(`\n  Scaffolding KoppaJS project: ${projectName}\n`);
 
   copyDirRecursive(TEMPLATE_DIR, targetDir);
   patchPackageJson(targetDir, projectName);
+  patchReadme(targetDir, projectName);
   printNextSteps(projectName);
 }
 
-main();
+main().catch((err) => {
+  console.error(`\n  Error: ${err.message}\n`);
+  process.exit(1);
+});

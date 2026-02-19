@@ -1,6 +1,6 @@
 [template]
   <div class="app-root">
-    <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="420" alt="Koppajs Logo" class="logo">
+    <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="420" alt="KoppaJS Logo" class="logo">
     <p class="subtitle">Minimal Starter</p>
     <counter-component></counter-component>
   </div>

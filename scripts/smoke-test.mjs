@@ -59,6 +59,7 @@ try {
   assert(existsSync(join(projectDir, "index.html")), "index.html exists");
   assert(existsSync(join(projectDir, "tsconfig.json")), "tsconfig.json exists");
   assert(existsSync(join(projectDir, "vite.config.mjs")), "vite.config.mjs exists");
+  assert(existsSync(join(projectDir, ".gitignore")), ".gitignore exists");
   assert(existsSync(join(projectDir, "src", "app-view.kpa")), "src/app-view.kpa exists");
   assert(existsSync(join(projectDir, "src", "counter-component.kpa")), "src/counter-component.kpa exists");
 
