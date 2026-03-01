@@ -1,6 +1,6 @@
 {
   "name": "create-koppajs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "type": "module",
   "description": "Scaffold a new KoppaJS project in seconds.",
@@ -22,7 +22,7 @@
     "smoke": "node scripts/smoke-test.mjs"
   },
   "author": "Bastian Bensch",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/koppajs/create-koppajs"
