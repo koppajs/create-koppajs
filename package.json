@@ -1,0 +1,34 @@
+{
+  "name": "create-koppajs",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Scaffold a new KoppaJS project in seconds.",
+  "bin": {
+    "create-koppajs": "./bin/create-koppajs.js"
+  },
+  "files": [
+    "bin",
+    "template",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "node -c bin/create-koppajs.js",
+    "test": "node ./bin/create-koppajs.js --help",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "author": "Bastian Bensch",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koppajs/create-koppajs"
+  },
+  "homepage": "https://github.com/koppajs/create-koppajs#readme",
+  "bugs": {
+    "url": "https://github.com/koppajs/create-koppajs/issues"
+  }
+}
