@@ -8,7 +8,7 @@
 
 <div align="center">
 	<a href="https://www.npmjs.com/package/create-koppajs"><img src="https://img.shields.io/npm/v/create-koppajs?style=flat-square" alt="npm version"></a>
-	<a href="./LICENSE"><img src="https://img.shields.io/github/license/koppajs/create-koppajs?style=flat-square" alt="License"></a>
+	<a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"></a>
 </div>
 
 <br>
@@ -128,4 +128,4 @@ https://github.com/koppajs/create-koppajs/issues
 
 ## License
 
-MIT — © 2025 KoppaJS, Bastian Bensch
+MIT — © 2026 KoppaJS, Bastian Bensch
