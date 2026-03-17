@@ -7,12 +7,12 @@ import { createInterface } from "node:readline";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const TEMPLATE_DIR = join(__dirname, "..", "template");
+export const TEMPLATE_DIR = join(__dirname, "..", "template");
 const CLI_PKG = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
 
 // ── Args ────────────────────────────────────────────────────────────
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const raw = argv.slice(2);
   return {
     help: raw.includes("--help") || raw.includes("-h"),
@@ -23,7 +23,7 @@ function parseArgs(argv) {
 
 // ── Help / Version ──────────────────────────────────────────────────
 
-function printHelp() {
+export function printHelp() {
   console.log(`
   create-koppajs v${CLI_PKG.version}
 
@@ -43,13 +43,13 @@ function printHelp() {
 `);
 }
 
-function printVersion() {
+export function printVersion() {
   console.log(CLI_PKG.version);
 }
 
 // ── Prompt ──────────────────────────────────────────────────────────
 
-function promptProjectName() {
+export function promptProjectName() {
   return new Promise((res, rej) => {
     const rl = createInterface({ input: process.stdin, output: process.stdout });
     let answered = false;
@@ -66,27 +66,23 @@ function promptProjectName() {
 
 // ── Validation ──────────────────────────────────────────────────────
 
-function validateProjectName(name) {
+export function validateProjectName(name) {
   if (!name) {
-    console.error("\n  Error: Project name cannot be empty.\n");
-    process.exit(1);
+    throw new Error("Project name cannot be empty.");
   }
   if (name === "." || name === "..") {
-    console.error(`\n  Error: Invalid project name "${name}".\n`);
-    process.exit(1);
+    throw new Error(`Invalid project name "${name}".`);
   }
   if (name.includes("/") || name.includes("\\")) {
-    console.error("\n  Error: Project name must not contain path separators.\n");
-    process.exit(1);
+    throw new Error("Project name must not contain path separators.");
   }
 }
 
 // ── Target directory ────────────────────────────────────────────────
 
-function ensureTargetDir(targetPath) {
+export function ensureTargetDir(targetPath) {
   if (existsSync(targetPath) && readdirSync(targetPath).length > 0) {
-    console.error(`\n  Error: Directory "${basename(targetPath)}" already exists and is not empty.\n`);
-    process.exit(1);
+    throw new Error(`Directory "${basename(targetPath)}" already exists and is not empty.`);
   }
   mkdirSync(targetPath, { recursive: true });
 }
@@ -95,9 +91,17 @@ function ensureTargetDir(targetPath) {
 
 // npm excludes .gitignore from published packages — ship as _gitignore
 // and rename during scaffolding (same approach as create-vite).
-const RENAME_FILES = { _gitignore: ".gitignore" };
+const RENAME_FILES = {
+  _editorconfig: ".editorconfig",
+  _gitattributes: ".gitattributes",
+  _github: ".github",
+  _gitignore: ".gitignore",
+  _husky: ".husky",
+  _npmrc: ".npmrc",
+  _prettierignore: ".prettierignore",
+};
 
-function copyDirRecursive(src, dest) {
+export function copyDirRecursive(src, dest) {
   mkdirSync(dest, { recursive: true });
   for (const entry of readdirSync(src)) {
     const srcPath = join(src, entry);
@@ -113,7 +117,7 @@ function copyDirRecursive(src, dest) {
 
 // ── Patch package.json ──────────────────────────────────────────────
 
-function patchPackageJson(destDir, projectName) {
+export function patchPackageJson(destDir, projectName) {
   const pkgPath = join(destDir, "package.json");
   const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
   pkg.name = projectName;
@@ -122,16 +126,28 @@ function patchPackageJson(destDir, projectName) {
 
 // ── Patch README ────────────────────────────────────────────────────
 
-function patchReadme(destDir, projectName) {
-  const readmePath = join(destDir, "README.md");
-  let content = readFileSync(readmePath, "utf-8");
+function patchTextFile(destDir, relativePath, projectName) {
+  const filePath = join(destDir, relativePath);
+  let content = readFileSync(filePath, "utf-8");
   content = content.replaceAll("__PROJECT_NAME__", projectName);
-  writeFileSync(readmePath, content);
+  writeFileSync(filePath, content);
+}
+
+export function patchReadme(destDir, projectName) {
+  patchTextFile(destDir, "README.md", projectName);
+}
+
+export function patchChangelog(destDir, projectName) {
+  patchTextFile(destDir, "CHANGELOG.md", projectName);
+}
+
+export function patchReleaseNotes(destDir, projectName) {
+  patchTextFile(destDir, "RELEASE.md", projectName);
 }
 
 // ── Final output ────────────────────────────────────────────────────
 
-function printNextSteps(projectName) {
+export function printNextSteps(projectName) {
   console.log("  Done! Next steps:\n");
   console.log(`    cd ${projectName}`);
   console.log("    pnpm install");
@@ -140,24 +156,24 @@ function printNextSteps(projectName) {
 
 // ── Main ────────────────────────────────────────────────────────────
 
-async function main() {
-  const { help, version, projectName: argName } = parseArgs(process.argv);
+export async function runCli(argv = process.argv, cwd = process.cwd()) {
+  const { help, version, projectName: argName } = parseArgs(argv);
 
   if (help) {
     printHelp();
-    process.exit(0);
+    return 0;
   }
 
   if (version) {
     printVersion();
-    process.exit(0);
+    return 0;
   }
 
   const projectName = argName || (await promptProjectName());
 
   validateProjectName(projectName);
 
-  const targetDir = resolve(process.cwd(), projectName);
+  const targetDir = resolve(cwd, projectName);
 
   ensureTargetDir(targetDir);
 
@@ -166,10 +182,20 @@ async function main() {
   copyDirRecursive(TEMPLATE_DIR, targetDir);
   patchPackageJson(targetDir, projectName);
   patchReadme(targetDir, projectName);
+  patchChangelog(targetDir, projectName);
+  patchReleaseNotes(targetDir, projectName);
   printNextSteps(projectName);
+
+  return 0;
 }
 
-main().catch((err) => {
-  console.error(`\n  Error: ${err.message}\n`);
-  process.exit(1);
-});
+function isDirectExecution() {
+  return Boolean(process.argv[1]) && resolve(process.argv[1]) === __filename;
+}
+
+if (isDirectExecution()) {
+  runCli().catch((err) => {
+    console.error(`\n  Error: ${err.message}\n`);
+    process.exit(1);
+  });
+}

@@ -1,223 +1,154 @@
-<a id="contributing-top"></a>
+# Contributing
 
-<!-- PROJECT LOGO -->
-<div align="center">
-  <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="500" alt="KoppaJS Logo">
-</div>
+## Purpose
 
-<br>
+`create-koppajs` is the official KoppaJS scaffolder. Contributions should keep
+the tool small, explicit, and reliable.
 
-<!-- TITLE -->
-<div align="center">
-  <h1 align="center">Contributing to KoppaJS Projects</h1>
-  <h3 align="center">Build with intention. Contribute with clarity.</h3>
-  <p align="center">
-    <i>A framework ecosystem powered by simplicity, transparency, and responsibility.</i>
-  </p>
-</div>
+The repository's job is narrow but important:
 
-<br>
+- ship a stable CLI
+- ship a clear starter template
+- protect the generated project contract
 
----
+## Read Before Editing
 
-## Philosophy
+Start here before changing code, workflows, or template files:
 
-> _“Only start things you are willing to finish with dedication.”_
-
-KoppaJS is more than a collection of repositories — it is a declaration of intent.
-
-The project exists to prove that frontend systems can be **simple**, **explicit**,
-and **comprehensible**, without relying on unnecessary abstraction or hidden magic.
-
-KoppaJS follows **Intentional Architecture**:
-
-- **No factories. No hidden abstractions. No magic.**  
-  Behavior must be explicit, traceable, and explainable.
-
-- **Every behavior is understandable.**  
-  No invisible lifecycles, no implicit state transitions.
-
-- **Data flows by reference.**  
-  What can be shared should not be duplicated.
-
-- **The developer stays in control.**  
-  KoppaJS does not override intent.
-
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
-
----
+1. [DECISION_HIERARCHY.md](./DECISION_HIERARCHY.md)
+2. [AI_CONSTITUTION.md](./AI_CONSTITUTION.md)
+3. [ARCHITECTURE.md](./ARCHITECTURE.md)
+4. [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md)
+5. [TESTING_STRATEGY.md](./TESTING_STRATEGY.md)
+6. Relevant specs in [docs/specs](./docs/specs)
+7. Relevant ADRs in [docs/adr](./docs/adr)
 
 ## Requirements
 
-Before contributing, ensure you have:
+- Node.js 20 or newer for the CLI and repository scripts
+- pnpm 10 or newer for dependency installation and hook setup
 
-- **Node.js ≥ 20**
-- **pnpm ≥ 10**
+When validating the generated starter with `pnpm test:template-build` or
+`pnpm release:check`, use a Node.js version supported by the starter toolchain.
+The current supported lines are 20.19+, 22.13+, and 24+.
 
-Install dependencies:
+The repository's built-in core checks can run without installing root
+dependencies, but the local Git hook and Conventional Commit workflow require:
 
 ```bash
 pnpm install
 ```
 
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+## Repository Map
 
----
+- `bin/create-koppajs.js`: CLI entry point and scaffolding logic
+- `template/`: bundled starter project copied into new apps
+- `scripts/smoke-test.mjs`: behavioral validation of the scaffolded output
+- `.github/workflows/`: CI and release automation
+- `docs/`: architecture, specs, ADRs, quality guidance, and meta docs
 
-## Development Workflow
+## Local Workflow
 
-Each KoppaJS repository provides a consistent development experience.
-
-Typical workflows include:
-
-### Build
-
-```bash
-pnpm build
-```
-
-This may include:
-- Type checking
-- Bundling
-- Generation of public type definitions (where applicable)
-
-### Testing
+### Core checks
 
 ```bash
-pnpm test
+pnpm check
 ```
 
-Optional:
+This runs:
 
-```bash
-pnpm test:coverage
-```
+- `pnpm check:meta`
+- `pnpm lint`
+- `pnpm format:check`
+- `pnpm check:cli`
+- `pnpm test`
+- `pnpm pack:dry-run`
 
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
-
----
-
-## Code Style & Quality
-
-All KoppaJS projects enforce consistency through:
-
-- **TypeScript (strict mode where applicable)**
-- **ESLint**
-- **Prettier**
-
-Check code quality:
+For targeted work, the smaller commands are:
 
 ```bash
 pnpm lint
+pnpm format:check
+pnpm test:unit
+pnpm test:smoke
+pnpm check:cli
+pnpm pack:dry-run
 ```
 
-Format code:
+### Generated-template build verification
+
+Use this when changing the template, starter dependencies, or build setup:
 
 ```bash
-pnpm format
+pnpm test:template-build
 ```
 
-Contributions must pass all checks enforced by CI.
+This scaffolds a temporary app, installs its dependencies, and builds it.
+Because the generated starter follows the current upstream frontend toolchain,
+Node 23 is intentionally not treated as a supported validation runtime here.
 
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+### Optional watch mode
 
----
-
-## Commit Conventions
-
-KoppaJS uses **Conventional Commits**.
-
-Example:
-
-```
-feat: add support for processed lifecycle hook
+```bash
+pnpm test:watch
 ```
 
-Gitmojis are optional.
+## Commit Policy
 
-Commit messages are validated automatically where commit hooks are enabled.
+Commit messages use Conventional Commits.
 
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+Examples:
 
----
+```text
+feat: align template with official example
+docs: add repository release guide
+fix: patch generated release placeholders
+```
 
-## Testing Guidelines
+Commit messages are validated locally by `.husky/commit-msg` when dependencies
+have been installed.
 
-Most KoppaJS projects follow the **Three Test Rule**:
+## Change Rules
 
-- **Valid Case** — expected usage
-- **Error Case** — invalid or failing input
-- **Edge Case** — unusual but valid scenario
+### If you change CLI behavior
 
-General expectations:
+- update the relevant spec in `docs/specs/`
+- update tests or smoke coverage
+- update `README.md` if usage changed
 
-- Tests should mirror the source structure
-- Each exported utility or behavior should be covered
-- No global mocks unless unavoidable
-- Test data should be explicit and minimal
+### If you change the generated template
 
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+- treat the change as user-facing
+- update `ARCHITECTURE.md` or `docs/architecture/*` if boundaries changed
+- update specs, `README.md`, and `CHANGELOG.md` when the generated contract
+  changed
 
----
+### If you change workflow, policy, or architecture
 
-## Architectural Expectations
+- update the relevant root meta docs
+- add or update an ADR for lasting decisions
+- update `.github/instructions/*` if the contributor or AI workflow changed
 
-When contributing to KoppaJS projects:
+## Pull Request Expectations
 
-- Prefer **explicit, functional code**
-- Avoid unnecessary abstraction
-- Isolate helpers and guards clearly
-- Avoid broad `any` or unchecked assertions unless justified
-- Favor clarity over cleverness
+- keep changes scoped and explain the user-visible effect
+- do not mix unrelated refactors into the same change
+- mention any public contract changes clearly
+- include the meta-layer updates in the same pull request
 
-If a change cannot be clearly explained, it likely does not belong.
+## Release Process
 
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+Releases are tag-driven.
 
----
+High-level flow:
 
-## Scripts
+1. ensure `package.json` version is correct
+2. update `CHANGELOG.md` for user-visible changes
+3. push a matching `vX.Y.Z` tag
+4. let GitHub Actions validate and publish
 
-Each repository defines its own scripts, but commonly available commands include:
-
-| Command        | Description                                  |
-|---------------|----------------------------------------------|
-| `pnpm build`  | Build the project                             |
-| `pnpm test`   | Run tests                                    |
-| `pnpm lint`   | Run lint checks                              |
-| `pnpm format` | Format code                                  |
-| `pnpm clean`  | Remove build artifacts                       |
-
-Refer to the repository’s `package.json` for project-specific commands.
-
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
-
----
-
-## Releasing
-
-KoppaJS projects use a **manual, tag-driven release process**.
-
-General flow:
-
-1. Update version and changelog
-2. Commit the release preparation
-3. Tag the release (`vX.Y.Z`)
-4. Push the tag to `main`
-
-CI will validate the release and publish artifacts where applicable.
-
-Exact release behavior may vary by repository.
-
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
-
----
-
-## Need Help?
-
-Open an issue or start a discussion in the relevant repository.
-
-Thank you for contributing — and for helping keep KoppaJS intentional, calm,
-and a pleasure to build with.
-
-<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+See [docs/quality/quality-gates.md](./docs/quality/quality-gates.md) and
+[docs/quality/tooling-baseline.md](./docs/quality/tooling-baseline.md), and
+[docs/adr/0003-tag-driven-release-publishing.md](./docs/adr/0003-tag-driven-release-publishing.md),
+[docs/adr/0005-adopt-commit-message-conventions.md](./docs/adr/0005-adopt-commit-message-conventions.md),
+and [RELEASE.md](./RELEASE.md) for the governing release rules.

@@ -1,4 +1,8 @@
 node_modules
 dist
+.tmp-smoke/
+coverage/
+.husky/_/
+*.tgz
 *.log
 .DS_Store

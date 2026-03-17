@@ -12,13 +12,44 @@ not every internal refactor.
 
 ## [Unreleased]
 
-This section is intentionally empty.
+_No unreleased changes yet._
 
-Changes will only appear here when they:
+---
 
-- affect CLI behavior,
-- change the generated project template,
-- or modify documented guarantees.
+## [1.1.0] — Starter & Release Baseline Upgrade
+
+**2026-03-17**
+
+### Added
+
+- Added a repository meta layer covering architecture, decision hierarchy,
+  testing strategy, specs, ADRs, quality gates, and AI collaboration rules
+- Added a repository-specific `RELEASE.md` aligned with the `koppajs-core`
+  release model and this package's npm publish path
+- Added Conventional Commit enforcement with `commitlint`, Husky, and
+  `lint-staged`
+- Added repository-level quality scripts for meta checks, syntax checks,
+  formatting hygiene, cleanup, and package dry-run validation
+- Added generated-template build verification and wired it into CI and releases
+
+### Changed
+
+- Updated contributing guidance to match the actual scripts, workflows, and
+  repository responsibilities
+- Expanded smoke coverage for README patching, invalid project names, and
+  scaffolding into an existing empty directory
+- Documented the CI meta-layer presence guard in the quality and architecture
+  docs
+- Added importable CLI helper coverage with the Node.js built-in test runner
+- Synced the bundled starter template to the current `koppajs-example`
+  technical baseline, including quality tooling, meta docs, tests, and release
+  files
+- Switched root CI and release workflows to pnpm-based dependency installation
+  so the new hook and commit tooling actually runs in automation
+- Isolated the root pre-commit `lint-staged` config from the generated
+  starter's own hook tooling so root commits stay reliable
+- Clarified the starter's supported Node.js lines and added an explicit
+  validation guard for unsupported runtimes such as Node 23
 
 ---
 
