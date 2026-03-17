@@ -14,18 +14,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.1
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          cache: pnpm
 
-      - name: Syntax check
-        run: node -c bin/create-koppajs.js
+      - name: Install repository dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: CLI --help
-        run: node bin/create-koppajs.js --help
+      - name: Repository quality gate
+        run: pnpm check
 
-      - name: CLI --version
-        run: node bin/create-koppajs.js --version
-
-      - name: Smoke test
-        run: node scripts/smoke-test.mjs
+      - name: Generated template build
+        if: matrix.node == 22
+        run: pnpm test:template-build

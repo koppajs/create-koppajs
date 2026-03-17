@@ -29,17 +29,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.1
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: pnpm
           registry-url: "https://registry.npmjs.org"
 
+      - name: Install repository dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Quality Gate
-        run: |
-          node -c bin/create-koppajs.js
-          node bin/create-koppajs.js --help
-          node bin/create-koppajs.js --version
-          node scripts/smoke-test.mjs
+        run: pnpm check
+
+      - name: Generated template build
+        run: pnpm test:template-build
 
       - name: Verify tag matches package.json
         run: |

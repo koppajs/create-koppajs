@@ -44,6 +44,7 @@
 		<li><a href="#usage">Usage</a></li>
 		<li><a href="#what-gets-generated">What gets generated</a></li>
 		<li><a href="#requirements">Requirements</a></li>
+		<li><a href="#release--governance">Release & Governance</a></li>
 		<li><a href="#community--contribution">Community & Contribution</a></li>
 		<li><a href="#license">License</a></li>
 	</ol>
@@ -89,13 +90,23 @@ If you omit the project name, the CLI will prompt you for one.
 
 ```
 my-app/
-├── index.html
+├── .github/
+├── .husky/
+├── docs/
+├── tests/
+├── CHANGELOG.md
+├── RELEASE.md
+├── AI_CONSTITUTION.md
+├── ARCHITECTURE.md
 ├── package.json
-├── tsconfig.json
-├── vite.config.mjs
 ├── .gitignore
-├── LICENSE
 ├── README.md
+├── vite.config.mjs
+├── vitest.config.mjs
+├── playwright.config.ts
+├── tsconfig.json
+├── pnpm-lock.yaml
+├── LICENSE
 ├── public/
 │   └── favicon.svg
 └── src/
@@ -106,15 +117,31 @@ my-app/
 ```
 
 - **Vite** as dev server and bundler
-- **TypeScript** support out of the box
-- **Two sample components** (app view + counter) to get started
-- **Zero unnecessary dependencies**
+- **TypeScript**, **ESLint**, **Prettier**, **Vitest**, and **Playwright**
+- **GitHub workflows**, **Husky**, **lint-staged**, and **Conventional Commits**
+- **Meta-layer docs**, ADRs, specs, and a release baseline
+- **Two sample components** (app view + counter) aligned with the current
+  `koppajs-example` starter
 
 ---
 
 ## Requirements
 
-- Node.js >= 20
+- `create-koppajs`: Node.js >= 20
+- Generated starter workflow: pnpm >= 10 plus a starter-supported Node.js line
+  (currently 20.19+, 22.13+, or 24+)
+
+---
+
+## Release & Governance
+
+The scaffolded starter now ships with the same quality and governance baseline
+as the current official `koppajs-example`, adapted for generated projects:
+
+- explicit meta docs and ADR/spec structure
+- tag-driven `CHANGELOG.md` plus `RELEASE.md`
+- Conventional Commit enforcement via `commitlint`
+- a generated-project CI/release baseline under `.github/workflows`
 
 ---
 
@@ -123,6 +150,17 @@ my-app/
 Issues and pull requests are welcome:
 
 https://github.com/koppajs/create-koppajs/issues
+
+## Governance & Architecture
+
+Repository design and maintenance rules live in the meta layer:
+
+- [AI_CONSTITUTION.md](./AI_CONSTITUTION.md)
+- [ARCHITECTURE.md](./ARCHITECTURE.md)
+- [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md)
+- [TESTING_STRATEGY.md](./TESTING_STRATEGY.md)
+- [RELEASE.md](./RELEASE.md)
+- [docs/meta/README.md](./docs/meta/README.md)
 
 ---
 

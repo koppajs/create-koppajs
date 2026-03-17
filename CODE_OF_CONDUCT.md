@@ -97,7 +97,7 @@ is violated.
 If you experience or witness behavior that violates this Code of Conduct,
 please contact:
 
-**Bastian Bensch**  
+**Bastian Bensch**
 📧 **kontakt@koppajs.org**
 
 All reports will be handled discreetly, respectfully, and in good faith.
