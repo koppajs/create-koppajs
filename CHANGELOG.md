@@ -16,6 +16,24 @@ _No unreleased changes yet._
 
 ---
 
+## [1.2.1] — Starter Source Of Truth Cleanup
+
+**2026-03-26**
+
+Patch release to make the bundled templates the only starter source of truth and
+to refresh the generated starter dependency baseline.
+
+### Changed
+
+- documented `template/` and `template-overlays/` as the only maintained source
+  of truth for generated starters
+- removed active ecosystem references to the retired `koppajs-example` starter
+  repository
+- updated generated starter dependencies to `@koppajs/koppajs-core@^3.0.3` and
+  `@koppajs/koppajs-vite-plugin@^1.0.1`
+
+---
+
 ## [1.2.0] — Starter Variants And Router Overlay
 
 **2026-03-26**

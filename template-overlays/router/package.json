@@ -43,14 +43,14 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@koppajs/koppajs-core": "^3.0.2",
+    "@koppajs/koppajs-core": "^3.0.3",
     "@koppajs/koppajs-router": "^0.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^10.0.1",
-    "@koppajs/koppajs-vite-plugin": "^1.0.0",
+    "@koppajs/koppajs-vite-plugin": "^1.0.1",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.4.0",
     "@vitest/coverage-v8": "^4.0.18",
