@@ -1,6 +1,6 @@
 {
   "name": "create-koppajs",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": false,
   "type": "module",
   "description": "Scaffold a new KoppaJS project in seconds.",
@@ -10,6 +10,7 @@
   "files": [
     "bin",
     "template",
+    "template-overlays",
     "CHANGELOG.md",
     "README.md",
     "LICENSE"

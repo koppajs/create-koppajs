@@ -8,35 +8,39 @@ and long-term maintainability. It is not a promise of product dates.
 ## Current State
 
 - Stable scaffolder CLI with a bundled starter template
+- Generated-template verification already enforced in CI and release checks
 - Lightweight CI and tag-driven release automation
 - Meta layer established for architecture memory, decision records, specs, and
   AI collaboration
 
 ## Next Priorities
 
-### 1. Strengthen scaffold contract coverage
+### 1. Keep contract docs synchronized with the starter payload
 
-- Expand smoke coverage for invalid names and README placeholder replacement
-- Consider extracting pure helpers if validation logic grows and warrants unit
-  tests
+- Review root specs and README whenever `template/` changes in a user-visible
+  way
+- Keep the generated starter contract explicit instead of letting it drift into
+  implementation-only knowledge
 
-### 2. Add generated-project verification
+### 2. Extend contract tests only when behavior actually expands
 
-- Evaluate a CI job that scaffolds the template, installs dependencies, and
-  runs the generated project's build
-- Add this when template complexity or dependency churn justifies the extra time
+- Add more smoke or helper coverage only when new CLI branches, rename rules,
+  or patch targets are introduced
+- Avoid speculative test infrastructure that does not protect a real contract
+  edge
 
-### 3. Improve release traceability
+### 3. Keep release evidence easy to audit
 
 - Keep changelog entries aligned with user-visible CLI and template changes
-- Document release checklists and versioning expectations as the process
-  evolves
+- Keep package payload, release docs, and workflow behavior aligned
+- Add stronger release assertions only if manual review stops being sufficient
 
 ### 4. Keep the meta layer alive
 
-- Review root meta docs whenever architecture or workflow changes
+- Review classification, boundaries, and quality docs whenever repository scope
+  changes
 - Seed new ADRs instead of letting major decisions live only in code review
-- Create specs for new subsystems before broadening the CLI feature set
+- Create or extend specs before broadening the CLI or starter contract
 
 ## Review Trigger
 

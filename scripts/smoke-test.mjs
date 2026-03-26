@@ -10,6 +10,7 @@ const ROOT = join(__dirname, "..");
 const TMP = join(ROOT, ".tmp-smoke");
 const CLI = join(ROOT, "bin", "create-koppajs.js");
 const PROJECT = "test-app";
+const ROUTER_PROJECT = "router-test-app";
 
 let passed = 0;
 let failed = 0;
@@ -121,6 +122,38 @@ try {
   execFileSync(process.execPath, [CLI, emptyDirProject], { cwd: TMP, stdio: "pipe" });
   assert(existsSync(join(TMP, emptyDirProject, "package.json")), "scaffolds into existing empty directory");
 
+  // Router starter scaffolds with overlay files and dependencies
+  execFileSync(process.execPath, [CLI, ROUTER_PROJECT, "--template", "router"], {
+    cwd: TMP,
+    stdio: "pipe",
+  });
+
+  const routerProjectDir = join(TMP, ROUTER_PROJECT);
+  const routerPkgPath = join(routerProjectDir, "package.json");
+  const routerReadmePath = join(routerProjectDir, "README.md");
+
+  assert(existsSync(routerPkgPath), "router starter package.json exists");
+  assert(existsSync(join(routerProjectDir, "src", "router-page.kpa")), "router starter route component exists");
+  assert(existsSync(join(routerProjectDir, "src", "not-found-page.kpa")), "router starter fallback page exists");
+  assert(
+    existsSync(join(routerProjectDir, "docs", "specs", "router-navigation.md")),
+    "router starter routing spec exists",
+  );
+
+  if (existsSync(routerPkgPath)) {
+    const routerPkg = JSON.parse(readFileSync(routerPkgPath, "utf-8"));
+    assert(
+      routerPkg.dependencies?.["@koppajs/koppajs-router"] === "^0.1.0",
+      'router starter depends on "@koppajs/koppajs-router"',
+    );
+  }
+
+  if (existsSync(routerReadmePath)) {
+    const routerReadme = readFileSync(routerReadmePath, "utf-8");
+    assert(routerReadme.includes(ROUTER_PROJECT), "router README project name is patched");
+    assert(/router starter project/i.test(routerReadme), "router README describes the router starter");
+  }
+
   // Invalid names fail
   const emptyName = expectFailure([], "rejects empty project name from prompt", { input: "\n" });
   assert(emptyName.stderr.includes("Project name cannot be empty."), "empty prompt shows validation error");
@@ -129,6 +162,24 @@ try {
   expectFailure([".."], 'rejects ".." as a project name');
   expectFailure(["bad/name"], "rejects project names with forward slashes");
   expectFailure(["bad\\name"], "rejects project names with backslashes");
+
+  const missingTemplate = expectFailure(
+    ["missing-template-app", "--template"],
+    "rejects missing --template values",
+  );
+  assert(
+    missingTemplate.stderr.includes("Option --template requires a value."),
+    "missing --template value shows a clear error",
+  );
+
+  const unknownTemplate = expectFailure(
+    ["unknown-template-app", "--template", "unknown"],
+    "rejects unknown starter templates",
+  );
+  assert(
+    unknownTemplate.stderr.includes('Unknown starter template "unknown".'),
+    "unknown template shows validation error",
+  );
 
   // Test duplicate run fails
   let duplicateFailed = false;

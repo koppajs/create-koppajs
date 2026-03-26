@@ -4,9 +4,13 @@
 
 Draft | Accepted | Superseded
 
-## Summary
+## Description
 
 Short statement of the behavior this spec governs.
+
+## Behavior
+
+Describe the observable behavior this spec protects.
 
 ## Inputs
 
@@ -34,6 +38,26 @@ Short statement of the behavior this spec governs.
 1. Criterion one
 2. Criterion two
 3. Criterion three
+
+## Evolution Phase
+
+Discovery | Stabilizing | Stable
+
+## Completeness Level
+
+Low | Medium | High
+
+## Known Gaps
+
+- gap one
+
+## Deferred Complexity
+
+- intentionally deferred item
+
+## Technical Debt Items
+
+- known debt item
 
 ## Change Management
 
