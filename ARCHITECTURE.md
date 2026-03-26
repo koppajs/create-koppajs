@@ -16,6 +16,15 @@ The root package does not build the template or fetch remote assets during
 scaffolding. It copies files directly, then applies a minimal set of patches to
 project identity files.
 
+## Repository Classification
+
+- Repo type: CLI scaffolding package with a bundled application template
+- Runtime responsibility: one-shot project creation through the root CLI
+- Build-time responsibility: package the template, protect the contract, and
+  publish tagged releases
+- UI presence: no root UI; the generated starter owns the browser-facing UI
+- Maturity level: stable, maintenance-first, and contract-driven
+
 ## Repository Modules
 
 ### `bin/create-koppajs.js`
@@ -105,6 +114,19 @@ The repository-level governance lives in:
 - root documents such as `AI_CONSTITUTION.md` and `DEVELOPMENT_RULES.md`
 - supporting docs in `docs/meta`, `docs/architecture`, `docs/adr`,
   `docs/specs`, and `docs/quality`
+
+## Public Contract Surface
+
+The repository has four contract-bearing surfaces:
+
+- CLI interface: `create-koppajs`, the `--help` and `--version` flags, the
+  project-name argument, and the interactive prompt fallback
+- Scaffolding behavior: validation, safe target-directory handling, template
+  copy, dotfile restoration, and minimal post-copy patching
+- Generated starter payload: the exact file tree and starter baseline shipped in
+  `template/`
+- Release payload: the published npm package contents and the tag-driven release
+  workflow that validates them
 
 ## Execution Flow
 

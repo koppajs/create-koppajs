@@ -1,83 +1,63 @@
-<a id="readme-top"></a>
+# create-koppajs
 
-<div align="center">
-  <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="500" alt="KoppaJS Logo">
-</div>
+`create-koppajs` is the official KoppaJS CLI scaffolder. It creates a new
+project by copying the versioned starter in `template/` and applying a minimal,
+explicit patch set to project-identity files.
 
-<br>
+## Purpose
 
-<div align="center">
-  <a href="https://www.npmjs.com/package/create-koppajs"><img src="https://img.shields.io/npm/v/create-koppajs?style=flat-square" alt="npm version"></a>
-  <a href="https://github.com/koppajs/create-koppajs/actions"><img src="https://img.shields.io/github/actions/workflow/status/koppajs/create-koppajs/ci.yml?branch=main&style=flat-square" alt="CI Status"></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue?style=flat-square" alt="License"></a>
-</div>
-
-<br>
-
-<div align="center">
-  <h1 align="center">create-koppajs</h1>
-  <h3 align="center">Official project scaffolder for KoppaJS</h3>
-  <p align="center">
-    <i>Generate a ready-to-run KoppaJS starter with the current quality baseline in one command.</i>
-  </p>
-</div>
-
-<br>
-
-<div align="center">
-  <p align="center">
-    <a href="https://github.com/koppajs/koppajs-documentation">Documentation</a>
-    &middot;
-    <a href="https://github.com/koppajs/koppajs-core">KoppaJS Core</a>
-    &middot;
-    <a href="https://github.com/koppajs/koppajs-example">Example Project</a>
-    &middot;
-    <a href="https://github.com/koppajs/create-koppajs/issues">Issues</a>
-  </p>
-</div>
-
-<br>
-
-<details>
-<summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#what-is-this">What is this?</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#what-gets-generated">What gets generated</a></li>
-    <li><a href="#requirements">Requirements</a></li>
-    <li><a href="#architecture--governance">Architecture & Governance</a></li>
-    <li><a href="#community--contribution">Community & Contribution</a></li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
-
----
-
-## What is this?
-
-`create-koppajs` is the official scaffolder for new KoppaJS projects.
-
-Its responsibility is intentionally narrow:
+This repository exists to do one job well:
 
 - create a fresh project directory
-- copy the current supported starter template
-- give consumers a clean baseline for local development, testing, and release
+- copy the current supported KoppaJS starter
+- preserve a stable, inspectable bootstrap path for new KoppaJS applications
 
-The generated project is aligned with the official KoppaJS example and carries
-the same quality and governance baseline expected from active KoppaJS work.
+It is not a runtime package and it does not own application behavior after
+generation.
 
----
+## Repository Classification
 
-## Features
+- Repo type: CLI scaffolding package with a bundled starter template
+- Runtime responsibility: one-shot filesystem scaffolding through
+  `bin/create-koppajs.js`
+- Build-time responsibility: publish the template, protect the contract, and
+  validate tagged releases
+- UI surface: none at the repository root; the generated starter owns the UI
+- Maturity level: stable, contract-governed, maintenance-first
 
-- one-command project bootstrap through `pnpm create`, `npm create`, or `npx`
-- starter template with Vite, TypeScript, ESLint, Prettier, Vitest, and
-  Playwright
-- generated meta-layer documents, release notes baseline, and GitHub workflows
-- no prerequisite global install and no manual starter assembly
+## Ownership Boundaries
 
----
+- `bin/create-koppajs.js` owns argument parsing, prompting, validation,
+  template copy, placeholder patching, and next-step output.
+- `template/` owns the exact project users receive after scaffolding.
+- `scripts/` and `.github/workflows/` own repository-quality and release
+  verification.
+- Root governance files own the repository doctrine and must stay aligned with
+  code and workflows.
+
+The root package must not take on runtime concerns that belong in generated
+applications, and generated applications must not depend on unpublished root
+files after scaffold completion.
+
+## Public Contract
+
+The stable public contract of this repository is:
+
+- the `create-koppajs` command and its `--help` / `--version` flags
+- the optional project-name argument and prompt fallback when omitted
+- rejection of invalid project names and non-empty target directories
+- recursive copying of the bundled `template/` directory
+- restoration of publish-safe dotfiles and dotdirectories during copy
+- patching of generated `package.json`, `README.md`, `CHANGELOG.md`, and
+  `RELEASE.md`
+- the generated starter baseline defined by `template/`
+- the npm package payload: `bin/`, `template/`, `README.md`, `CHANGELOG.md`,
+  and `LICENSE`
+
+The governing specs for that contract are:
+
+- [docs/specs/cli-scaffolding.md](./docs/specs/cli-scaffolding.md)
+- [docs/specs/template-starter-contract.md](./docs/specs/template-starter-contract.md)
 
 ## Usage
 
@@ -93,7 +73,9 @@ npm create koppajs my-app
 npx create-koppajs my-app
 ```
 
-Then:
+If the target directory name is omitted, the CLI prompts for one.
+
+After generation:
 
 ```bash
 cd my-app
@@ -101,63 +83,41 @@ pnpm install
 pnpm dev
 ```
 
-If you omit the target directory name, the CLI prompts for one.
-
----
-
-## What gets generated
-
-```text
-my-app/
-├── .github/
-├── .husky/
-├── docs/
-├── tests/
-├── CHANGELOG.md
-├── RELEASE.md
-├── AI_CONSTITUTION.md
-├── ARCHITECTURE.md
-├── package.json
-├── .gitignore
-├── README.md
-├── vite.config.mjs
-├── vitest.config.mjs
-├── playwright.config.ts
-├── tsconfig.json
-├── pnpm-lock.yaml
-├── LICENSE
-├── public/
-│   └── favicon.svg
-└── src/
-    ├── main.ts
-    ├── style.css
-    ├── app-view.kpa
-    └── counter-component.kpa
-```
-
-- Vite as dev server and bundler
-- TypeScript, ESLint, Prettier, Vitest, and Playwright
-- Husky, lint-staged, Conventional Commit enforcement, and GitHub workflows
-- meta-layer documents, ADR/spec scaffolding, and release process files
-- a minimal example app aligned with the official `koppajs-example` starter
-
----
-
 ## Requirements
 
-- to run `create-koppajs`: Node.js >= 20
-- for generated starter projects: pnpm >= 10 and a starter-supported Node.js
-  line, currently 20.19+, 22.13+, or 24+
+- for `create-koppajs`: Node.js `>=20`
+- for generated starter projects: pnpm `>=10` and a starter-supported Node.js
+  line, currently `20.19+`, `22.13+`, or `24+`
 
----
+## Generated Starter
 
-## Architecture & Governance
+The generated project includes:
 
-`create-koppajs` remains a scaffolding tool, not a runtime package. Its job is
-to generate a trustworthy starting point, not to own application logic.
+- a minimal KoppaJS application built on Vite and TypeScript
+- quality tooling through ESLint, Prettier, Vitest, and Playwright
+- local workflow guards through Husky, lint-staged, and commitlint
+- starter governance files, ADR/spec structure, and release-process documents
+- GitHub workflows for CI and tagged releases
 
-The repo ships the same governance surface expected elsewhere in the KoppaJS
-ecosystem:
+The root repository treats that starter as versioned product surface, not test
+data.
+
+## Ecosystem Fit
+
+`create-koppajs` is the canonical entry point for starting a new KoppaJS
+application. It complements:
+
+- `@koppajs/koppajs-core` for runtime behavior
+- `@koppajs/koppajs-vite-plugin` for build integration
+- the maintained KoppaJS starter and example conventions reflected in
+  `template/`
+
+The repository stays intentionally narrow so the CLI, starter contract, and
+governance baseline can evolve together without hidden behavior.
+
+## Governance
+
+The root meta layer defines how this repository changes:
 
 - [AI_CONSTITUTION.md](./AI_CONSTITUTION.md)
 - [ARCHITECTURE.md](./ARCHITECTURE.md)
@@ -167,21 +127,11 @@ ecosystem:
 - [RELEASE.md](./RELEASE.md)
 - [ROADMAP.md](./ROADMAP.md)
 - [docs/meta/README.md](./docs/meta/README.md)
+- [docs/architecture/README.md](./docs/architecture/README.md)
+- [docs/quality/README.md](./docs/quality/README.md)
 
-Tagged releases are documented in `CHANGELOG.md`, and the template itself is
-validated through CLI checks, smoke tests, and a generated-project build test.
-
----
-
-## Community & Contribution
-
-Issues and pull requests are welcome:
-
-https://github.com/koppajs/create-koppajs/issues
-
-Contributor workflow details live in [CONTRIBUTING.md](./CONTRIBUTING.md).
-
----
+Tagged releases are documented in [CHANGELOG.md](./CHANGELOG.md). Contributor
+workflow rules live in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 

@@ -4,11 +4,26 @@
 
 Accepted
 
-## Summary
+## Description
 
 The `create-koppajs` CLI creates a new KoppaJS starter project by copying the
 bundled `template/` directory into a target folder and patching a minimal set
 of identity fields.
+
+## Behavior
+
+The CLI must:
+
+1. parse flags and the first positional project name
+2. exit successfully for `--help` and `--version`
+3. prompt for a project name when no positional name is provided
+4. validate the selected project name before any filesystem writes
+5. refuse to scaffold into a non-empty target directory
+6. copy the bundled template into the target directory
+7. restore publish-safe dotfiles and dotdirectories during copy
+8. patch the generated `package.json`, `README.md`, `CHANGELOG.md`, and
+   `RELEASE.md`
+9. print next steps and exit successfully when scaffolding completes
 
 ## Inputs
 
@@ -68,6 +83,33 @@ of identity fields.
 7. Representative invalid project names are rejected.
 8. Running the CLI again for the same non-empty directory fails.
 9. `create-koppajs --help` and `create-koppajs --version` exit successfully.
+
+## Evolution Phase
+
+Stable
+
+## Completeness Level
+
+High
+
+## Known Gaps
+
+- The CLI intentionally supports a single starter and a single project-name
+  prompt only.
+- The CLI does not currently expose flags for package-manager selection,
+  template selection, or non-interactive overwrite flows.
+
+## Deferred Complexity
+
+- template selection
+- package-manager-specific bootstrap flows
+- overwrite or merge modes for existing directories
+
+## Technical Debt Items
+
+- Keep prompt and validation coverage aligned if project-name rules expand.
+- Extend contract tests only when new CLI branches are added; avoid speculative
+  option handling.
 
 ## Change Management
 
