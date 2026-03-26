@@ -210,6 +210,7 @@ The npm package intentionally ships only the files needed to scaffold a starter:
 
 - `bin/`
 - `template/`
+- `template-overlays/`
 - `CHANGELOG.md`
 - `README.md`
 - `LICENSE`

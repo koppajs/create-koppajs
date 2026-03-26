@@ -8,17 +8,90 @@ import { createInterface } from "node:readline";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export const TEMPLATE_DIR = join(__dirname, "..", "template");
+export const TEMPLATE_OVERLAY_DIRS = Object.freeze({
+  minimal: null,
+  router: join(__dirname, "..", "template-overlays", "router"),
+});
+export const DEFAULT_TEMPLATE = "minimal";
 const CLI_PKG = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
 
 // ── Args ────────────────────────────────────────────────────────────
 
 export function parseArgs(argv) {
   const raw = argv.slice(2);
-  return {
+  const parsed = {
     help: raw.includes("--help") || raw.includes("-h"),
     version: raw.includes("--version") || raw.includes("-v"),
-    projectName: raw.find((a) => !a.startsWith("-")) || null,
+    projectName: null,
+    templateName: null,
+    optionError: null,
   };
+
+  const setTemplateName = (templateName) => {
+    if (!templateName) {
+      parsed.optionError = "Option --template requires a value.";
+      return false;
+    }
+
+    if (parsed.templateName && parsed.templateName !== templateName) {
+      parsed.optionError = "Choose either --router or one --template value.";
+      return false;
+    }
+
+    parsed.templateName = templateName;
+    return true;
+  };
+
+  for (let index = 0; index < raw.length; index++) {
+    const arg = raw[index];
+
+    if (arg === "--help" || arg === "-h" || arg === "--version" || arg === "-v") {
+      continue;
+    }
+
+    if (arg === "--router") {
+      if (!setTemplateName("router")) {
+        break;
+      }
+      continue;
+    }
+
+    if (arg === "--template" || arg === "-t") {
+      const templateName = raw[index + 1];
+
+      if (!templateName || templateName.startsWith("-")) {
+        parsed.optionError = "Option --template requires a value.";
+        break;
+      }
+
+      if (!setTemplateName(templateName)) {
+        break;
+      }
+
+      index++;
+      continue;
+    }
+
+    if (arg.startsWith("--template=")) {
+      if (!setTemplateName(arg.slice("--template=".length))) {
+        break;
+      }
+      continue;
+    }
+
+    if (arg.startsWith("-t=")) {
+      if (!setTemplateName(arg.slice("-t=".length))) {
+        break;
+      }
+      continue;
+    }
+
+    if (!arg.startsWith("-") && parsed.projectName === null) {
+      parsed.projectName = arg;
+    }
+  }
+
+  return parsed;
 }
 
 // ── Help / Version ──────────────────────────────────────────────────
@@ -35,11 +108,14 @@ export function printHelp() {
     npx create-koppajs [project-name]
 
   Options:
-    --help, -h       Show this help message
-    --version, -v    Show version number
+    --help, -h                Show this help message
+    --version, -v             Show version number
+    --template, -t <name>     Starter template: minimal | router
+    --router                  Shortcut for --template router
 
   Example:
     pnpm create koppajs my-app
+    pnpm create koppajs my-app --template router
 `);
 }
 
@@ -49,19 +125,47 @@ export function printVersion() {
 
 // ── Prompt ──────────────────────────────────────────────────────────
 
-export function promptProjectName() {
+function promptLine(question, closeErrorMessage, input = process.stdin, output = process.stdout) {
   return new Promise((res, rej) => {
-    const rl = createInterface({ input: process.stdin, output: process.stdout });
+    const rl = createInterface({ input, output });
     let answered = false;
     rl.on("close", () => {
-      if (!answered) rej(new Error("Input closed before a project name was provided."));
+      if (!answered) rej(new Error(closeErrorMessage));
     });
-    rl.question("  Project name: ", (answer) => {
+    rl.question(question, (answer) => {
       answered = true;
       rl.close();
       res(answer.trim());
     });
   });
+}
+
+export function promptProjectName(input = process.stdin, output = process.stdout) {
+  return promptLine(
+    "  Project name: ",
+    "Input closed before a project name was provided.",
+    input,
+    output,
+  );
+}
+
+export async function promptStarterTemplate(input = process.stdin, output = process.stdout) {
+  const answer = (await promptLine(
+    `  Starter template (minimal/router) [${DEFAULT_TEMPLATE}]: `,
+    "Input closed before a starter template was provided.",
+    input,
+    output,
+  )).toLowerCase();
+
+  if (answer === "" || answer === "m") {
+    return DEFAULT_TEMPLATE;
+  }
+
+  if (answer === "r") {
+    return "router";
+  }
+
+  return answer;
 }
 
 // ── Validation ──────────────────────────────────────────────────────
@@ -76,6 +180,16 @@ export function validateProjectName(name) {
   if (name.includes("/") || name.includes("\\")) {
     throw new Error("Project name must not contain path separators.");
   }
+}
+
+export function validateStarterTemplate(templateName) {
+  if (Object.hasOwn(TEMPLATE_OVERLAY_DIRS, templateName)) {
+    return;
+  }
+
+  throw new Error(
+    `Unknown starter template "${templateName}". Supported templates: ${Object.keys(TEMPLATE_OVERLAY_DIRS).join(", ")}.`,
+  );
 }
 
 // ── Target directory ────────────────────────────────────────────────
@@ -112,6 +226,16 @@ export function copyDirRecursive(src, dest) {
     } else {
       copyFileSync(srcPath, destPath);
     }
+  }
+}
+
+export function copyStarterTemplate(templateName, dest) {
+  copyDirRecursive(TEMPLATE_DIR, dest);
+
+  const overlayDir = TEMPLATE_OVERLAY_DIRS[templateName];
+
+  if (overlayDir) {
+    copyDirRecursive(overlayDir, dest);
   }
 }
 
@@ -156,8 +280,17 @@ export function printNextSteps(projectName) {
 
 // ── Main ────────────────────────────────────────────────────────────
 
-export async function runCli(argv = process.argv, cwd = process.cwd()) {
-  const { help, version, projectName: argName } = parseArgs(argv);
+export function shouldPromptForTemplateSelection(input = process.stdin, output = process.stdout) {
+  return Boolean(input.isTTY && output.isTTY);
+}
+
+export async function runCli(
+  argv = process.argv,
+  cwd = process.cwd(),
+  io = { input: process.stdin, output: process.stdout },
+) {
+  const { help, version, projectName: argName, templateName: argTemplateName, optionError } =
+    parseArgs(argv);
 
   if (help) {
     printHelp();
@@ -169,17 +302,29 @@ export async function runCli(argv = process.argv, cwd = process.cwd()) {
     return 0;
   }
 
-  const projectName = argName || (await promptProjectName());
+  if (optionError) {
+    throw new Error(optionError);
+  }
+
+  const projectName = argName || (await promptProjectName(io.input, io.output));
 
   validateProjectName(projectName);
+
+  const templateName =
+    argTemplateName ||
+    (shouldPromptForTemplateSelection(io.input, io.output)
+      ? await promptStarterTemplate(io.input, io.output)
+      : DEFAULT_TEMPLATE);
+
+  validateStarterTemplate(templateName);
 
   const targetDir = resolve(cwd, projectName);
 
   ensureTargetDir(targetDir);
 
-  console.log(`\n  Scaffolding KoppaJS project: ${projectName}\n`);
+  console.log(`\n  Scaffolding KoppaJS project: ${projectName} (${templateName} starter)\n`);
 
-  copyDirRecursive(TEMPLATE_DIR, targetDir);
+  copyStarterTemplate(templateName, targetDir);
   patchPackageJson(targetDir, projectName);
   patchReadme(targetDir, projectName);
   patchChangelog(targetDir, projectName);

@@ -16,6 +16,28 @@ _No unreleased changes yet._
 
 ---
 
+## [1.2.0] — Starter Variants And Router Overlay
+
+**2026-03-26**
+
+### Added
+
+- added an opt-in `router` starter that layers `@koppajs/koppajs-router`, a
+  two-page navigation flow, and an explicit fallback route on top of the
+  minimal baseline
+- added overlay-based starter support through `template-overlays/` so future
+  starter variants can replace only the files that actually differ
+
+### Changed
+
+- extended the CLI contract with `--template` and `--router`, plus interactive
+  starter selection in TTY runs when no template flag is provided
+- expanded smoke, unit, and generated-template build coverage to validate both
+  the default minimal starter and the opt-in router starter
+- updated architecture docs, specs, and ADRs to reflect multi-starter support
+
+---
+
 ## [1.1.0] — Starter & Release Baseline Upgrade
 
 **2026-03-17**

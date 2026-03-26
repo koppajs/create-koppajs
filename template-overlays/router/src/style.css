@@ -1,0 +1,51 @@
+:root {
+  color-scheme: dark;
+  --app-bg: #08111f;
+  --app-bg-accent: #102742;
+  --surface: rgba(9, 16, 31, 0.78);
+  --surface-strong: rgba(11, 22, 40, 0.92);
+  --border: rgba(148, 163, 184, 0.2);
+  --text: #edf6ff;
+  --muted: #a7bfd7;
+  --accent: #64dce8;
+  --accent-strong: #97f3fb;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(100, 220, 232, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(16, 39, 66, 0.55),
+      transparent 32%
+    ),
+    linear-gradient(
+      160deg,
+      var(--app-bg) 0%,
+      #060c18 45%,
+      var(--app-bg-accent) 100%
+    );
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text);
+}
+
+a,
+button {
+  font: inherit;
+}
