@@ -34,8 +34,8 @@ Current tools:
 - repository metadata and CLI contract checks via `npm run check`
 
 This applies to the repository root only. The generated starter intentionally
-ships a richer frontend-oriented toolchain inherited from the current
-`koppajs-example` baseline.
+ships a richer frontend-oriented toolchain defined directly by the starter
+template contract in `template/` and `template-overlays/`.
 
 ### Git hooks and commit policy
 

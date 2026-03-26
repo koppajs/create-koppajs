@@ -31,8 +31,11 @@ generation.
 
 - `bin/create-koppajs.js` owns argument parsing, prompting, validation, starter
   selection, template copy, placeholder patching, and next-step output.
-- `template/` owns the default `minimal` starter baseline.
+- `template/` owns the default `minimal` starter baseline and is the single
+  source of truth for that starter.
 - `template-overlays/` owns the files that differ for opt-in starter variants.
+  Together with `template/`, they define the only source of truth for
+  generated starter output.
 - `scripts/` and `.github/workflows/` own repository-quality and release
   verification.
 - Root governance files own the repository doctrine and must stay aligned with
@@ -127,7 +130,8 @@ Every starter also includes:
 - GitHub workflows for CI and tagged releases
 
 The root repository treats those starters as versioned product surface, not
-test data.
+test data. `template/` plus the supported overlays are the only source of truth
+for starter behavior.
 
 ## Ecosystem Fit
 

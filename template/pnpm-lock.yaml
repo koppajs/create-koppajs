@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@koppajs/koppajs-core':
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^3.0.3
+        version: 3.0.3
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.1.0
@@ -22,8 +22,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.0.3(jiti@2.6.1))
       '@koppajs/koppajs-vite-plugin':
-        specifier: ^1.0.0
-        version: 1.0.0(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
+        specifier: ^1.0.1
+        version: 1.0.1(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       '@playwright/test':
         specifier: ^1.58.2
         version: 1.58.2
@@ -605,12 +605,12 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@koppajs/koppajs-core@3.0.2':
-    resolution: {integrity: sha512-wvgg6sbWZMSe6Qhqy4WwIdKpzfgdK5f7sTh5rZIJwmBUsvfzJ3mIjl/1xgfDcNWBw9ij9epoW41MzekCgTBbkw==}
+  '@koppajs/koppajs-core@3.0.3':
+    resolution: {integrity: sha512-l6e+M8hEugVW/4crOzddeImLM/0j+rqSJ5ZkFyBZPdv57Bp45WWdbmoK7HNKzPd+L70SehCaH7CcgRKM8ltbCQ==}
     engines: {node: '>=20', pnpm: '>=10.24.0'}
 
-  '@koppajs/koppajs-vite-plugin@1.0.0':
-    resolution: {integrity: sha512-tO1yyYOcHKTXqpbVOoMhdBmk9qw0DG2RcBUknpxVmPmMEXWysLXRRRFrkz0A/dOv72F1FrMN5OpIMztEvH6Hcg==}
+  '@koppajs/koppajs-vite-plugin@1.0.1':
+    resolution: {integrity: sha512-idjAD9zYQsK68yLxAI9So2bZScH7R4akDPsznHHivVCksMHSvkvQVtq328oeAg8rCi9AYN4z1Q0SAUB90aMDbg==}
     engines: {node: '>=20', pnpm: '>=10.24.0'}
     peerDependencies:
       typescript: '>=5.5 <6'
@@ -943,11 +943,6 @@ packages:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
-
-  acorn@8.15.0:
-    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
 
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
@@ -2411,11 +2406,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@koppajs/koppajs-core@3.0.2': {}
+  '@koppajs/koppajs-core@3.0.3': {}
 
-  '@koppajs/koppajs-vite-plugin@1.0.0(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
+  '@koppajs/koppajs-vite-plugin@1.0.1(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
-      acorn: 8.15.0
+      acorn: 8.16.0
       autoprefixer: 10.4.23(postcss@8.5.6)
       postcss: 8.5.6
       sass: 1.97.1
@@ -2725,8 +2720,6 @@ snapshots:
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
       acorn: 8.16.0
-
-  acorn@8.15.0: {}
 
   acorn@8.16.0: {}
 

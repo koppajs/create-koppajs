@@ -7,9 +7,9 @@ Accepted
 ## Context
 
 `create-koppajs` now carries a stronger release baseline, a living meta layer,
-and a bundled starter that mirrors the current official `koppajs-example`
-quality posture. That makes release review and changelog preparation easier
-when commit history stays structured as well.
+and a bundled starter family whose quality posture is owned directly in this
+repository. That makes release review and changelog preparation easier when
+commit history stays structured as well.
 
 `koppajs-core` already enforces Conventional Commits with `commitlint`. The
 same baseline is appropriate here because it improves traceability with little
