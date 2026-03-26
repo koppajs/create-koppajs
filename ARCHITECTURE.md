@@ -59,8 +59,8 @@ Current base characteristics:
 - Depends on `@koppajs/koppajs-core`
 - Uses `@koppajs/koppajs-vite-plugin`
 - Ships a minimal sample app with `.kpa` component files
-- Mirrors the current `koppajs-example` quality baseline with ESLint,
-  Prettier, Vitest, Playwright, Husky, lint-staged, and commitlint
+- Defines the starter quality baseline directly with ESLint, Prettier, Vitest,
+  Playwright, Husky, lint-staged, and commitlint
 - Includes a starter meta layer, ADR/spec structure, and release documentation
 
 ### `template-overlays/`

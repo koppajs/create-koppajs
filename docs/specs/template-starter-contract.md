@@ -9,7 +9,8 @@ Accepted
 The bundled `template/` directory and supported `template-overlays/`
 directories define the exact starter projects users receive after successful
 scaffolding. They are part of the public product surface of `create-koppajs`,
-not internal fixtures.
+not internal fixtures. They are the single source of truth for current starter
+output.
 
 ## Behavior
 
