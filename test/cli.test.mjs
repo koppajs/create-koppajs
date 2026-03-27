@@ -143,6 +143,8 @@ test("copyStarterTemplate scaffolds the default starter and patch helpers update
   const release = readFileSync(join(target, "RELEASE.md"), "utf-8");
 
   assert.equal(pkg.name, "generated-project");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "^3.0.7");
+  assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "^1.0.4");
   assert.match(readme, /generated-project/);
   assert.doesNotMatch(readme, /__PROJECT_NAME__/);
   assert.match(changelog, /generated-project/);
@@ -164,7 +166,9 @@ test("copyStarterTemplate applies the router overlay when requested", (t) => {
   const readme = readFileSync(join(target, "README.md"), "utf-8");
 
   assert.equal(pkg.name, "router-project");
-  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "^0.1.0");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "^3.0.7");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "^0.1.2");
+  assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "^1.0.4");
   assert.equal(existsSync(join(target, "src", "router-page.kpa")), true);
   assert.equal(existsSync(join(target, "docs", "specs", "router-navigation.md")), true);
   assert.match(readme, /router starter project/i);

@@ -2,7 +2,7 @@
 
 ## Context
 
-The repository already had a living meta layer and a real interactive UI, but its practical quality gates were still limited to `pnpm typecheck`, `pnpm build`, and manual smoke testing. That left the repo-local `.kpa` build workaround, bootstrap wiring, and browser-visible starter behavior exposed to easy regression.
+The repository already had a living meta layer and a real interactive UI, but its practical quality gates were still limited to `pnpm typecheck`, `pnpm build`, and manual smoke testing. That left bootstrap wiring and browser-visible starter behavior exposed to easy regression.
 
 ## Decision
 

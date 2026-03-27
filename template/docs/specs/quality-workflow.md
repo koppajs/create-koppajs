@@ -33,7 +33,7 @@ Keep the starter's tooling, tests, and contributor workflow consistent enough th
 - Consistent formatting on supported file types
 - Conventional commit history for maintainable review and release preparation
 - Type-safe source and TypeScript tooling files
-- Automated confidence for the `.kpa` export workaround, bootstrap wiring, and the starter UI smoke path
+- Automated confidence for bootstrap wiring and the starter UI smoke path
 - A guarded GitHub release path that fails when the pushed tag does not match `package.json`
 - Fast feedback before commit and in CI
 

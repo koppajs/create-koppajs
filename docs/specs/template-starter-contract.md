@@ -73,8 +73,8 @@ KoppaJS starter that:
   differ from the base starter.
 - Only files that intentionally contain `__PROJECT_NAME__` may rely on the CLI
   patch step.
-- Template validation depends on a starter-supported Node.js line and must fail
-  fast on unsupported runtimes rather than producing misleading build results.
+- Template validation depends on Node.js `>=22` and must fail fast on
+  unsupported runtimes rather than producing misleading build results.
 
 ## Acceptance Criteria
 
@@ -87,8 +87,8 @@ KoppaJS starter that:
 4. The scaffolded project restores publish-safe dotfiles and dotdirectories to
    their final names.
 5. The scaffolded project defines `pnpm check` and `pnpm validate` workflows.
-6. The scaffolded project passes its own `pnpm check` baseline on a
-   starter-supported Node.js runtime.
+6. The scaffolded project passes its own `pnpm check` baseline on Node.js
+   `>=22`.
 
 ## Evolution Phase
 

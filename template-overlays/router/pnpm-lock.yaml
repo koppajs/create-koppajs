@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@koppajs/koppajs-core':
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^3.0.7
+        version: 3.0.7
       '@koppajs/koppajs-router':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.2
+        version: 0.1.2
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.1.0
@@ -25,8 +25,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.0.3(jiti@2.6.1))
       '@koppajs/koppajs-vite-plugin':
-        specifier: ^1.0.1
-        version: 1.0.1(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
+        specifier: ^1.0.4
+        version: 1.0.4(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       '@playwright/test':
         specifier: ^1.58.2
         version: 1.58.2
@@ -608,17 +608,17 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@koppajs/koppajs-core@3.0.3':
-    resolution: {integrity: sha512-l6e+M8hEugVW/4crOzddeImLM/0j+rqSJ5ZkFyBZPdv57Bp45WWdbmoK7HNKzPd+L70SehCaH7CcgRKM8ltbCQ==}
-    engines: {node: '>=20', pnpm: '>=10.24.0'}
+  '@koppajs/koppajs-core@3.0.7':
+    resolution: {integrity: sha512-ZVaeU93skwDJZU+lWQaIlbExLFXJRC4+lg1Stoi0QUNg3iHUNEm1k8ESfTeF+GIJordpYdRKr1uytAHsT+EXLQ==}
+    engines: {node: '>=22', pnpm: '>=10.24.0'}
 
-  '@koppajs/koppajs-router@0.1.0':
-    resolution: {integrity: sha512-XJclUeB2Nwc/tDviuyFDSupFeOdI0NrkBKAoxwGdXE3vI6TN7AIoV6bfuiFnE8u4vLtVKhJ2Ds0IId7wlpF73Q==}
-    engines: {node: '>=20', pnpm: '>=10.17.1'}
+  '@koppajs/koppajs-router@0.1.2':
+    resolution: {integrity: sha512-HJCvG4RDDlTG50UPiyodhtDRO/P2FDZ7c+U7FWyA/l5GtiYiJ02JjuY0ARjC6qCdiNwswNc6oHQGlmlYx3p7fQ==}
+    engines: {node: '>=22', pnpm: '>=10.17.1'}
 
-  '@koppajs/koppajs-vite-plugin@1.0.1':
-    resolution: {integrity: sha512-idjAD9zYQsK68yLxAI9So2bZScH7R4akDPsznHHivVCksMHSvkvQVtq328oeAg8rCi9AYN4z1Q0SAUB90aMDbg==}
-    engines: {node: '>=20', pnpm: '>=10.24.0'}
+  '@koppajs/koppajs-vite-plugin@1.0.4':
+    resolution: {integrity: sha512-lBME5lq80t6Pk1lNDJeI4lOAfvfHR4AVqwpMLHUH5rqP9nbGh6t4ud/0llH4MiLNZAZK2HzNykzqO3+Rb+7tsw==}
+    engines: {node: '>=22', pnpm: '>=10.24.0'}
     peerDependencies:
       typescript: '>=5.5 <6'
       vite: ^7.0.0
@@ -2413,11 +2413,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@koppajs/koppajs-core@3.0.3': {}
+  '@koppajs/koppajs-core@3.0.7': {}
 
-  '@koppajs/koppajs-router@0.1.0': {}
+  '@koppajs/koppajs-router@0.1.2': {}
 
-  '@koppajs/koppajs-vite-plugin@1.0.1(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
+  '@koppajs/koppajs-vite-plugin@1.0.4(typescript@5.9.3)(vite@7.2.6(@types/node@25.4.0)(jiti@2.6.1)(sass@1.97.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       acorn: 8.16.0
       autoprefixer: 10.4.23(postcss@8.5.6)

@@ -54,7 +54,7 @@ The CLI must:
 
 ## Constraints
 
-- The CLI must support Node.js 20+.
+- The CLI must support Node.js 22+.
 - The CLI must not require network access.
 - The CLI must refuse empty project names.
 - The CLI must reject unknown starter template names.

@@ -17,7 +17,7 @@
   ],
   "packageManager": "pnpm@10.12.1",
   "engines": {
-    "node": ">=20",
+    "node": ">=22",
     "pnpm": ">=10"
   },
   "scripts": {
@@ -29,12 +29,15 @@
     "test:watch": "node scripts/run-unit-tests.mjs --watch",
     "test:smoke": "node scripts/smoke-test.mjs",
     "test:template-build": "node scripts/template-build-test.mjs",
+    "test:package": "node scripts/test-package-smoke.mjs",
     "test": "npm run test:unit && npm run test:smoke",
     "pack:dry-run": "npm pack --dry-run",
-    "check": "npm run check:meta && npm run lint && npm run format:check && npm run check:cli && npm test && npm run pack:dry-run",
-    "release:check": "npm run check && npm run test:template-build",
+    "check": "pnpm run check:docs && npm run check:meta && npm run lint && npm run format:check && npm run check:cli && npm test && npm run pack:dry-run",
+    "validate": "pnpm run check && pnpm run test:template-build && pnpm run test:package",
+    "release:check": "pnpm run validate",
     "prepare": "husky",
-    "clean": "node scripts/clean.mjs"
+    "clean": "node scripts/clean.mjs",
+    "check:docs": "node scripts/check-doc-contract.mjs"
   },
   "author": "Bastian Bensch",
   "license": "Apache-2.0",

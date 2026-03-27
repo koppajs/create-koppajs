@@ -66,11 +66,8 @@ Before cutting a release, ensure all of the following are true:
 
 Tooling expectations for local verification:
 
-- Node.js 20.19+, 22.13+, or 24+
+- Node.js 22 or newer
 - pnpm 10 or newer
-
-Node 23 is intentionally not treated as supported here because the current
-upstream frontend toolchain excludes it.
 
 This repository also enforces `engine-strict=true` in `.npmrc`, so incompatible
 Node.js or pnpm versions should be treated as a release blocker.

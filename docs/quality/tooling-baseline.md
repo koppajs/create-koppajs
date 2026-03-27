@@ -26,12 +26,14 @@ Used because:
 
 Current tools:
 
-- `node --check` via `npm run lint`
-- `node:test` via `npm run test:unit`
-- real filesystem smoke verification via `npm run test:smoke`
-- generated-template build verification via `npm run test:template-build`
-- `npm pack --dry-run` via `npm run pack:dry-run`
-- repository metadata and CLI contract checks via `npm run check`
+- `node --check` via `pnpm run lint`
+- `node:test` via `pnpm run test:unit`
+- real filesystem smoke verification via `pnpm run test:smoke`
+- generated-template build verification via `pnpm run test:template-build`
+- packed-package smoke verification via `pnpm run test:package`
+- `npm pack --dry-run` via `pnpm run pack:dry-run`
+- repository metadata and CLI contract checks via `pnpm run check`
+- the full CI and release gate via `pnpm run validate`
 
 This applies to the repository root only. The generated starter intentionally
 ships a richer frontend-oriented toolchain defined directly by the starter
@@ -60,7 +62,7 @@ replace the repository's core built-in validation scripts.
 
 ### Repository formatting guard
 
-`npm run format:check` uses a repository script instead of an external
+`pnpm run format:check` uses a repository script instead of an external
 formatter. It currently enforces:
 
 - LF line endings
@@ -111,19 +113,31 @@ no longer provide a clear, maintainable baseline.
 ### Fast local baseline
 
 ```bash
-npm run check
+pnpm run check
 ```
 
 ### Template-sensitive changes
 
 ```bash
-npm run test:template-build
+pnpm run test:template-build
+```
+
+### Publish-sensitive changes
+
+```bash
+pnpm run test:package
+```
+
+### CI and release baseline
+
+```bash
+pnpm run validate
 ```
 
 ### Cleanup
 
 ```bash
-npm run clean
+pnpm run clean
 ```
 
 ## Evolution Rules

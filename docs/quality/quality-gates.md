@@ -4,11 +4,15 @@
 
 Changes should satisfy the following repository checks:
 
-1. `npm run check`
-2. `npm run test:template-build` on CI when validating the generated starter
-   build on a starter-supported Node.js runtime
+1. `pnpm run validate`
 
-`npm run check` currently includes:
+`pnpm run validate` currently includes:
+
+1. `pnpm run check`
+2. `pnpm run test:template-build`
+3. `pnpm run test:package`
+
+`pnpm run check` currently includes:
 
 1. required meta-layer source-of-truth files exist
 2. repository syntax checks
@@ -18,7 +22,7 @@ Changes should satisfy the following repository checks:
 6. smoke integration tests
 7. package dry-run validation
 
-These are also represented in `.github/workflows/ci.yml`.
+These are enforced in `.github/workflows/ci.yml` on Node 22 and 24.
 
 ## Local Git Gates
 
@@ -33,19 +37,17 @@ These gates are intentionally lighter than the full repository check.
 
 For local maintainer validation, run:
 
-1. `npm run release:check`
+1. `pnpm run validate`
 
-`npm run release:check` should be executed on a Node.js version supported by
-the generated starter toolchain. CI and release automation use Node 22 for that
-reason.
+`pnpm run release:check` remains available as an alias for
+`pnpm run validate`.
 
 Before publish, the release workflow must:
 
-1. rerun the quality gate, including the meta-layer presence guard
-2. build the generated starter project
-3. verify that the pushed tag matches the version in `package.json`
-4. create a GitHub Release
-5. publish to npm using the configured token
+1. rerun `pnpm run validate` on the maintainer default from `.nvmrc`
+2. verify that the pushed tag matches the version in `package.json`
+3. create a GitHub Release
+4. publish to npm using the configured token
 
 These are implemented in `.github/workflows/release.yml`.
 
@@ -56,7 +58,8 @@ following when relevant:
 
 - the generated README still reads correctly after placeholder replacement
 - template file changes are reflected in `README.md`, specs, and changelog
-- template build changes are covered by `npm run test:template-build`
+- template build changes are covered by `pnpm run test:template-build`
+- publish-payload changes are covered by `pnpm run test:package`
 - release and commit workflow docs still match `RELEASE.md`,
   `commitlint.config.mjs`, and `.husky/*`
 - release process changes are recorded in ADRs and contributor docs

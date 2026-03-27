@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, copyFileSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, copyFileSync, statSync, realpathSync } from "node:fs";
 import { basename, join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline";
@@ -335,7 +335,15 @@ export async function runCli(
 }
 
 function isDirectExecution() {
-  return Boolean(process.argv[1]) && resolve(process.argv[1]) === __filename;
+  if (!process.argv[1]) {
+    return false;
+  }
+
+  try {
+    return realpathSync(process.argv[1]) === realpathSync(__filename);
+  } catch {
+    return resolve(process.argv[1]) === __filename;
+  }
 }
 
 if (isDirectExecution()) {

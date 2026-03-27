@@ -1,15 +1,19 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [develop, main]
 
 jobs:
-  ci:
+  validate:
+    name: Validate (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node: [20, 22]
+        node: [22, 24]
 
     steps:
       - uses: actions/checkout@v6
@@ -26,9 +30,5 @@ jobs:
       - name: Install repository dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Repository quality gate
-        run: pnpm check
-
-      - name: Generated template build
-        if: matrix.node == 22
-        run: pnpm test:template-build
+      - name: Validate
+        run: pnpm run validate

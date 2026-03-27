@@ -11,8 +11,7 @@ const ROOT = join(__dirname, "..");
 const CLI = join(ROOT, "bin", "create-koppajs.js");
 const TMP = mkdtempSync(join(tmpdir(), "create-koppajs-template-"));
 const PNPM_BIN = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
-const TEMPLATE_NODE_REQUIREMENT =
-  "20.19+, 22.13+, or 24+ (Node 23 is not supported by the current starter toolchain)";
+const TEMPLATE_NODE_REQUIREMENT = ">=22";
 const STARTER_VARIANTS = [
   {
     label: "minimal",
@@ -37,17 +36,8 @@ function getNodeVersionParts(version = process.versions.node) {
 }
 
 function supportsTemplateToolchain(versionParts) {
-  const { major, minor, patch } = versionParts;
-
-  if (major === 20) {
-    return minor > 19 || (minor === 19 && patch >= 0);
-  }
-
-  if (major === 22) {
-    return minor > 13 || (minor === 13 && patch >= 0);
-  }
-
-  return major >= 24;
+  const { major } = versionParts;
+  return major >= 22;
 }
 
 function cleanup() {

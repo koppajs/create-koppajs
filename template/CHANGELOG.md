@@ -9,13 +9,14 @@ Only tagged versions represent official releases.
 
 ## [Unreleased]
 
-This section is intentionally empty.
+### Changed
 
-Changes will only appear here when they:
-
-- alter the project's observable behavior,
-- change contributor or maintainer workflow,
-- or modify documented repository guarantees.
+- raised the minimum Node.js version to `>=22` and expanded CI coverage to
+  Node 24
+- refreshed the starter dependency baseline to the current `@koppajs/koppajs-core`
+  and `@koppajs/koppajs-vite-plugin` releases
+- removed the obsolete local `.kpa` export wrapper because the upstream Vite
+  plugin already emits valid ES modules
 
 ---
 

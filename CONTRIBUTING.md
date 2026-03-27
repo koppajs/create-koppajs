@@ -1,154 +1,185 @@
-# Contributing
+<a id="contributing-top"></a>
 
-## Purpose
+<div align="center">
+  <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="500" alt="KoppaJS Logo">
+</div>
 
-`create-koppajs` is the official KoppaJS scaffolder. Contributions should keep
-the tool small, explicit, and reliable.
+<br>
 
-The repository's job is narrow but important:
+<div align="center">
+  <h1 align="center">Contributing to KoppaJS Projects</h1>
+  <h3 align="center">Build with intention. Contribute with clarity.</h3>
+  <p align="center">
+    <i>A framework ecosystem powered by simplicity, transparency, and responsibility.</i>
+  </p>
+</div>
 
-- ship a stable CLI
-- ship a clear starter template
-- protect the generated project contract
+<br>
 
-## Read Before Editing
+---
 
-Start here before changing code, workflows, or template files:
+## Philosophy
 
-1. [DECISION_HIERARCHY.md](./DECISION_HIERARCHY.md)
-2. [AI_CONSTITUTION.md](./AI_CONSTITUTION.md)
-3. [ARCHITECTURE.md](./ARCHITECTURE.md)
-4. [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md)
-5. [TESTING_STRATEGY.md](./TESTING_STRATEGY.md)
-6. Relevant specs in [docs/specs](./docs/specs)
-7. Relevant ADRs in [docs/adr](./docs/adr)
+> _“Only start things you are willing to finish with dedication.”_
+
+KoppaJS favors explicit behavior, readable systems, and deliberate repository contracts.
+
+Contributions should preserve those traits:
+
+- keep behavior understandable and traceable
+- prefer explicit contracts over hidden convention
+- update documentation when the owned contract changes
+- leave the repository in a state where both humans and AI agents can recover intent locally
+
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+
+---
+
+## Repository Governance
+
+Before structural, workflow, or user-visible changes, read the local governance layer:
+
+- [DECISION_HIERARCHY.md](./DECISION_HIERARCHY.md)
+- [ARCHITECTURE.md](./ARCHITECTURE.md)
+- [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md)
+- [docs/specs/README.md](./docs/specs/README.md)
+- [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md)
+
+If your change moves package behavior, contributor workflow, or governed file shape, update the corresponding documentation in the same change.
+
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+
+---
+
+## Documentation Contract
+
+The root documents `README.md`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, and `CONTRIBUTING.md` are governed by [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md).
+
+Before committing, run:
+
+```bash
+pnpm run check:docs
+```
+
+The local pre-commit hook runs the same guard and blocks the commit when the contract fails.
+
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+
+---
 
 ## Requirements
 
-- Node.js 20 or newer for the CLI and repository scripts
-- pnpm 10 or newer for dependency installation and hook setup
+- Node.js >= 22
+- pnpm >= 10.17.1
 
-When validating the generated starter with `pnpm test:template-build` or
-`pnpm release:check`, use a Node.js version supported by the starter toolchain.
-The current supported lines are 20.19+, 22.13+, and 24+.
-
-The repository's built-in core checks can run without installing root
-dependencies, but the local Git hook and Conventional Commit workflow require:
+Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-## Repository Map
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
 
-- `bin/create-koppajs.js`: CLI entry point and scaffolding logic
-- `template/`: bundled starter project copied into new apps
-- `scripts/smoke-test.mjs`: behavioral validation of the scaffolded output
-- `.github/workflows/`: CI and release automation
-- `docs/`: architecture, specs, ADRs, quality guidance, and meta docs
+---
 
-## Local Workflow
+## Development Workflow
 
-### Core checks
+Use the smallest change that solves the actual problem.
 
-```bash
-pnpm check
-```
+A safe default workflow is:
 
-This runs:
+1. Read the affected code, tests, and local governance docs before changing behavior.
+2. Update the owned specs and governed root docs in the same change when the contract moves.
+3. Run `pnpm run check:docs` before broader quality checks.
+4. Run the repository quality gates that cover the affected behavior.
+5. Keep unrelated edits out of the same change whenever possible.
 
-- `pnpm check:meta`
-- `pnpm lint`
-- `pnpm format:check`
-- `pnpm check:cli`
-- `pnpm test`
-- `pnpm pack:dry-run`
+Repository-specific focus for this project:
 
-For targeted work, the smaller commands are:
+- Treat `template/` plus supported overlays as the only starter source of truth.
+- Keep the CLI thin and avoid moving generated-app behavior back into the scaffolder.
 
-```bash
-pnpm lint
-pnpm format:check
-pnpm test:unit
-pnpm test:smoke
-pnpm check:cli
-pnpm pack:dry-run
-```
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
 
-### Generated-template build verification
+---
 
-Use this when changing the template, starter dependencies, or build setup:
+## Code Style & Quality
 
-```bash
-pnpm test:template-build
-```
+All KoppaJS repositories value clarity over cleverness.
 
-This scaffolds a temporary app, installs its dependencies, and builds it.
-Because the generated starter follows the current upstream frontend toolchain,
-Node 23 is intentionally not treated as a supported validation runtime here.
+Expectations for changes in this repository:
 
-### Optional watch mode
+- keep implementations explicit and easy to review
+- prefer updating governing docs over leaving intent implicit
+- keep quality-gate commands passing before asking for review
+- do not silently change public behavior or contributor workflow
 
-```bash
-pnpm test:watch
-```
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
 
-## Commit Policy
+---
 
-Commit messages use Conventional Commits.
+## Commit Conventions
 
-Examples:
+KoppaJS uses **Conventional Commits**.
+
+Example:
 
 ```text
-feat: align template with official example
-docs: add repository release guide
-fix: patch generated release placeholders
+feat: harden documentation contract validation
 ```
 
-Commit messages are validated locally by `.husky/commit-msg` when dependencies
-have been installed.
+Keep commit scope aligned with the actual repository change.
 
-## Change Rules
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
 
-### If you change CLI behavior
+---
 
-- update the relevant spec in `docs/specs/`
-- update tests or smoke coverage
-- update `README.md` if usage changed
+## Testing Guidelines
 
-### If you change the generated template
+Every user-visible or contract-visible change should leave verification behind.
 
-- treat the change as user-facing
-- update `ARCHITECTURE.md` or `docs/architecture/*` if boundaries changed
-- update specs, `README.md`, and `CHANGELOG.md` when the generated contract
-  changed
+That means:
 
-### If you change workflow, policy, or architecture
+- update specs when behavior changes
+- add or adjust automated tests when executable behavior changes
+- run the repository commands that cover the affected area
+- keep the documentation contract valid when the root docs change
 
-- update the relevant root meta docs
-- add or update an ADR for lasting decisions
-- update `.github/instructions/*` if the contributor or AI workflow changed
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
 
-## Pull Request Expectations
+---
 
-- keep changes scoped and explain the user-visible effect
-- do not mix unrelated refactors into the same change
-- mention any public contract changes clearly
-- include the meta-layer updates in the same pull request
+## Scripts
 
-## Release Process
+| Command | Description |
+| ------- | ----------- |
+| `pnpm run check:docs` | Validate README, CHANGELOG, CODE_OF_CONDUCT, CONTRIBUTING, and the local doc contract |
+| `pnpm run check` | Run the main local quality gate |
+| `pnpm run test` | Run the test suite |
+| `pnpm run test:package` | Validate the packed npm tarball and installed CLI path |
+| `pnpm run validate` | Run the CI and release validation flow |
+| `pnpm run lint` | Run lint checks |
+| `pnpm run format:check` | Check formatting without rewriting files |
+| `pnpm run release:check` | Alias for the release-facing validation flow |
 
-Releases are tag-driven.
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
 
-High-level flow:
+---
 
-1. ensure `package.json` version is correct
-2. update `CHANGELOG.md` for user-visible changes
-3. push a matching `vX.Y.Z` tag
-4. let GitHub Actions validate and publish
+## Releasing
 
-See [docs/quality/quality-gates.md](./docs/quality/quality-gates.md) and
-[docs/quality/tooling-baseline.md](./docs/quality/tooling-baseline.md), and
-[docs/adr/0003-tag-driven-release-publishing.md](./docs/adr/0003-tag-driven-release-publishing.md),
-[docs/adr/0005-adopt-commit-message-conventions.md](./docs/adr/0005-adopt-commit-message-conventions.md),
-and [RELEASE.md](./RELEASE.md) for the governing release rules.
+This repository uses the documented release-branch and tag flow in `RELEASE.md`.
+
+When a release changes the public contract, update `CHANGELOG.md`, the relevant specs, and the governed root documents together.
+
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>
+
+---
+
+## Need Help?
+
+Open an issue: https://github.com/koppajs/create-koppajs/issues
+
+If the question is about contributor expectations or file shape, start with [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md) and [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md).
+
+<p align="right">(<a href="#contributing-top">back to top</a>)</p>

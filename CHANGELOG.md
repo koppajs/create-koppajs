@@ -12,7 +12,17 @@ not every internal refactor.
 
 ## [Unreleased]
 
-_No unreleased changes yet._
+### Changed
+
+- raised the repository and bundled starter minimum Node.js version to `>=22`
+  and expanded CI coverage to Node 24
+- aligned CI and release validation around `pnpm validate`, added a packed-CLI
+  smoke test, and switched release automation to the maintainer default from
+  `.nvmrc`
+- refreshed bundled starter dependencies to the current `@koppajs/koppajs-core`,
+  `@koppajs/koppajs-vite-plugin`, and `@koppajs/koppajs-router` baselines
+- removed the obsolete starter-local `.kpa` export wrapper now that the Vite
+  plugin emits valid ES modules itself
 
 ---
 

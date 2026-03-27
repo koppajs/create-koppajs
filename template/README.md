@@ -81,11 +81,8 @@ Use it as a starting point for new KoppaJS projects or as a reference for how co
 
 ## Requirements
 
-- Node.js 20.19+, 22.13+, or 24+
+- Node.js >= 22
 - pnpm >= 10
-
-Node 23 is intentionally not treated as supported here because the current
-upstream frontend toolchain excludes it.
 
 ---
 

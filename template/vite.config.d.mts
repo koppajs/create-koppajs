@@ -1,6 +1,4 @@
-import type { Plugin, UserConfig } from "vite";
-
-export declare function normalizeKpaModuleExport(): Plugin;
+import type { UserConfig } from "vite";
 
 declare const config: UserConfig;
 

@@ -5,7 +5,7 @@ name: Release
 #   1. Merge develop → main via PR
 #   2. Ensure package.json version is updated
 #   3. Tag main with matching version: git tag v1.0.0 && git push origin v1.0.0
-#   4. This workflow runs checks, creates GitHub Release, and publishes to npm
+#   4. This workflow runs validation, creates GitHub Release, and publishes to npm
 #
 # Required repository secrets:
 #   - NPM_TOKEN: npm access token with publish permissions
@@ -35,18 +35,15 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version-file: ".nvmrc"
           cache: pnpm
           registry-url: "https://registry.npmjs.org"
 
       - name: Install repository dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Quality Gate
-        run: pnpm check
-
-      - name: Generated template build
-        run: pnpm test:template-build
+      - name: Validate
+        run: pnpm run validate
 
       - name: Verify tag matches package.json
         run: |

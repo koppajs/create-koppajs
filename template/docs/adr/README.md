@@ -31,7 +31,7 @@ Use [`TEMPLATE.md`](./TEMPLATE.md). Every ADR must contain:
 
 - [`0001-keep-the-starter-minimal.md`](./0001-keep-the-starter-minimal.md)
 - [`0002-adopt-a-living-meta-layer.md`](./0002-adopt-a-living-meta-layer.md)
-- [`0003-normalize-kpa-plugin-output.md`](./0003-normalize-kpa-plugin-output.md)
+- [`0003-rely-on-upstream-kpa-es-module-output.md`](./0003-rely-on-upstream-kpa-es-module-output.md)
 - [`0004-adopt-an-automated-quality-baseline.md`](./0004-adopt-an-automated-quality-baseline.md)
 - [`0005-adopt-a-tag-driven-release-baseline.md`](./0005-adopt-a-tag-driven-release-baseline.md)
 - [`0006-adopt-commit-message-conventions.md`](./0006-adopt-commit-message-conventions.md)
