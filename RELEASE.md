@@ -60,12 +60,11 @@ Before cutting a release, ensure all of the following are true:
 
 Tooling expectations for local verification:
 
-- Node.js 20 or newer for the root repository checks
+- Node.js 22 or newer for the root repository checks
 - pnpm 10 or newer
 
-For `pnpm test:template-build` and `pnpm release:check`, use a Node.js version
-supported by the generated starter toolchain. The current supported lines are
-20.19+, 22.13+, and 24+.
+For `pnpm test:template-build` and `pnpm release:check`, use Node.js 22 or
+newer.
 
 This repository enforces `engine-strict=true` in `.npmrc`, so incompatible
 Node.js or pnpm versions should be treated as a release blocker.
@@ -81,14 +80,17 @@ Recommended commands:
 
 ```bash
 pnpm install
-pnpm release:check
+pnpm validate
 ```
 
-`pnpm release:check` runs the repository quality gate and verifies that the
-generated starter still passes its bundled quality baseline.
+`pnpm validate` runs the repository quality gate, verifies that the generated
+starter still passes its bundled quality baseline, and checks that the packed
+CLI tarball still scaffolds correctly.
 
-If the local runtime falls outside the starter-supported Node.js lines, switch
-to a supported version before trusting release validation.
+`pnpm release:check` remains available as an alias for `pnpm validate`.
+
+If the local runtime is older than Node.js 22, switch to a supported version
+before trusting release validation.
 
 ---
 
@@ -194,11 +196,10 @@ The workflow `.github/workflows/release.yml` runs on pushed tags matching
 
 For each matching tag it will:
 
-1. run the repository quality gate
-2. verify that the generated starter still passes `pnpm check`
-3. verify that the tag version matches `package.json`
-4. create a GitHub Release with generated release notes
-5. publish the package to npm
+1. run `pnpm validate` on the maintainer default from `.nvmrc`
+2. verify that the tag version matches `package.json`
+3. create a GitHub Release with generated release notes
+4. publish the package to npm
 
 If any step fails, the release job stops immediately.
 
@@ -215,7 +216,8 @@ The npm package intentionally ships only the files needed to scaffold a starter:
 - `README.md`
 - `LICENSE`
 
-Before release, verify that `npm pack --dry-run` still reflects that contract.
+Before release, verify that `pnpm run test:package` still passes so the packed
+CLI can scaffold from the exact published tarball.
 
 ---
 
@@ -226,7 +228,7 @@ Use this as the maintainer checklist for every release:
 1. Verify the release scope on `develop`
 2. Update `package.json`
 3. Update `CHANGELOG.md`
-4. Run `pnpm release:check`
+4. Run `pnpm validate`
 5. Create `release/*` from `develop`
 6. Merge `release/*` into `main`
 7. Confirm the merged commit on `main` has the correct version and changelog

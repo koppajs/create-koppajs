@@ -26,7 +26,10 @@ This repository now has a small automated testing stack aligned with the actual 
 
 ### Unit tests
 
-Use unit tests for isolated logic that can fail independently of the browser runtime. Today that includes the repo-local `.kpa` export normalization helper in `vite.config.mjs`.
+Use unit tests for isolated logic that can fail independently of the browser runtime.
+
+Today the starter does not ship dedicated extracted helper modules, so unit-only
+coverage is optional until new isolated logic actually exists.
 
 Typical triggers:
 

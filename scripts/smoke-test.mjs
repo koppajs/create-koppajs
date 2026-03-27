@@ -11,6 +11,11 @@ const TMP = join(ROOT, ".tmp-smoke");
 const CLI = join(ROOT, "bin", "create-koppajs.js");
 const PROJECT = "test-app";
 const ROUTER_PROJECT = "router-test-app";
+const EXPECTED_STARTER_VERSIONS = {
+  core: "^3.0.7",
+  vitePlugin: "^1.0.4",
+  router: "^0.1.2",
+};
 
 let passed = 0;
 let failed = 0;
@@ -63,6 +68,14 @@ try {
     assert(pkg.name === PROJECT, `package.json name is "${PROJECT}"`);
     assert(typeof pkg.scripts?.check === "string", 'package.json defines "check"');
     assert(typeof pkg.scripts?.validate === "string", 'package.json defines "validate"');
+    assert(
+      pkg.dependencies?.["@koppajs/koppajs-core"] === EXPECTED_STARTER_VERSIONS.core,
+      'starter depends on the current "@koppajs/koppajs-core" baseline',
+    );
+    assert(
+      pkg.devDependencies?.["@koppajs/koppajs-vite-plugin"] === EXPECTED_STARTER_VERSIONS.vitePlugin,
+      'starter depends on the current "@koppajs/koppajs-vite-plugin" baseline',
+    );
   }
 
   const readmePath = join(projectDir, "README.md");
@@ -113,8 +126,20 @@ try {
   assert(existsSync(join(projectDir, "pnpm-lock.yaml")), "pnpm-lock.yaml exists");
   assert(existsSync(join(projectDir, "src", "app-view.kpa")), "src/app-view.kpa exists");
   assert(existsSync(join(projectDir, "src", "counter-component.kpa")), "src/counter-component.kpa exists");
-  assert(existsSync(join(projectDir, "tests", "unit", "normalize-kpa-module-export.test.ts")), "tests/unit/normalize-kpa-module-export.test.ts exists");
+  assert(
+    !existsSync(join(projectDir, "tests", "unit", "normalize-kpa-module-export.test.ts")),
+    "obsolete KPA export wrapper unit test is not shipped",
+  );
   assert(existsSync(join(projectDir, "docs", "quality", "quality-gates.md")), "docs/quality/quality-gates.md exists");
+
+  const viteConfigPath = join(projectDir, "vite.config.mjs");
+  if (existsSync(viteConfigPath)) {
+    const viteConfig = readFileSync(viteConfigPath, "utf-8");
+    assert(
+      !viteConfig.includes("normalizeKpaModuleExport"),
+      "vite.config.mjs does not include the obsolete KPA export wrapper",
+    );
+  }
 
   // Existing empty directory is allowed
   const emptyDirProject = "empty-dir-app";
@@ -143,8 +168,16 @@ try {
   if (existsSync(routerPkgPath)) {
     const routerPkg = JSON.parse(readFileSync(routerPkgPath, "utf-8"));
     assert(
-      routerPkg.dependencies?.["@koppajs/koppajs-router"] === "^0.1.0",
+      routerPkg.dependencies?.["@koppajs/koppajs-router"] === EXPECTED_STARTER_VERSIONS.router,
       'router starter depends on "@koppajs/koppajs-router"',
+    );
+    assert(
+      routerPkg.dependencies?.["@koppajs/koppajs-core"] === EXPECTED_STARTER_VERSIONS.core,
+      'router starter depends on the current "@koppajs/koppajs-core" baseline',
+    );
+    assert(
+      routerPkg.devDependencies?.["@koppajs/koppajs-vite-plugin"] === EXPECTED_STARTER_VERSIONS.vitePlugin,
+      'router starter depends on the current "@koppajs/koppajs-vite-plugin" baseline',
     );
   }
 

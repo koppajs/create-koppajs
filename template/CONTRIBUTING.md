@@ -4,11 +4,8 @@
 
 Requirements:
 
-- Node.js 20.19+, 22.13+, or 24+
+- Node.js >= 22
 - pnpm 10 or newer
-
-Node 23 is intentionally not part of the supported range because the current
-upstream frontend tooling excludes it.
 
 Install and run:
 

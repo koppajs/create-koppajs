@@ -104,8 +104,8 @@ Contains repository-quality utilities in addition to smoke tests:
 - `run-unit-tests.mjs` runs Node.js built-in unit tests in a platform-robust
   way
 - `template-build-test.mjs` scaffolds each supported starter, installs
-  dependencies, and runs the generated project's own `pnpm check` baseline on a
-  starter-supported Node.js runtime
+  dependencies, and runs the generated project's own `pnpm check` baseline on
+  Node.js `>=22`
 - `clean.mjs` removes temporary smoke, coverage, and package artifacts
 
 ### `lint-staged.config.mjs`
@@ -119,11 +119,11 @@ frontend tooling.
 
 Defines automation around the product contract:
 
-- `ci.yml` installs dependencies with pnpm, runs the repository quality gate on
-  Node 20 and 22, and performs generated-template builds on Node 22
-- `release.yml` installs dependencies with pnpm, reruns the repository quality
-  gate, builds the generated templates on Node 22, and verifies that the Git
-  tag version matches `package.json`
+- `ci.yml` installs dependencies with pnpm and runs `pnpm validate` on pushes
+  to `main` and pull requests for Node 22 and 24
+- `release.yml` installs dependencies with pnpm, reruns `pnpm validate` on the
+  maintainer default from `.nvmrc`, and verifies that the Git tag version
+  matches `package.json`
 
 ### Meta Layer
 
@@ -194,7 +194,7 @@ after scaffolding.
   must contain `__PROJECT_NAME__` if the generated docs are expected to include
   the new project name.
 - Scaffolding must not modify files outside the chosen target directory.
-- The root package remains usable with Node.js 20+.
+- The root package remains usable with Node.js 22+.
 - The CLI must work without network access.
 - Starter structure changes are user-visible and require spec/changelog review.
 

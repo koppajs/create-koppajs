@@ -27,11 +27,11 @@ Before editing code or workflows, read:
 
 ## Verification Rules
 
-- Run `npm run check` for normal repository changes.
-- Run `npm run test:template-build` when template files, template dependencies,
-  or generated build configuration changes.
-- Run `npm run release:check` when versioning, changelog, release workflow, or
-  published-template release guarantees change.
+- Run `pnpm run check` for normal repository changes.
+- Run `pnpm run validate` when template files, template dependencies, publish
+  payload, generated build configuration, or release workflow behavior changes.
+- Use `pnpm run test:template-build` or `pnpm run test:package` directly only
+  when you are narrowing a failure inside the full validation flow.
 - For CLI or template behavior changes, update the spec first or in the same
   change.
 - If you create commits, use Conventional Commits that satisfy `commitlint`.

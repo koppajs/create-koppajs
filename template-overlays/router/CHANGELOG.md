@@ -12,7 +12,13 @@ not every internal refactor.
 
 ## [Unreleased]
 
-_No unreleased changes yet._
+### Changed
+
+- raised the minimum Node.js version to `>=22` and expanded CI coverage to
+  Node 24
+- refreshed the router starter dependency baseline to the current
+  `@koppajs/koppajs-core`, `@koppajs/koppajs-vite-plugin`, and
+  `@koppajs/koppajs-router` releases
 
 ---
 

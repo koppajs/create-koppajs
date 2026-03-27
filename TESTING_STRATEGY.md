@@ -12,9 +12,9 @@ heavy test infrastructure.
 
 ### 1. Static validity and repository guards
 
-- `npm run check:meta`
-- `npm run lint`
-- `npm run format:check`
+- `pnpm run check:meta`
+- `pnpm run lint`
+- `pnpm run format:check`
 
 Purpose:
 
@@ -35,7 +35,7 @@ Purpose:
 
 ### 3. CLI contract checks
 
-- `npm run check:cli`
+- `pnpm run check:cli`
 
 Purpose:
 
@@ -57,7 +57,7 @@ Purpose:
 
 ### 5. Generated-template build validation
 
-- `npm run test:template-build`
+- `pnpm run test:template-build`
 
 Purpose:
 
@@ -67,14 +67,25 @@ Purpose:
 
 Runtime note:
 
-- this validation must run on a Node.js version supported by the generated
-  starter toolchain, currently 20.19+, 22.13+, or 24+
-- Node 23 is intentionally treated as unsupported here because current upstream
-  frontend dependencies exclude it
+- this validation must run on Node.js 22 or newer
 
 This is heavier than the default local check because it relies on registry
 access. It is therefore available locally and enforced in CI/release, but kept
-out of the default `npm run check` loop.
+out of the default `pnpm run check` loop.
+
+### 6. Packed-package smoke validation
+
+- `pnpm run test:package`
+
+Purpose:
+
+- create a tarball from the current repository state
+- install that tarball into a temporary consumer directory
+- invoke the packaged `create-koppajs` binary from the installed package
+- verify the published payload still scaffolds the supported starters
+
+This protects the shipped npm package path instead of only the workspace copy of
+the CLI.
 
 ## When To Add Unit Tests
 
@@ -146,8 +157,8 @@ This repository also enforces a lightweight local Git workflow baseline:
 - Conventional Commit validation through `.husky/commit-msg` plus `commitlint`
 
 These hooks are intentionally faster and narrower than the full repository
-checks. Heavy validation still belongs in `npm run check`,
-`npm run test:template-build`, and CI.
+checks. Heavy validation still belongs in `pnpm run check`,
+`pnpm run test:template-build`, `pnpm run test:package`, and CI.
 
 ## Required Updates When Behavior Changes
 
@@ -157,6 +168,19 @@ checks. Heavy validation still belongs in `npm run check`,
 - Update CI expectations if the quality gate changes
 - Update the quality-tooling documentation if repository-level checks or tool
   choices change
+
+## Release And CI Gates
+
+The repository quality gates currently include:
+
+- `pnpm run check`
+- `pnpm run test:template-build`
+- `pnpm run test:package`
+- `pnpm run validate`
+
+GitHub Actions CI runs `pnpm run validate` on Node 22 and 24. The release
+workflow reruns `pnpm run validate` on the maintainer default from `.nvmrc`
+before publish.
 
 See [docs/quality/quality-gates.md](./docs/quality/quality-gates.md) for the
 current merge and release gate definitions, and

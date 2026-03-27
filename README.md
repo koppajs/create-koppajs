@@ -1,9 +1,63 @@
-# create-koppajs
+<a id="readme-top"></a>
 
-`create-koppajs` is the official KoppaJS CLI scaffolder. It creates a new
-project by copying the versioned base starter in `template/`, optionally
-applying a supported starter overlay from `template-overlays/`, and patching a
-small, explicit set of identity files.
+<div align="center">
+  <img src="https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png" width="500" alt="KoppaJS Logo">
+</div>
+
+<br>
+
+<div align="center">
+  <a href="https://www.npmjs.com/package/create-koppajs"><img src="https://img.shields.io/npm/v/create-koppajs?style=flat-square" alt="npm version"></a>
+  <a href="https://github.com/koppajs/create-koppajs/actions"><img src="https://img.shields.io/github/actions/workflow/status/koppajs/create-koppajs/ci.yml?branch=main&style=flat-square" alt="CI Status"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue?style=flat-square" alt="License"></a>
+</div>
+
+<br>
+
+<div align="center">
+  <h1 align="center">create-koppajs</h1>
+  <h3 align="center">Official project scaffolder for KoppaJS</h3>
+  <p align="center">
+    <i>Generate a ready-to-run KoppaJS starter with the current quality baseline in one command.</i>
+  </p>
+</div>
+
+<br>
+
+<div align="center">
+  <p align="center">
+    <a href="https://github.com/koppajs/koppajs-documentation">Documentation</a>
+    &middot;
+    <a href="https://github.com/koppajs/koppajs-core">KoppaJS Core</a>
+    &middot;
+    <a href="https://github.com/koppajs/koppajs-vite-plugin">Vite Plugin</a>
+    &middot;
+    <a href="https://github.com/koppajs/koppajs-router">Router</a>
+    &middot;
+    <a href="https://github.com/koppajs/create-koppajs/issues">Issues</a>
+  </p>
+</div>
+
+<br>
+
+<details>
+<summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#purpose">Purpose</a></li>
+    <li><a href="#repository-classification">Repository Classification</a></li>
+    <li><a href="#ownership-boundaries">Ownership Boundaries</a></li>
+    <li><a href="#public-contract">Public Contract</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#generated-starters">Generated Starters</a></li>
+    <li><a href="#ecosystem-fit">Ecosystem Fit</a></li>
+    <li><a href="#architecture-governance">Architecture & Governance</a></li>
+    <li><a href="#community-contribution">Community & Contribution</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
+
+---
 
 ## Purpose
 
@@ -17,6 +71,8 @@ This repository exists to do one job well:
 It is not a runtime package and it does not own application behavior after
 generation.
 
+---
+
 ## Repository Classification
 
 - Repo type: CLI scaffolding package with a bundled starter family
@@ -26,6 +82,8 @@ generation.
   and validate tagged releases
 - UI surface: none at the repository root; the generated starter owns the UI
 - Maturity level: stable, contract-governed, maintenance-first
+
+---
 
 ## Ownership Boundaries
 
@@ -44,6 +102,8 @@ generation.
 The root package must not take on runtime concerns that belong in generated
 applications, and generated applications must not depend on unpublished root
 files after scaffold completion.
+
+---
 
 ## Public Contract
 
@@ -70,6 +130,8 @@ The governing specs for that contract are:
 
 - [docs/specs/cli-scaffolding.md](./docs/specs/cli-scaffolding.md)
 - [docs/specs/template-starter-contract.md](./docs/specs/template-starter-contract.md)
+
+---
 
 ## Usage
 
@@ -107,11 +169,14 @@ pnpm install
 pnpm dev
 ```
 
+---
+
 ## Requirements
 
-- for `create-koppajs`: Node.js `>=20`
-- for generated starter projects: pnpm `>=10` and a starter-supported Node.js
-  line, currently `20.19+`, `22.13+`, or `24+`
+- for `create-koppajs`: Node.js `>=22`
+- for generated starter projects: Node.js `>=22` and pnpm `>=10`
+
+---
 
 ## Generated Starters
 
@@ -133,6 +198,8 @@ The root repository treats those starters as versioned product surface, not
 test data. `template/` plus the supported overlays are the only source of truth
 for starter behavior.
 
+---
+
 ## Ecosystem Fit
 
 `create-koppajs` is the canonical entry point for starting a new KoppaJS
@@ -147,9 +214,11 @@ application. It complements:
 The repository stays intentionally narrow so the CLI, starter contract, and
 governance baseline can evolve together without hidden behavior.
 
-## Governance
+---
 
-The root meta layer defines how this repository changes:
+## Architecture & Governance
+
+Project intent, contributor rules, and documentation contracts live in the local repo meta layer:
 
 - [AI_CONSTITUTION.md](./AI_CONSTITUTION.md)
 - [ARCHITECTURE.md](./ARCHITECTURE.md)
@@ -158,12 +227,36 @@ The root meta layer defines how this repository changes:
 - [TESTING_STRATEGY.md](./TESTING_STRATEGY.md)
 - [RELEASE.md](./RELEASE.md)
 - [ROADMAP.md](./ROADMAP.md)
-- [docs/meta/README.md](./docs/meta/README.md)
+- [CHANGELOG.md](./CHANGELOG.md)
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- [docs/specs/README.md](./docs/specs/README.md)
+- [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md)
 - [docs/architecture/README.md](./docs/architecture/README.md)
+- [docs/meta/README.md](./docs/meta/README.md)
 - [docs/quality/README.md](./docs/quality/README.md)
 
-Tagged releases are documented in [CHANGELOG.md](./CHANGELOG.md). Contributor
-workflow rules live in [CONTRIBUTING.md](./CONTRIBUTING.md).
+The file-shape contract for `README.md`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, and `CONTRIBUTING.md` is defined in [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md).
+
+Run the local document guard before committing:
+
+```bash
+pnpm run check:docs
+```
+
+---
+
+## Community & Contribution
+
+Issues and pull requests are welcome:
+
+https://github.com/koppajs/create-koppajs/issues
+
+Contributor workflow details live in [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+Community expectations live in [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
+
+---
 
 ## License
 

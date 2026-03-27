@@ -17,7 +17,7 @@
   ],
   "packageManager": "pnpm@10.12.1",
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24.0.0",
+    "node": ">=22",
     "pnpm": ">=10"
   },
   "scripts": {
@@ -43,14 +43,14 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@koppajs/koppajs-core": "^3.0.3",
-    "@koppajs/koppajs-router": "^0.1.0"
+    "@koppajs/koppajs-core": "^3.0.7",
+    "@koppajs/koppajs-router": "^0.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^10.0.1",
-    "@koppajs/koppajs-vite-plugin": "^1.0.1",
+    "@koppajs/koppajs-vite-plugin": "^1.0.4",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.4.0",
     "@vitest/coverage-v8": "^4.0.18",

@@ -19,7 +19,9 @@ Use a lightweight quality model based on:
 - syntax validation of the shipped CLI entry
 - direct checks for `--help` and `--version`
 - a smoke test that scaffolds a project and validates critical outputs
-- CI execution on Node.js 20 and 22
+- a packed-package smoke test that installs the tarball and runs the shipped
+  CLI
+- CI execution on Node.js 22 and 24
 
 ## Consequences
 
@@ -28,6 +30,8 @@ Use a lightweight quality model based on:
   details.
 - The repository also protects against deleting its core governance docs by
   accident.
+- Published-package regressions are caught before release instead of relying
+  only on `npm pack --dry-run`.
 - Some edge cases may still require additional tests as the CLI grows.
 - Template buildability is not currently automated and must be reviewed when
   template risk increases.

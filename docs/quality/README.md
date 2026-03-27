@@ -12,10 +12,11 @@ It exists to keep three concerns explicit:
 
 ## Quality Model
 
-- Fast baseline: `npm run check`
-- Release baseline: `npm run release:check`
-- Template-sensitive validation: `npm run test:template-build` on a
-  starter-supported Node.js runtime
+- Fast baseline: `pnpm run check`
+- CI and release baseline: `pnpm run validate`
+- Packed CLI smoke validation: `pnpm run test:package`
+- Template-sensitive validation: `pnpm run test:template-build` on Node.js
+  `>=22`
 - Local workflow guards: Husky, lint-staged, and commitlint after
   `pnpm install`
 
