@@ -12,6 +12,14 @@ not every internal refactor.
 
 ## [Unreleased]
 
+_No unreleased changes yet._
+
+---
+
+## [1.2.2] — Node & Validation Baseline Alignment
+
+**2026-03-27**
+
 ### Changed
 
 - raised the repository and bundled starter minimum Node.js version to `>=22`
