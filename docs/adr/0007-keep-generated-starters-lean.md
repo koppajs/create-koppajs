@@ -24,8 +24,9 @@ Generated starters should stay focused on a runnable KoppaJS application:
 
 Generated starters must not include scaffolder governance files, GitHub
 workflows, Git hooks, commitlint or lint-staged setup, changelog or release
-files, ADR/spec documentation trees, pre-generated lockfiles, lint tooling,
-format tooling, test tooling, or starter tests.
+files, ADR/spec documentation trees, pre-generated lockfiles, default
+`.gitattributes`, `.gitignore`, `.npmrc` files, lint tooling, format tooling,
+test tooling, or starter tests.
 
 The CLI patches only generated `package.json` and `README.md`.
 
@@ -35,6 +36,8 @@ The CLI patches only generated `package.json` and `README.md`.
 - The generated file tree is easier to inspect and maintain.
 - Applications can add their own CI, release, hook, and governance systems when
   they need them.
+- Applications can add their own Git ignore, attributes, and npm engine policy
+  when they need them.
 - Template build validation now installs without a checked-in starter lockfile
   and validates `pnpm build`.
 
