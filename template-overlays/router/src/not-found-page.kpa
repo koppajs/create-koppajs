@@ -1,69 +1,37 @@
 [template]
-  <section class="page-card page-card--missing">
-    <p class="section-label">404</p>
-    <h2 class="page-title">Page not found</h2>
-    <p class="page-text">
-      The router starter includes an explicit catch-all route, so unmatched URLs
-      still render a predictable fallback page instead of failing silently.
-    </p>
-
-    <div class="page-actions">
-      <a data-route="/" href="/" class="page-link">Return home</a>
-    </div>
+  <section class="page">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p>The router fallback route rendered this page for an unknown URL.</p>
+    <a data-route="/" href="/" class="page-link">Return home</a>
   </section>
 [/template]
 
 [css]
-  .page-card {
-    display: flex;
-    flex-direction: column;
+  .page {
+    display: grid;
     gap: 1rem;
-    padding: 1.5rem;
-    border: 1px solid rgba(248, 113, 113, 0.24);
-    border-radius: 1.75rem;
-    background: linear-gradient(180deg, rgba(61, 12, 22, 0.5), rgba(11, 22, 40, 0.88));
-    box-shadow: var(--shadow);
   }
 
-  .section-label {
-    color: #fda4af;
+  .eyebrow {
+    color: var(--accent);
     font-size: 0.8rem;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
   }
 
-  .page-title {
-    font-size: clamp(1.7rem, 3vw, 2.5rem);
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.1;
   }
 
-  .page-text {
-    color: #fecdd3;
+  p {
+    color: var(--muted);
     line-height: 1.7;
-    max-width: 58ch;
-  }
-
-  .page-actions {
-    display: flex;
   }
 
   .page-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.8rem;
-    padding: 0 1.25rem;
-    border-radius: 999px;
-    background: rgba(253, 164, 175, 0.12);
-    border: 1px solid rgba(253, 164, 175, 0.4);
-    color: #fff1f2;
-    text-decoration: none;
-  }
-
-  @media (max-width: 640px) {
-    .page-card {
-      padding: 1.15rem;
-      border-radius: 1.25rem;
-    }
+    width: fit-content;
+    color: var(--accent);
   }
 [/css]

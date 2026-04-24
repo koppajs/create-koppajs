@@ -10,17 +10,10 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts",
-    "playwright.config.ts",
-    "vite.config.d.mts"
-  ],
+  "include": ["src/**/*.ts"],
   "exclude": [
     "coverage",
     "dist",
-    "node_modules",
-    "playwright-report",
-    "test-results"
+    "node_modules"
   ]
 }

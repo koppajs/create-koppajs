@@ -1,9 +1,6 @@
 node_modules
-coverage
 dist
 .ai
-playwright-report
-test-results
 pnpm-debug.log*
 *.log
 *.local

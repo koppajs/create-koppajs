@@ -36,8 +36,8 @@ Current tools:
 - the full CI and release gate via `pnpm run validate`
 
 This applies to the repository root only. The generated starter intentionally
-ships a richer frontend-oriented toolchain defined directly by the starter
-template contract in `template/` and `template-overlays/`.
+ships only the frontend runtime and build toolchain defined directly by the
+starter template contract in `template/` and `template-overlays/`.
 
 ### Git hooks and commit policy
 

@@ -18,7 +18,7 @@
   <h1 align="center">create-koppajs</h1>
   <h3 align="center">Official project scaffolder for KoppaJS</h3>
   <p align="center">
-    <i>Generate a ready-to-run KoppaJS starter with the current quality baseline in one command.</i>
+    <i>Generate a ready-to-run KoppaJS starter in one command.</i>
   </p>
 </div>
 
@@ -118,9 +118,8 @@ The stable public contract of this repository is:
   target directories
 - recursive copying of the bundled `template/` directory plus any selected
   overlay
-- restoration of publish-safe dotfiles and dotdirectories during copy
-- patching of generated `package.json`, `README.md`, `CHANGELOG.md`, and
-  `RELEASE.md`
+- restoration of publish-safe dotfiles during copy
+- patching of generated `package.json` and `README.md`
 - the generated starter baselines defined by `template/` and
   `template-overlays/`
 - the npm package payload: `bin/`, `template/`, `template-overlays/`,
@@ -173,8 +172,8 @@ pnpm dev
 
 ## Requirements
 
-- for `create-koppajs`: Node.js `>=22`
-- for generated starter projects: Node.js `>=22` and pnpm `>=10`
+- for `create-koppajs`: Node.js `>=22.12.0` and pnpm `>=10.24.0`
+- for generated starter projects: Node.js `>=22.12.0` and pnpm `>=10.24.0`
 
 ---
 
@@ -189,10 +188,13 @@ The generated project includes one of two supported starters:
 
 Every starter also includes:
 
-- quality tooling through ESLint, Prettier, Vitest, and Playwright
-- local workflow guards through Husky, lint-staged, and commitlint
-- starter governance files, ADR/spec structure, and release-process documents
-- GitHub workflows for CI and tagged releases
+- a focused README with setup, scripts, and project structure
+
+The generated project intentionally excludes repository governance files,
+release automation, GitHub workflows, Git hooks, changelog files, lockfiles,
+and lint/format/test tooling. Those files belong to this scaffolder repository
+or to project-specific app decisions, not to every new application created from
+it.
 
 The root repository treats those starters as versioned product surface, not
 test data. `template/` plus the supported overlays are the only source of truth

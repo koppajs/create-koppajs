@@ -1,17 +1,14 @@
 [template]
-  <section class="page-card">
+  <section class="page">
     <div class="page-copy">
-      <p class="section-label">Home route</p>
-      <h2 class="page-title">A small starter, now with real navigation</h2>
-      <p class="page-text">
-        The home page keeps the original interactive counter so the starter still
-        shows local state, while the navigation above now switches routes through
-        the published KoppaJS router.
+      <p class="eyebrow">Home route</p>
+      <h1>KoppaJS router starter</h1>
+      <p>
+        This page is rendered for <code>/</code>. The counter stays here so the
+        starter shows component state and route rendering in the same small app.
       </p>
 
-      <div class="page-actions">
-        <a data-route="/router" href="/router" class="page-link">Open the second page</a>
-      </div>
+      <a data-route="/router" href="/router" class="page-link">Open router page</a>
     </div>
 
     <counter-component></counter-component>
@@ -19,82 +16,48 @@
 [/template]
 
 [css]
-  .page-card {
+  .page {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) auto;
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2rem;
     align-items: start;
-    padding: 1.5rem;
-    border: 1px solid var(--border);
-    border-radius: 1.75rem;
-    background: var(--surface);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(18px);
   }
 
   .page-copy {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 1rem;
   }
 
-  .section-label {
+  .eyebrow {
     color: var(--accent);
     font-size: 0.8rem;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
   }
 
-  .page-title {
-    font-size: clamp(1.7rem, 3vw, 2.7rem);
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.1;
   }
 
-  .page-text {
+  p {
+    max-width: 58ch;
     color: var(--muted);
     line-height: 1.7;
-    max-width: 54ch;
   }
 
-  .page-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
+  code {
+    color: var(--accent);
   }
 
   .page-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.8rem;
-    padding: 0 1.25rem;
-    border-radius: 999px;
-    background: rgba(100, 220, 232, 0.1);
-    border: 1px solid rgba(100, 220, 232, 0.3);
-    color: var(--accent-strong);
-    text-decoration: none;
-    transition: background 0.25s ease, transform 0.15s ease;
+    width: fit-content;
+    color: var(--accent);
   }
 
-  .page-link:hover {
-    background: rgba(100, 220, 232, 0.18);
-  }
-
-  .page-link:active {
-    transform: translateY(1px);
-  }
-
-  @media (max-width: 840px) {
-    .page-card {
+  @media (max-width: 760px) {
+    .page {
       grid-template-columns: 1fr;
-      justify-items: start;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .page-card {
-      padding: 1.15rem;
-      border-radius: 1.25rem;
     }
   }
 [/css]

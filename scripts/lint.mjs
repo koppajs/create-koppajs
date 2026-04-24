@@ -26,11 +26,7 @@ const files = [
   join(ROOT, "commitlint.config.mjs"),
   join(ROOT, "lint-staged.config.mjs"),
   ...collectFiles(join(ROOT, "scripts")),
-  join(ROOT, "template", "commitlint.config.mjs"),
-  join(ROOT, "template", "eslint.config.mjs"),
-  join(ROOT, "template", "prettier.config.mjs"),
   join(ROOT, "template", "vite.config.mjs"),
-  join(ROOT, "template", "vitest.config.mjs"),
   ...collectFiles(join(ROOT, "test")),
 ];
 

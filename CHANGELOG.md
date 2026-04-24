@@ -16,6 +16,43 @@ _No unreleased changes yet._
 
 ---
 
+## [1.2.3] — Lean Starter Maintenance
+
+**2026-04-24**
+
+Patch release to keep generated projects focused on runnable KoppaJS app code.
+This is a maintainer-approved patch exception to the versioning policy because
+the CLI invocation contract stays unchanged while the generated starter tree is
+intentionally reduced.
+
+### Changed
+
+- trimmed generated starters to app source, README, and Vite/TypeScript build
+  files
+- switched generated starter views from the remote KoppaJS logo URL to a local
+  `public/koppajs-logo.png` asset
+- switched generated starter favicon output from `public/favicon.svg` to
+  `public/favicon.png`
+- stopped patching generated `CHANGELOG.md` and `RELEASE.md`; those files are
+  no longer included in new apps
+- refreshed the compatible generated-starter toolchain to `vite@7.3.2` and
+  `@types/node@25.6.0` while keeping `typescript@5.9.3` within the current
+  `@koppajs/koppajs-vite-plugin` peer range
+- raised repository and generated-starter pnpm metadata to `pnpm@10.33.2`,
+  with a declared minimum of `>=10.24.0`
+- raised repository and generated-starter Node.js metadata to `>=22.12.0`
+
+### Removed
+
+- removed governance, ADR/spec docs, GitHub workflows, Husky hooks, commitlint,
+  lint-staged, release files, changelog files, license files, and starter
+  lockfiles from generated projects
+- removed generated-starter lint, format, and test tooling, including ESLint,
+  Prettier, Vitest, Playwright, their configs, scripts, dependencies, and test
+  files
+
+---
+
 ## [1.2.2] — Node & Validation Baseline Alignment
 
 **2026-03-27**

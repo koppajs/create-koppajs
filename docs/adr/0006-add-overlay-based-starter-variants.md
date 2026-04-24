@@ -12,8 +12,8 @@ some users want a minimal KoppaJS app, while others want a small baseline that
 already demonstrates routing.
 
 Duplicating the full starter tree for each variant would increase maintenance
-cost and make it easier for the variants to drift apart in quality tooling,
-governance files, and release baseline details.
+cost and make it easier for the variants to drift apart in app code and starter
+behavior.
 
 ## Decision
 
@@ -33,8 +33,8 @@ The CLI now:
 
 - The minimal starter remains the default and stays easy to audit.
 - New starters can reuse the shared baseline instead of copying the whole tree.
-- Variant-specific docs and tests can still override the files that genuinely
-  differ.
+- Variant-specific README and source files can still override the files that
+  genuinely differ.
 - The CLI contract becomes slightly broader and needs stronger contract tests.
 
 ## Alternatives considered

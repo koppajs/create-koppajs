@@ -60,11 +60,11 @@ Before cutting a release, ensure all of the following are true:
 
 Tooling expectations for local verification:
 
-- Node.js 22 or newer for the root repository checks
-- pnpm 10 or newer
+- Node.js 22.12.0 or newer for the root repository checks
+- pnpm 10.24.0 or newer
 
-For `pnpm test:template-build` and `pnpm release:check`, use Node.js 22 or
-newer.
+For `pnpm test:template-build` and `pnpm release:check`, use Node.js 22.12.0
+or newer.
 
 This repository enforces `engine-strict=true` in `.npmrc`, so incompatible
 Node.js or pnpm versions should be treated as a release blocker.
@@ -84,13 +84,13 @@ pnpm validate
 ```
 
 `pnpm validate` runs the repository quality gate, verifies that the generated
-starter still passes its bundled quality baseline, and checks that the packed
-CLI tarball still scaffolds correctly.
+starter still installs and builds, and checks that the packed CLI tarball still
+scaffolds correctly.
 
 `pnpm release:check` remains available as an alias for `pnpm validate`.
 
-If the local runtime is older than Node.js 22, switch to a supported version
-before trusting release validation.
+If the local runtime is older than Node.js 22.12.0, switch to a supported
+version before trusting release validation.
 
 ---
 

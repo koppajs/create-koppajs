@@ -16,7 +16,7 @@ It exists to keep three concerns explicit:
 - CI and release baseline: `pnpm run validate`
 - Packed CLI smoke validation: `pnpm run test:package`
 - Template-sensitive validation: `pnpm run test:template-build` on Node.js
-  `>=22`
+  `>=22.12.0`
 - Local workflow guards: Husky, lint-staged, and commitlint after
   `pnpm install`
 

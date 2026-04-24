@@ -1,6 +1,6 @@
 {
   "name": "create-koppajs",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": false,
   "type": "module",
   "description": "Scaffold a new KoppaJS project in seconds.",
@@ -15,10 +15,10 @@
     "README.md",
     "LICENSE"
   ],
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.33.2",
   "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
+    "node": ">=22.12.0",
+    "pnpm": ">=10.24.0"
   },
   "scripts": {
     "check:meta": "node scripts/check-meta-layer.mjs",

@@ -37,10 +37,6 @@ Files:
 
 - `template/package.json`
 - `template/index.html`
-- `template/_github/*`
-- `template/_husky/*`
-- `template/docs/*`
-- `template/tests/*`
 - `template/src/*`
 - `template-overlays/*`
 - `template/vite.config.mjs`
@@ -96,7 +92,7 @@ The following boundaries matter most for maintenance:
 
 - CLI interface boundary: flags, arguments, prompts, exit conditions
 - Template boundary: generated file names, overlay behavior, placeholder
-  patching, starter deps, and starter governance files
+  patching, starter deps, and excluded repository artifacts
 - Release boundary: tag version must match `package.json`
 - Commit-policy boundary: local hook behavior must match documented
   Conventional Commit rules

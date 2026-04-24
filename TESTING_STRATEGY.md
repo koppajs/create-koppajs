@@ -63,11 +63,11 @@ Purpose:
 
 - scaffold a real starter project
 - install the generated application's dependencies
-- confirm the generated app passes its own `pnpm check` baseline
+- confirm the generated app passes its own `pnpm build` baseline
 
 Runtime note:
 
-- this validation must run on Node.js 22 or newer
+- this validation must run on Node.js 22.12.0 or newer
 
 This is heavier than the default local check because it relies on registry
 access. It is therefore available locally and enforced in CI/release, but kept
