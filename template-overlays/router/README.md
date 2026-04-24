@@ -36,9 +36,6 @@ The route table contains:
 
 ```text
 __PROJECT_NAME__/
-├── .gitattributes
-├── .gitignore
-├── .npmrc
 ├── README.md
 ├── index.html
 ├── package.json

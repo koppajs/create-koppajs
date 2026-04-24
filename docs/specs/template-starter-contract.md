@@ -58,14 +58,13 @@ KoppaJS starter that:
   GitHub workflow, Git hook, changelog, release-note, or lockfile artifacts.
 - The starter must not include ESLint, Prettier, Vitest, Playwright, lint
   scripts, format scripts, test scripts, or generated starter tests.
+- The starter must not include default `.gitattributes`, `.gitignore`, or
+  `.npmrc` files.
 - The starter must remain compatible with its declared Node.js and pnpm engine
   constraints.
 
 ## Edge Cases
 
-- Publish-safe entries such as `_gitignore`, `_gitattributes`, and `_npmrc`
-  are stored with leading underscores in `template/` and restored by the CLI
-  during scaffolding.
 - Supported starter overlays may replace only the files that intentionally
   differ from the base starter.
 - Only files that intentionally contain `__PROJECT_NAME__` may rely on the CLI
@@ -82,7 +81,8 @@ KoppaJS starter that:
 3. The scaffolded project omits repository governance, workflows, hooks,
    release files, and lockfiles while remaining self-contained after
    generation.
-4. The scaffolded project restores publish-safe dotfiles to their final names.
+4. The scaffolded project omits default `.gitattributes`, `.gitignore`, and
+   `.npmrc` files.
 5. The scaffolded project defines `pnpm build`, `pnpm typecheck`, and
    `pnpm serve` workflows.
 6. The scaffolded project passes its own `pnpm build` baseline on Node.js

@@ -16,6 +16,26 @@ _No unreleased changes yet._
 
 ---
 
+## [1.2.4] — Starter Dotfile Removal
+
+**2026-04-24**
+
+Patch release to remove the last generated dotfile defaults from new apps.
+
+### Removed
+
+- removed generated `.gitattributes`, `.gitignore`, and `.npmrc` files from
+  generated minimal and router starters
+- removed the remaining CLI copy-time dotfile rename behavior because the
+  generated starter no longer ships underscore-prefixed dotfile placeholders
+
+### Changed
+
+- updated pnpm usage examples to `pnpm create koppajs@latest` so users bypass
+  stale pnpm create/dlx cache entries after a new release
+
+---
+
 ## [1.2.3] — Lean Starter Maintenance
 
 **2026-04-24**

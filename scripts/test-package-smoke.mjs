@@ -121,7 +121,9 @@ function verifyProject(projectDir, projectName) {
   assert(pkg.devDependencies?.vitest === undefined, "Packed starter should not depend on Vitest.");
   assert(pkg.devDependencies?.["@playwright/test"] === undefined, "Packed starter should not depend on Playwright.");
   assert(readme.includes(projectName), "Packed starter README was not patched.");
-  assert(existsSync(join(projectDir, ".gitignore")), "Packed starter is missing restored dotfiles.");
+  assert(!existsSync(join(projectDir, ".gitignore")), "Packed starter should not ship .gitignore.");
+  assert(!existsSync(join(projectDir, ".gitattributes")), "Packed starter should not ship .gitattributes.");
+  assert(!existsSync(join(projectDir, ".npmrc")), "Packed starter should not ship .npmrc.");
   assert(existsSync(join(projectDir, "public", "favicon.png")), "Packed starter is missing PNG favicon.");
   assert(!existsSync(join(projectDir, "public", "favicon.svg")), "Packed starter should not ship SVG favicon.");
   assert(existsSync(join(projectDir, "public", "koppajs-logo.png")), "Packed starter is missing local logo asset.");

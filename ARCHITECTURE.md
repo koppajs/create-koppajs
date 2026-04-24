@@ -41,8 +41,6 @@ Owns the full scaffolding workflow:
 - ensure the target directory is safe to use
 - copy the base template recursively
 - apply the selected overlay recursively when needed
-- rename publish-safe files such as `_gitignore` -> `.gitignore`,
-  `_gitattributes` -> `.gitattributes`, and `_npmrc` -> `.npmrc`
 - patch the generated `package.json` and `README.md`
 - print next-step instructions
 
@@ -183,13 +181,13 @@ after scaffolding.
 
 - The npm package must include `bin/`, `template/`, `template-overlays/`,
   `CHANGELOG.md`, `README.md`, and `LICENSE`.
-- publish-safe template entries such as `_gitignore`, `_gitattributes`, and
-  `_npmrc` must remain renamed during copy.
 - `template/README.md` must contain `__PROJECT_NAME__` if the generated docs
   are expected to include the new project name.
 - Generated starters must not ship root governance docs, release automation,
   Git hooks, GitHub workflows, changelog files, release notes, or lockfiles by
   default.
+- Generated starters must not ship default `.gitattributes`, `.gitignore`, or
+  `.npmrc` files by default.
 - Generated starters must not ship lint, format, or test tooling by default.
 - Scaffolding must not modify files outside the chosen target directory.
 - The root package remains usable with Node.js 22.12.0+.

@@ -103,7 +103,7 @@ export function printHelp() {
   Scaffold a new KoppaJS project.
 
   Usage:
-    pnpm create koppajs [project-name]
+    pnpm create koppajs@latest [project-name]
     npm create koppajs [project-name]
     npx create-koppajs [project-name]
 
@@ -114,8 +114,8 @@ export function printHelp() {
     --router                  Shortcut for --template router
 
   Example:
-    pnpm create koppajs my-app
-    pnpm create koppajs my-app --template router
+    pnpm create koppajs@latest my-app
+    pnpm create koppajs@latest my-app --template router
 `);
 }
 
@@ -203,13 +203,7 @@ export function ensureTargetDir(targetPath) {
 
 // ── Copy ────────────────────────────────────────────────────────────
 
-// npm excludes .gitignore from published packages — ship as _gitignore
-// and rename during scaffolding (same approach as create-vite).
-const RENAME_FILES = {
-  _gitattributes: ".gitattributes",
-  _gitignore: ".gitignore",
-  _npmrc: ".npmrc",
-};
+const RENAME_FILES = {};
 
 export function copyDirRecursive(src, dest) {
   mkdirSync(dest, { recursive: true });

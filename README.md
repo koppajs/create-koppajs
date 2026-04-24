@@ -118,7 +118,6 @@ The stable public contract of this repository is:
   target directories
 - recursive copying of the bundled `template/` directory plus any selected
   overlay
-- restoration of publish-safe dotfiles during copy
 - patching of generated `package.json` and `README.md`
 - the generated starter baselines defined by `template/` and
   `template-overlays/`
@@ -137,13 +136,13 @@ The governing specs for that contract are:
 Default starter:
 
 ```bash
-pnpm create koppajs my-app
+pnpm create koppajs@latest my-app
 ```
 
 Router starter:
 
 ```bash
-pnpm create koppajs my-app --template router
+pnpm create koppajs@latest my-app --template router
 ```
 
 Alternative entrypoints:
@@ -192,9 +191,9 @@ Every starter also includes:
 
 The generated project intentionally excludes repository governance files,
 release automation, GitHub workflows, Git hooks, changelog files, lockfiles,
-and lint/format/test tooling. Those files belong to this scaffolder repository
-or to project-specific app decisions, not to every new application created from
-it.
+default dotfiles, and lint/format/test tooling. Those files belong to this
+scaffolder repository or to project-specific app decisions, not to every new
+application created from it.
 
 The root repository treats those starters as versioned product surface, not
 test data. `template/` plus the supported overlays are the only source of truth

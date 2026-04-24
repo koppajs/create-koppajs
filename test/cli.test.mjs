@@ -122,13 +122,13 @@ test("copyStarterTemplate scaffolds the default starter and patch helpers update
 
   copyStarterTemplate(DEFAULT_TEMPLATE, target);
 
-  assert.equal(existsSync(join(target, ".gitignore")), true);
+  assert.equal(existsSync(join(target, ".gitignore")), false);
   assert.equal(existsSync(join(target, "_gitignore")), false);
-  assert.equal(existsSync(join(target, ".gitattributes")), true);
+  assert.equal(existsSync(join(target, ".gitattributes")), false);
   assert.equal(existsSync(join(target, ".editorconfig")), false);
   assert.equal(existsSync(join(target, ".github")), false);
   assert.equal(existsSync(join(target, ".husky")), false);
-  assert.equal(existsSync(join(target, ".npmrc")), true);
+  assert.equal(existsSync(join(target, ".npmrc")), false);
   assert.equal(existsSync(join(target, ".prettierignore")), false);
   assert.equal(existsSync(join(target, "public", "koppajs-logo.png")), true);
 
