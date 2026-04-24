@@ -11,9 +11,7 @@ import {
   ensureTargetDir,
   parseArgs,
   patchPackageJson,
-  patchChangelog,
   patchReadme,
-  patchReleaseNotes,
   validateProjectName,
   validateStarterTemplate,
 } from "../bin/create-koppajs.js";
@@ -126,29 +124,47 @@ test("copyStarterTemplate scaffolds the default starter and patch helpers update
 
   assert.equal(existsSync(join(target, ".gitignore")), true);
   assert.equal(existsSync(join(target, "_gitignore")), false);
-  assert.equal(existsSync(join(target, ".editorconfig")), true);
-  assert.equal(existsSync(join(target, ".github")), true);
-  assert.equal(existsSync(join(target, ".husky")), true);
+  assert.equal(existsSync(join(target, ".gitattributes")), true);
+  assert.equal(existsSync(join(target, ".editorconfig")), false);
+  assert.equal(existsSync(join(target, ".github")), false);
+  assert.equal(existsSync(join(target, ".husky")), false);
   assert.equal(existsSync(join(target, ".npmrc")), true);
-  assert.equal(existsSync(join(target, ".prettierignore")), true);
+  assert.equal(existsSync(join(target, ".prettierignore")), false);
+  assert.equal(existsSync(join(target, "public", "koppajs-logo.png")), true);
 
   patchPackageJson(target, "generated-project");
   patchReadme(target, "generated-project");
-  patchChangelog(target, "generated-project");
-  patchReleaseNotes(target, "generated-project");
 
   const pkg = JSON.parse(readFileSync(join(target, "package.json"), "utf-8"));
   const readme = readFileSync(join(target, "README.md"), "utf-8");
-  const changelog = readFileSync(join(target, "CHANGELOG.md"), "utf-8");
-  const release = readFileSync(join(target, "RELEASE.md"), "utf-8");
 
   assert.equal(pkg.name, "generated-project");
-  assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "^3.0.7");
-  assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "^1.0.4");
+  assert.equal(pkg.packageManager, "pnpm@10.33.2");
+  assert.equal(pkg.engines.node, ">=22.12.0");
+  assert.equal(pkg.engines.pnpm, ">=10.24.0");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "3.0.7");
+  assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "1.0.4");
+  assert.equal(pkg.devDependencies["@types/node"], "25.6.0");
+  assert.equal(pkg.devDependencies.typescript, "5.9.3");
+  assert.equal(pkg.devDependencies.vite, "7.3.2");
+  assert.equal(pkg.devDependencies.eslint, undefined);
+  assert.equal(pkg.devDependencies.prettier, undefined);
+  assert.equal(pkg.devDependencies.vitest, undefined);
+  assert.equal(pkg.devDependencies["@playwright/test"], undefined);
+  assert.equal(pkg.scripts.lint, undefined);
+  assert.equal(pkg.scripts.format, undefined);
+  assert.equal(pkg.scripts.test, undefined);
   assert.match(readme, /generated-project/);
   assert.doesNotMatch(readme, /__PROJECT_NAME__/);
-  assert.match(changelog, /generated-project/);
-  assert.match(release, /generated-project/);
+  assert.equal(existsSync(join(target, "eslint.config.mjs")), false);
+  assert.equal(existsSync(join(target, "prettier.config.mjs")), false);
+  assert.equal(existsSync(join(target, "vitest.config.mjs")), false);
+  assert.equal(existsSync(join(target, "playwright.config.ts")), false);
+  assert.equal(existsSync(join(target, "tests")), false);
+  assert.equal(existsSync(join(target, "CHANGELOG.md")), false);
+  assert.equal(existsSync(join(target, "RELEASE.md")), false);
+  assert.equal(existsSync(join(target, "AI_CONSTITUTION.md")), false);
+  assert.equal(existsSync(join(target, "docs")), false);
 });
 
 test("copyStarterTemplate applies the router overlay when requested", (t) => {
@@ -159,18 +175,25 @@ test("copyStarterTemplate applies the router overlay when requested", (t) => {
 
   patchPackageJson(target, "router-project");
   patchReadme(target, "router-project");
-  patchChangelog(target, "router-project");
-  patchReleaseNotes(target, "router-project");
 
   const pkg = JSON.parse(readFileSync(join(target, "package.json"), "utf-8"));
   const readme = readFileSync(join(target, "README.md"), "utf-8");
 
   assert.equal(pkg.name, "router-project");
-  assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "^3.0.7");
-  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "^0.1.2");
-  assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "^1.0.4");
+  assert.equal(pkg.packageManager, "pnpm@10.33.2");
+  assert.equal(pkg.engines.node, ">=22.12.0");
+  assert.equal(pkg.engines.pnpm, ">=10.24.0");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "3.0.7");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "0.1.2");
+  assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "1.0.4");
+  assert.equal(pkg.devDependencies["@types/node"], "25.6.0");
+  assert.equal(pkg.devDependencies.typescript, "5.9.3");
+  assert.equal(pkg.devDependencies.vite, "7.3.2");
   assert.equal(existsSync(join(target, "src", "router-page.kpa")), true);
-  assert.equal(existsSync(join(target, "docs", "specs", "router-navigation.md")), true);
+  assert.equal(existsSync(join(target, "docs")), false);
+  assert.equal(existsSync(join(target, "tests")), false);
+  assert.equal(existsSync(join(target, "eslint.config.mjs")), false);
+  assert.equal(existsSync(join(target, "vitest.config.mjs")), false);
   assert.match(readme, /router starter project/i);
   assert.equal(existsSync(join(TEMPLATE_DIR, "src", "router-page.kpa")), false);
 });

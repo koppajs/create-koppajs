@@ -27,9 +27,8 @@ The CLI must:
 8. refuse to scaffold into a non-empty target directory
 9. copy the bundled base template into the target directory
 10. apply the selected starter overlay on top of the base template when needed
-11. restore publish-safe dotfiles and dotdirectories during copy
-12. patch the generated `package.json`, `README.md`, `CHANGELOG.md`, and
-   `RELEASE.md`
+11. restore publish-safe dotfiles during copy
+12. patch the generated `package.json` and `README.md`
 13. print next steps and exit successfully when scaffolding completes
 
 ## Inputs
@@ -54,7 +53,7 @@ The CLI must:
 
 ## Constraints
 
-- The CLI must support Node.js 22+.
+- The CLI must support Node.js 22.12.0+.
 - The CLI must not require network access.
 - The CLI must refuse empty project names.
 - The CLI must reject unknown starter template names.
@@ -65,15 +64,15 @@ The CLI must:
 - The base template must be copied recursively from `template/`.
 - Supported starter overlays must be copied recursively from
   `template-overlays/<name>/`.
-- publish-safe template entries such as `_gitignore`, `_github`, `_husky`,
-  `_editorconfig`, `_npmrc`, and `_prettierignore` must be restored to their
-  dot-prefixed names in the generated project.
+- publish-safe template entries such as `_gitignore`, `_gitattributes`, and
+  `_npmrc` must be restored to their dot-prefixed names in the generated
+  project.
 - The default starter template is `minimal`.
 - The generated `package.json` `name` must equal the selected project name.
 - The generated `README.md` must replace `__PROJECT_NAME__` with the selected
   project name.
-- The generated `CHANGELOG.md` and `RELEASE.md` must replace `__PROJECT_NAME__`
-  with the selected project name.
+- The generated starter must not include scaffolder governance, release,
+  workflow, hook, lockfile, lint, format, or test artifacts by default.
 
 ## Edge Cases
 
@@ -90,14 +89,13 @@ The CLI must:
 1. `create-koppajs my-app` creates a `my-app/` directory with the full default
    `minimal` starter file set.
 2. The generated `package.json` contains `"name": "my-app"`.
-3. The generated `README.md`, `CHANGELOG.md`, and `RELEASE.md` replace
-   `__PROJECT_NAME__` with `my-app`.
+3. The generated `README.md` replaces `__PROJECT_NAME__` with `my-app`.
 4. Publish-safe starter files and folders are restored to their dot-prefixed
    names after scaffolding.
 5. `create-koppajs my-app --template router` creates the router starter file
    set, including the router dependency and route files.
-6. The generated starter includes its quality, test, workflow, and meta-layer
-   baseline.
+6. The generated starter includes its runtime and build baseline without
+   repository governance, release automation, lint, format, or test files.
 7. Scaffolding into an existing empty directory succeeds.
 8. Representative invalid project names and invalid template selections are
    rejected.

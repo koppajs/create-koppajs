@@ -42,9 +42,8 @@ Owns the full scaffolding workflow:
 - copy the base template recursively
 - apply the selected overlay recursively when needed
 - rename publish-safe files such as `_gitignore` -> `.gitignore`,
-  `_github` -> `.github`, and `_husky` -> `.husky`
-- patch the generated `package.json`, `README.md`, `CHANGELOG.md`, and
-  `RELEASE.md`
+  `_gitattributes` -> `.gitattributes`, and `_npmrc` -> `.npmrc`
+- patch the generated `package.json` and `README.md`
 - print next-step instructions
 
 ### `template/`
@@ -59,9 +58,9 @@ Current base characteristics:
 - Depends on `@koppajs/koppajs-core`
 - Uses `@koppajs/koppajs-vite-plugin`
 - Ships a minimal sample app with `.kpa` component files
-- Defines the starter quality baseline directly with ESLint, Prettier, Vitest,
-  Playwright, Husky, lint-staged, and commitlint
-- Includes a starter meta layer, ADR/spec structure, and release documentation
+- Defines only the scripts needed to run, build, typecheck, and preview the app
+- Excludes root governance docs, release automation, Git hooks, GitHub
+  workflows, changelog files, lockfiles, and lint/format/test tooling
 
 ### `template-overlays/`
 
@@ -71,8 +70,8 @@ the matching starter is selected.
 Current overlay characteristics:
 
 - `router/` adds `@koppajs/koppajs-router`
-- overrides only the runtime, docs, tests, and lockfile files that differ from
-  the minimal baseline
+- overrides only the runtime, README, and package files that differ from the
+  minimal baseline
 - keeps unchanged files inherited from the base template so variant maintenance
   stays bounded
 
@@ -104,16 +103,15 @@ Contains repository-quality utilities in addition to smoke tests:
 - `run-unit-tests.mjs` runs Node.js built-in unit tests in a platform-robust
   way
 - `template-build-test.mjs` scaffolds each supported starter, installs
-  dependencies, and runs the generated project's own `pnpm check` baseline on
+  dependencies, and runs the generated project's own `pnpm build` baseline on
   Node.js `>=22`
 - `clean.mjs` removes temporary smoke, coverage, and package artifacts
 
 ### `lint-staged.config.mjs`
 
 Defines the root repository's staged-file checks. This config intentionally
-stays separate from the generated starter's own `lint-staged` configuration so
-commits in the root repository do not accidentally execute template-local
-frontend tooling.
+stays root-local so generated starters do not inherit this repository's commit
+workflow.
 
 ### `.github/workflows/`
 
@@ -162,11 +160,9 @@ The repository has four contract-bearing surfaces:
 8. The base template is copied recursively into the target directory.
 9. If the selected starter has an overlay, that overlay is copied on top of the
    base template.
-10. Four post-copy mutations occur:
+10. Two post-copy mutations occur:
    - `package.json` gets the requested project name
    - `README.md` replaces `__PROJECT_NAME__`
-   - `CHANGELOG.md` replaces `__PROJECT_NAME__`
-   - `RELEASE.md` replaces `__PROJECT_NAME__`
 11. The CLI prints next steps and exits successfully.
 
 ## Data And Dependency Flow
@@ -187,14 +183,16 @@ after scaffolding.
 
 - The npm package must include `bin/`, `template/`, `template-overlays/`,
   `CHANGELOG.md`, `README.md`, and `LICENSE`.
-- publish-safe template entries such as `_gitignore`, `_github`, `_husky`,
-  `_editorconfig`, `_npmrc`, and `_prettierignore` must remain renamed during
-  copy.
-- `template/README.md`, `template/CHANGELOG.md`, and `template/RELEASE.md`
-  must contain `__PROJECT_NAME__` if the generated docs are expected to include
-  the new project name.
+- publish-safe template entries such as `_gitignore`, `_gitattributes`, and
+  `_npmrc` must remain renamed during copy.
+- `template/README.md` must contain `__PROJECT_NAME__` if the generated docs
+  are expected to include the new project name.
+- Generated starters must not ship root governance docs, release automation,
+  Git hooks, GitHub workflows, changelog files, release notes, or lockfiles by
+  default.
+- Generated starters must not ship lint, format, or test tooling by default.
 - Scaffolding must not modify files outside the chosen target directory.
-- The root package remains usable with Node.js 22+.
+- The root package remains usable with Node.js 22.12.0+.
 - The CLI must work without network access.
 - Starter structure changes are user-visible and require spec/changelog review.
 

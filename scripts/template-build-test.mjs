@@ -11,7 +11,7 @@ const ROOT = join(__dirname, "..");
 const CLI = join(ROOT, "bin", "create-koppajs.js");
 const TMP = mkdtempSync(join(tmpdir(), "create-koppajs-template-"));
 const PNPM_BIN = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
-const TEMPLATE_NODE_REQUIREMENT = ">=22";
+const TEMPLATE_NODE_REQUIREMENT = ">=22.12.0";
 const STARTER_VARIANTS = [
   {
     label: "minimal",
@@ -36,8 +36,8 @@ function getNodeVersionParts(version = process.versions.node) {
 }
 
 function supportsTemplateToolchain(versionParts) {
-  const { major } = versionParts;
-  return major >= 22;
+  const { major, minor } = versionParts;
+  return major > 22 || (major === 22 && minor >= 12);
 }
 
 function cleanup() {
@@ -56,13 +56,13 @@ function validateGeneratedProject(projectName, cliArgs) {
 
   const projectDir = join(TMP, projectName);
 
-  execFileSync(PNPM_BIN, ["install", "--frozen-lockfile"], {
+  execFileSync(PNPM_BIN, ["install", "--no-frozen-lockfile"], {
     cwd: projectDir,
     env: { ...process.env, HUSKY: "0" },
     stdio: "inherit",
   });
 
-  execFileSync(PNPM_BIN, ["check"], {
+  execFileSync(PNPM_BIN, ["build"], {
     cwd: projectDir,
     stdio: "inherit",
   });

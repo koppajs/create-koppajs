@@ -12,10 +12,16 @@ const CLI = join(ROOT, "bin", "create-koppajs.js");
 const PROJECT = "test-app";
 const ROUTER_PROJECT = "router-test-app";
 const EXPECTED_STARTER_VERSIONS = {
-  core: "^3.0.7",
-  vitePlugin: "^1.0.4",
-  router: "^0.1.2",
+  core: "3.0.7",
+  vitePlugin: "1.0.4",
+  router: "0.1.2",
+  typesNode: "25.6.0",
+  typescript: "5.9.3",
+  vite: "7.3.2",
 };
+const EXPECTED_PACKAGE_MANAGER = "pnpm@10.33.2";
+const EXPECTED_NODE_ENGINE = ">=22.12.0";
+const EXPECTED_PNPM_ENGINE = ">=10.24.0";
 
 let passed = 0;
 let failed = 0;
@@ -66,8 +72,19 @@ try {
   if (existsSync(pkgPath)) {
     const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
     assert(pkg.name === PROJECT, `package.json name is "${PROJECT}"`);
-    assert(typeof pkg.scripts?.check === "string", 'package.json defines "check"');
-    assert(typeof pkg.scripts?.validate === "string", 'package.json defines "validate"');
+    assert(pkg.packageManager === EXPECTED_PACKAGE_MANAGER, "package.json pins the current pnpm baseline");
+    assert(pkg.engines?.node === EXPECTED_NODE_ENGINE, "package.json declares the current Node baseline");
+    assert(pkg.engines?.pnpm === EXPECTED_PNPM_ENGINE, "package.json declares the current pnpm baseline");
+    assert(typeof pkg.scripts?.dev === "string", 'package.json defines "dev"');
+    assert(typeof pkg.scripts?.build === "string", 'package.json defines "build"');
+    assert(typeof pkg.scripts?.typecheck === "string", 'package.json defines "typecheck"');
+    assert(pkg.scripts?.lint === undefined, 'package.json does not define "lint"');
+    assert(pkg.scripts?.format === undefined, 'package.json does not define "format"');
+    assert(pkg.scripts?.test === undefined, 'package.json does not define "test"');
+    assert(pkg.scripts?.check === undefined, 'package.json does not define "check"');
+    assert(pkg.scripts?.validate === undefined, 'package.json does not define "validate"');
+    assert(pkg.scripts?.prepare === undefined, 'package.json does not define "prepare"');
+    assert(pkg.scripts?.["release:check"] === undefined, 'package.json does not define "release:check"');
     assert(
       pkg.dependencies?.["@koppajs/koppajs-core"] === EXPECTED_STARTER_VERSIONS.core,
       'starter depends on the current "@koppajs/koppajs-core" baseline',
@@ -76,6 +93,27 @@ try {
       pkg.devDependencies?.["@koppajs/koppajs-vite-plugin"] === EXPECTED_STARTER_VERSIONS.vitePlugin,
       'starter depends on the current "@koppajs/koppajs-vite-plugin" baseline',
     );
+    assert(
+      pkg.devDependencies?.["@types/node"] === EXPECTED_STARTER_VERSIONS.typesNode,
+      'starter depends on the current "@types/node" baseline',
+    );
+    assert(
+      pkg.devDependencies?.typescript === EXPECTED_STARTER_VERSIONS.typescript,
+      "starter depends on the current TypeScript baseline",
+    );
+    assert(
+      pkg.devDependencies?.vite === EXPECTED_STARTER_VERSIONS.vite,
+      "starter depends on the current Vite 7 baseline",
+    );
+    assert(pkg.devDependencies?.["@eslint/js"] === undefined, "starter does not depend on @eslint/js");
+    assert(pkg.devDependencies?.eslint === undefined, "starter does not depend on ESLint");
+    assert(pkg.devDependencies?.prettier === undefined, "starter does not depend on Prettier");
+    assert(pkg.devDependencies?.["@playwright/test"] === undefined, "starter does not depend on Playwright");
+    assert(pkg.devDependencies?.vitest === undefined, "starter does not depend on Vitest");
+    assert(pkg.devDependencies?.["@vitest/coverage-v8"] === undefined, "starter does not depend on Vitest coverage");
+    assert(pkg.devDependencies?.husky === undefined, "starter does not depend on Husky");
+    assert(pkg.devDependencies?.["lint-staged"] === undefined, "starter does not depend on lint-staged");
+    assert(pkg.devDependencies?.["@commitlint/cli"] === undefined, "starter does not depend on commitlint");
   }
 
   const readmePath = join(projectDir, "README.md");
@@ -87,22 +125,6 @@ try {
     assert(!readme.includes("__PROJECT_NAME__"), "README.md placeholder is removed");
   }
 
-  const changelogPath = join(projectDir, "CHANGELOG.md");
-  assert(existsSync(changelogPath), "CHANGELOG.md exists");
-
-  if (existsSync(changelogPath)) {
-    const changelog = readFileSync(changelogPath, "utf-8");
-    assert(changelog.includes(PROJECT), "CHANGELOG.md project name is patched");
-  }
-
-  const releasePath = join(projectDir, "RELEASE.md");
-  assert(existsSync(releasePath), "RELEASE.md exists");
-
-  if (existsSync(releasePath)) {
-    const release = readFileSync(releasePath, "utf-8");
-    assert(release.includes(PROJECT), "RELEASE.md project name is patched");
-  }
-
   // Check src/main.ts exists
   const mainPath = join(projectDir, "src", "main.ts");
   assert(existsSync(mainPath), "src/main.ts exists");
@@ -111,27 +133,29 @@ try {
   assert(existsSync(join(projectDir, "index.html")), "index.html exists");
   assert(existsSync(join(projectDir, "tsconfig.json")), "tsconfig.json exists");
   assert(existsSync(join(projectDir, "vite.config.mjs")), "vite.config.mjs exists");
-  assert(existsSync(join(projectDir, "vitest.config.mjs")), "vitest.config.mjs exists");
-  assert(existsSync(join(projectDir, "playwright.config.ts")), "playwright.config.ts exists");
   assert(existsSync(join(projectDir, ".gitignore")), ".gitignore exists");
-  assert(existsSync(join(projectDir, ".editorconfig")), ".editorconfig exists");
+  assert(existsSync(join(projectDir, ".gitattributes")), ".gitattributes exists");
   assert(existsSync(join(projectDir, ".npmrc")), ".npmrc exists");
-  assert(existsSync(join(projectDir, ".prettierignore")), ".prettierignore exists");
-  assert(existsSync(join(projectDir, ".github", "workflows", "ci.yml")), ".github/workflows/ci.yml exists");
-  assert(existsSync(join(projectDir, ".github", "workflows", "release.yml")), ".github/workflows/release.yml exists");
-  assert(existsSync(join(projectDir, ".husky", "pre-commit")), ".husky/pre-commit exists");
-  assert(existsSync(join(projectDir, "commitlint.config.mjs")), "commitlint.config.mjs exists");
-  assert(existsSync(join(projectDir, "eslint.config.mjs")), "eslint.config.mjs exists");
-  assert(existsSync(join(projectDir, "prettier.config.mjs")), "prettier.config.mjs exists");
-  assert(existsSync(join(projectDir, "pnpm-lock.yaml")), "pnpm-lock.yaml exists");
   assert(existsSync(join(projectDir, "src", "app-view.kpa")), "src/app-view.kpa exists");
   assert(existsSync(join(projectDir, "src", "counter-component.kpa")), "src/counter-component.kpa exists");
-  assert(
-    !existsSync(join(projectDir, "tests", "unit", "normalize-kpa-module-export.test.ts")),
-    "obsolete KPA export wrapper unit test is not shipped",
-  );
-  assert(existsSync(join(projectDir, "docs", "quality", "quality-gates.md")), "docs/quality/quality-gates.md exists");
-
+  assert(existsSync(join(projectDir, "public", "favicon.png")), "public/favicon.png exists");
+  assert(!existsSync(join(projectDir, "public", "favicon.svg")), "public/favicon.svg is not shipped");
+  assert(existsSync(join(projectDir, "public", "koppajs-logo.png")), "local KoppaJS logo exists");
+  assert(!existsSync(join(projectDir, ".editorconfig")), ".editorconfig is not shipped");
+  assert(!existsSync(join(projectDir, ".prettierignore")), ".prettierignore is not shipped");
+  assert(!existsSync(join(projectDir, "eslint.config.mjs")), "ESLint config is not shipped");
+  assert(!existsSync(join(projectDir, "prettier.config.mjs")), "Prettier config is not shipped");
+  assert(!existsSync(join(projectDir, "vitest.config.mjs")), "Vitest config is not shipped");
+  assert(!existsSync(join(projectDir, "playwright.config.ts")), "Playwright config is not shipped");
+  assert(!existsSync(join(projectDir, "tests")), "starter tests are not shipped");
+  assert(!existsSync(join(projectDir, ".github")), "GitHub workflows are not shipped");
+  assert(!existsSync(join(projectDir, ".husky")), "Husky hooks are not shipped");
+  assert(!existsSync(join(projectDir, "commitlint.config.mjs")), "commitlint config is not shipped");
+  assert(!existsSync(join(projectDir, "CHANGELOG.md")), "CHANGELOG.md is not shipped");
+  assert(!existsSync(join(projectDir, "RELEASE.md")), "RELEASE.md is not shipped");
+  assert(!existsSync(join(projectDir, "AI_CONSTITUTION.md")), "AI_CONSTITUTION.md is not shipped");
+  assert(!existsSync(join(projectDir, "docs")), "starter governance docs are not shipped");
+  assert(!existsSync(join(projectDir, "pnpm-lock.yaml")), "starter lockfile is not shipped");
   const viteConfigPath = join(projectDir, "vite.config.mjs");
   if (existsSync(viteConfigPath)) {
     const viteConfig = readFileSync(viteConfigPath, "utf-8");
@@ -139,6 +163,13 @@ try {
       !viteConfig.includes("normalizeKpaModuleExport"),
       "vite.config.mjs does not include the obsolete KPA export wrapper",
     );
+  }
+
+  const appViewPath = join(projectDir, "src", "app-view.kpa");
+  if (existsSync(appViewPath)) {
+    const appView = readFileSync(appViewPath, "utf-8");
+    assert(appView.includes('src="/koppajs-logo.png"'), "app view uses the local KoppaJS logo");
+    assert(!appView.includes("public-assets-"), "app view does not reference the remote KoppaJS logo");
   }
 
   // Existing empty directory is allowed
@@ -160,13 +191,17 @@ try {
   assert(existsSync(routerPkgPath), "router starter package.json exists");
   assert(existsSync(join(routerProjectDir, "src", "router-page.kpa")), "router starter route component exists");
   assert(existsSync(join(routerProjectDir, "src", "not-found-page.kpa")), "router starter fallback page exists");
-  assert(
-    existsSync(join(routerProjectDir, "docs", "specs", "router-navigation.md")),
-    "router starter routing spec exists",
-  );
+  assert(existsSync(join(routerProjectDir, "public", "koppajs-logo.png")), "router starter local KoppaJS logo exists");
+  assert(!existsSync(join(routerProjectDir, "docs")), "router starter governance docs are not shipped");
 
   if (existsSync(routerPkgPath)) {
     const routerPkg = JSON.parse(readFileSync(routerPkgPath, "utf-8"));
+    assert(
+      routerPkg.packageManager === EXPECTED_PACKAGE_MANAGER,
+      "router package.json pins the current pnpm baseline",
+    );
+    assert(routerPkg.engines?.node === EXPECTED_NODE_ENGINE, "router package.json declares the current Node baseline");
+    assert(routerPkg.engines?.pnpm === EXPECTED_PNPM_ENGINE, "router package.json declares the current pnpm baseline");
     assert(
       routerPkg.dependencies?.["@koppajs/koppajs-router"] === EXPECTED_STARTER_VERSIONS.router,
       'router starter depends on "@koppajs/koppajs-router"',
@@ -179,12 +214,34 @@ try {
       routerPkg.devDependencies?.["@koppajs/koppajs-vite-plugin"] === EXPECTED_STARTER_VERSIONS.vitePlugin,
       'router starter depends on the current "@koppajs/koppajs-vite-plugin" baseline',
     );
+    assert(
+      routerPkg.devDependencies?.["@types/node"] === EXPECTED_STARTER_VERSIONS.typesNode,
+      'router starter depends on the current "@types/node" baseline',
+    );
+    assert(
+      routerPkg.devDependencies?.typescript === EXPECTED_STARTER_VERSIONS.typescript,
+      "router starter depends on the current TypeScript baseline",
+    );
+    assert(
+      routerPkg.devDependencies?.vite === EXPECTED_STARTER_VERSIONS.vite,
+      "router starter depends on the current Vite 7 baseline",
+    );
   }
 
   if (existsSync(routerReadmePath)) {
     const routerReadme = readFileSync(routerReadmePath, "utf-8");
     assert(routerReadme.includes(ROUTER_PROJECT), "router README project name is patched");
     assert(/router starter project/i.test(routerReadme), "router README describes the router starter");
+  }
+
+  const routerAppViewPath = join(routerProjectDir, "src", "app-view.kpa");
+  if (existsSync(routerAppViewPath)) {
+    const routerAppView = readFileSync(routerAppViewPath, "utf-8");
+    assert(routerAppView.includes('src="/koppajs-logo.png"'), "router app view uses the local KoppaJS logo");
+    assert(
+      !routerAppView.includes("public-assets-"),
+      "router app view does not reference the remote KoppaJS logo",
+    );
   }
 
   // Invalid names fail

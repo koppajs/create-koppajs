@@ -90,10 +90,9 @@ otherwise:
 - Refusing to scaffold into a non-empty target directory
 - Copying the versioned `template/` directory into the target project
 - Renaming `template/_gitignore` to `.gitignore`
-- Restoring publish-safe template dotfiles and dotdirectories during copy
+- Restoring publish-safe template dotfiles during copy
 - Rewriting the generated `package.json` name
-- Replacing `__PROJECT_NAME__` in generated starter docs that expose the
-  scaffolded project name
+- Replacing `__PROJECT_NAME__` in the generated starter README
 - The tag-driven npm release workflow
 - The Conventional Commit policy enforced by `commitlint`
 

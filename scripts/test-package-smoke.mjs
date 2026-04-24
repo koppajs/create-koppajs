@@ -15,10 +15,16 @@ const cacheDir = join(tempRoot, "npm-cache");
 const packDir = join(tempRoot, "pack");
 const consumerDir = join(tempRoot, "consumer");
 const EXPECTED_STARTER_VERSIONS = {
-  core: "^3.0.7",
-  vitePlugin: "^1.0.4",
-  router: "^0.1.2",
+  core: "3.0.7",
+  vitePlugin: "1.0.4",
+  router: "0.1.2",
+  typesNode: "25.6.0",
+  typescript: "5.9.3",
+  vite: "7.3.2",
 };
+const EXPECTED_PACKAGE_MANAGER = "pnpm@10.33.2";
+const EXPECTED_NODE_ENGINE = ">=22.12.0";
+const EXPECTED_PNPM_ENGINE = ">=10.24.0";
 
 function runCommand(command, args, cwd, extra = {}) {
   const result = spawnSync(command, args, {
@@ -82,6 +88,9 @@ function verifyProject(projectDir, projectName) {
   const viteConfig = readFileSync(join(projectDir, "vite.config.mjs"), "utf8");
 
   assert(pkg.name === projectName, `Expected package name "${projectName}".`);
+  assert(pkg.packageManager === EXPECTED_PACKAGE_MANAGER, "Packed starter does not pin the current pnpm baseline.");
+  assert(pkg.engines?.node === EXPECTED_NODE_ENGINE, "Packed starter does not declare the current Node baseline.");
+  assert(pkg.engines?.pnpm === EXPECTED_PNPM_ENGINE, "Packed starter does not declare the current pnpm baseline.");
   assert(
     pkg.dependencies?.["@koppajs/koppajs-core"] === EXPECTED_STARTER_VERSIONS.core,
     "Packed starter does not use the current @koppajs/koppajs-core baseline.",
@@ -90,9 +99,48 @@ function verifyProject(projectDir, projectName) {
     pkg.devDependencies?.["@koppajs/koppajs-vite-plugin"] === EXPECTED_STARTER_VERSIONS.vitePlugin,
     "Packed starter does not use the current @koppajs/koppajs-vite-plugin baseline.",
   );
+  assert(
+    pkg.devDependencies?.["@types/node"] === EXPECTED_STARTER_VERSIONS.typesNode,
+    "Packed starter does not use the current @types/node baseline.",
+  );
+  assert(
+    pkg.devDependencies?.typescript === EXPECTED_STARTER_VERSIONS.typescript,
+    "Packed starter does not use the current TypeScript baseline.",
+  );
+  assert(
+    pkg.devDependencies?.vite === EXPECTED_STARTER_VERSIONS.vite,
+    "Packed starter does not use the current Vite 7 baseline.",
+  );
+  assert(pkg.scripts?.lint === undefined, "Packed starter should not define lint scripts.");
+  assert(pkg.scripts?.format === undefined, "Packed starter should not define format scripts.");
+  assert(pkg.scripts?.test === undefined, "Packed starter should not define test scripts.");
+  assert(pkg.scripts?.check === undefined, "Packed starter should not define check scripts.");
+  assert(pkg.scripts?.validate === undefined, "Packed starter should not define validate scripts.");
+  assert(pkg.devDependencies?.eslint === undefined, "Packed starter should not depend on ESLint.");
+  assert(pkg.devDependencies?.prettier === undefined, "Packed starter should not depend on Prettier.");
+  assert(pkg.devDependencies?.vitest === undefined, "Packed starter should not depend on Vitest.");
+  assert(pkg.devDependencies?.["@playwright/test"] === undefined, "Packed starter should not depend on Playwright.");
   assert(readme.includes(projectName), "Packed starter README was not patched.");
-  assert(existsSync(join(projectDir, ".github", "workflows", "ci.yml")), "Packed starter is missing CI workflow files.");
   assert(existsSync(join(projectDir, ".gitignore")), "Packed starter is missing restored dotfiles.");
+  assert(existsSync(join(projectDir, "public", "favicon.png")), "Packed starter is missing PNG favicon.");
+  assert(!existsSync(join(projectDir, "public", "favicon.svg")), "Packed starter should not ship SVG favicon.");
+  assert(existsSync(join(projectDir, "public", "koppajs-logo.png")), "Packed starter is missing local logo asset.");
+  assert(
+    !readFileSync(join(projectDir, "src", "app-view.kpa"), "utf8").includes("public-assets-"),
+    "Packed starter should not reference the remote logo asset.",
+  );
+  assert(!existsSync(join(projectDir, ".editorconfig")), "Packed starter should not ship .editorconfig.");
+  assert(!existsSync(join(projectDir, ".prettierignore")), "Packed starter should not ship .prettierignore.");
+  assert(!existsSync(join(projectDir, "eslint.config.mjs")), "Packed starter should not ship ESLint config.");
+  assert(!existsSync(join(projectDir, "prettier.config.mjs")), "Packed starter should not ship Prettier config.");
+  assert(!existsSync(join(projectDir, "vitest.config.mjs")), "Packed starter should not ship Vitest config.");
+  assert(!existsSync(join(projectDir, "playwright.config.ts")), "Packed starter should not ship Playwright config.");
+  assert(!existsSync(join(projectDir, "tests")), "Packed starter should not ship tests.");
+  assert(!existsSync(join(projectDir, ".github")), "Packed starter should not ship GitHub workflows.");
+  assert(!existsSync(join(projectDir, ".husky")), "Packed starter should not ship Husky hooks.");
+  assert(!existsSync(join(projectDir, "docs")), "Packed starter should not ship governance docs.");
+  assert(!existsSync(join(projectDir, "CHANGELOG.md")), "Packed starter should not ship changelog files.");
+  assert(!existsSync(join(projectDir, "pnpm-lock.yaml")), "Packed starter should not ship a lockfile.");
   assert(
     !viteConfig.includes("normalizeKpaModuleExport"),
     "Packed starter still ships the obsolete KPA export wrapper.",
@@ -107,10 +155,7 @@ function verifyRouterProject(projectDir) {
     "Packed router starter does not use the current @koppajs/koppajs-router baseline.",
   );
   assert(existsSync(join(projectDir, "src", "router-page.kpa")), "Packed router starter is missing router files.");
-  assert(
-    existsSync(join(projectDir, "docs", "specs", "router-navigation.md")),
-    "Packed router starter is missing router documentation.",
-  );
+  assert(!existsSync(join(projectDir, "docs")), "Packed router starter should not ship governance docs.");
 }
 
 try {

@@ -206,13 +206,9 @@ export function ensureTargetDir(targetPath) {
 // npm excludes .gitignore from published packages — ship as _gitignore
 // and rename during scaffolding (same approach as create-vite).
 const RENAME_FILES = {
-  _editorconfig: ".editorconfig",
   _gitattributes: ".gitattributes",
-  _github: ".github",
   _gitignore: ".gitignore",
-  _husky: ".husky",
   _npmrc: ".npmrc",
-  _prettierignore: ".prettierignore",
 };
 
 export function copyDirRecursive(src, dest) {
@@ -259,14 +255,6 @@ function patchTextFile(destDir, relativePath, projectName) {
 
 export function patchReadme(destDir, projectName) {
   patchTextFile(destDir, "README.md", projectName);
-}
-
-export function patchChangelog(destDir, projectName) {
-  patchTextFile(destDir, "CHANGELOG.md", projectName);
-}
-
-export function patchReleaseNotes(destDir, projectName) {
-  patchTextFile(destDir, "RELEASE.md", projectName);
 }
 
 // ── Final output ────────────────────────────────────────────────────
@@ -327,8 +315,6 @@ export async function runCli(
   copyStarterTemplate(templateName, targetDir);
   patchPackageJson(targetDir, projectName);
   patchReadme(targetDir, projectName);
-  patchChangelog(targetDir, projectName);
-  patchReleaseNotes(targetDir, projectName);
   printNextSteps(projectName);
 
   return 0;
