@@ -14,7 +14,7 @@ const ROUTER_PROJECT = "router-test-app";
 const EXPECTED_STARTER_VERSIONS = {
   core: "3.0.7",
   vitePlugin: "1.0.4",
-  router: "0.1.2",
+  router: "0.1.3",
   typesNode: "25.6.0",
   typescript: "5.9.3",
   vite: "7.3.2",

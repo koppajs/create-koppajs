@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@koppajs/koppajs-core": "3.0.7",
-    "@koppajs/koppajs-router": "0.1.2"
+    "@koppajs/koppajs-router": "0.1.3"
   },
   "devDependencies": {
     "@koppajs/koppajs-vite-plugin": "1.0.4",
