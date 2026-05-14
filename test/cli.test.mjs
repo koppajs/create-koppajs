@@ -184,7 +184,7 @@ test("copyStarterTemplate applies the router overlay when requested", (t) => {
   assert.equal(pkg.engines.node, ">=22.12.0");
   assert.equal(pkg.engines.pnpm, ">=10.24.0");
   assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "3.0.7");
-  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "0.1.4");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "0.1.5");
   assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "1.0.4");
   assert.equal(pkg.devDependencies["@types/node"], "25.6.0");
   assert.equal(pkg.devDependencies.typescript, "5.9.3");
