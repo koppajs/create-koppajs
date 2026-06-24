@@ -31,10 +31,13 @@ Changes to the structure of those files require updating this spec, the local va
 - render the shared KoppaJS logo and centered title block
 - include a badge row that matches the repository surface
 - include a Table of Contents block
-- end with `Architecture & Governance`, `Community & Contribution`, and `License` sections
-- reference the local documentation contract spec in the governance section
+- describe the current CLI contract, usage, requirements, supported starters,
+  and ecosystem fit
+- end with `Community & Contribution` and `License` sections
+- keep npm-facing links valid for the published package; repo-internal
+  documents should use GitHub links when they are referenced from README
 
-Repo-specific content is allowed in the middle sections as long as the branded header and closing governance sections stay consistent.
+Repo-specific content is allowed in the middle sections as long as the branded header and closing community and license sections stay consistent.
 
 ## CHANGELOG Contract
 
