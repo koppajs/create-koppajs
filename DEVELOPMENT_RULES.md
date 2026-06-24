@@ -103,4 +103,5 @@ Before finishing a change, confirm:
 
 - `README.md`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, and `CONTRIBUTING.md` are governed by [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md).
 - If one of those files changes shape, update the spec and `scripts/check-doc-contract.mjs` in the same change.
-- Keep official KoppaJS branding, logo usage, and closing governance sections consistent across the governed root documents.
+- Keep official KoppaJS branding, logo usage, and closing community and license sections consistent across the governed root documents.
+- Keep npm-facing README links valid for the published package; use GitHub URLs for repo-internal documents that are not shipped in the npm payload.

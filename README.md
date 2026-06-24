@@ -51,7 +51,6 @@
     <li><a href="#requirements">Requirements</a></li>
     <li><a href="#generated-starters">Generated Starters</a></li>
     <li><a href="#ecosystem-fit">Ecosystem Fit</a></li>
-    <li><a href="#architecture-governance">Architecture & Governance</a></li>
     <li><a href="#community-contribution">Community & Contribution</a></li>
     <li><a href="#license">License</a></li>
   </ol>
@@ -123,11 +122,6 @@ The stable public contract of this repository is:
   `template-overlays/`
 - the npm package payload: `bin/`, `template/`, `template-overlays/`,
   `README.md`, `CHANGELOG.md`, and `LICENSE`
-
-The governing specs for that contract are:
-
-- [docs/specs/cli-scaffolding.md](./docs/specs/cli-scaffolding.md)
-- [docs/specs/template-starter-contract.md](./docs/specs/template-starter-contract.md)
 
 ---
 
@@ -217,45 +211,19 @@ governance baseline can evolve together without hidden behavior.
 
 ---
 
-## Architecture & Governance
-
-Project intent, contributor rules, and documentation contracts live in the local repo meta layer:
-
-- [AI_CONSTITUTION.md](./AI_CONSTITUTION.md)
-- [ARCHITECTURE.md](./ARCHITECTURE.md)
-- [DECISION_HIERARCHY.md](./DECISION_HIERARCHY.md)
-- [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md)
-- [TESTING_STRATEGY.md](./TESTING_STRATEGY.md)
-- [RELEASE.md](./RELEASE.md)
-- [ROADMAP.md](./ROADMAP.md)
-- [CHANGELOG.md](./CHANGELOG.md)
-- [CONTRIBUTING.md](./CONTRIBUTING.md)
-- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
-- [docs/specs/README.md](./docs/specs/README.md)
-- [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md)
-- [docs/architecture/README.md](./docs/architecture/README.md)
-- [docs/meta/README.md](./docs/meta/README.md)
-- [docs/quality/README.md](./docs/quality/README.md)
-
-The file-shape contract for `README.md`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, and `CONTRIBUTING.md` is defined in [docs/specs/repository-documentation-contract.md](./docs/specs/repository-documentation-contract.md).
-
-Run the local document guard before committing:
-
-```bash
-pnpm run check:docs
-```
-
----
-
 ## Community & Contribution
 
 Issues and pull requests are welcome:
 
 https://github.com/koppajs/create-koppajs/issues
 
-Contributor workflow details live in [CONTRIBUTING.md](./CONTRIBUTING.md).
+Contributor workflow details live in the GitHub repository:
 
-Community expectations live in [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
+https://github.com/koppajs/create-koppajs/blob/main/CONTRIBUTING.md
+
+Community expectations live in the GitHub repository:
+
+https://github.com/koppajs/create-koppajs/blob/main/CODE_OF_CONDUCT.md
 
 ---
 

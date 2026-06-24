@@ -16,6 +16,17 @@ _No unreleased changes yet._
 
 ---
 
+## [1.2.8] — npm README Payload Alignment
+
+**2026-06-24**
+
+### Changed
+
+- aligned the npm-facing README with the current package payload and GitHub
+  contribution links
+
+---
+
 ## [1.2.7] — Router Baseline Refresh
 
 **2026-05-14**
