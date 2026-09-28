@@ -25,6 +25,8 @@ pnpm serve
 ## Routing
 
 The starter wires `@koppajs/koppajs-router` in `src/main.ts`.
+Each renderable route supplies the title, description, and component tag
+required by the router at runtime.
 
 The route table contains:
 

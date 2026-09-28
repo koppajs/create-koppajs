@@ -184,12 +184,20 @@ test("copyStarterTemplate applies the router overlay when requested", (t) => {
   assert.equal(pkg.engines.node, ">=22.12.0");
   assert.equal(pkg.engines.pnpm, ">=10.24.0");
   assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "3.0.7");
-  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "0.1.5");
+  assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "0.1.6");
   assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "1.0.4");
   assert.equal(pkg.devDependencies["@types/node"], "25.6.0");
   assert.equal(pkg.devDependencies.typescript, "5.9.3");
   assert.equal(pkg.devDependencies.vite, "7.3.2");
   assert.equal(existsSync(join(target, "src", "router-page.kpa")), true);
+  const routerMain = readFileSync(join(target, "src", "main.ts"), "utf-8");
+  const routeDefinitions = [...routerMain.matchAll(/\{\s*path: "([^"]+)",([\s\S]*?)\}/g)];
+  assert.deepEqual(routeDefinitions.map(([, path]) => path), ["/", "/router", "*"]);
+  for (const [, , definition] of routeDefinitions) {
+    assert.match(definition, /title: "[^"]+"/);
+    assert.match(definition, /description: "[^"]+"/);
+    assert.match(definition, /componentTag: "[^"]+"/);
+  }
   assert.equal(existsSync(join(target, "docs")), false);
   assert.equal(existsSync(join(target, "tests")), false);
   assert.equal(existsSync(join(target, "eslint.config.mjs")), false);

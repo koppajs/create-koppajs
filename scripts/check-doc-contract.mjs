@@ -11,11 +11,21 @@ const checks = [
       '<a id="readme-top"></a>',
       'https://public-assets-1b57ca06-687a-4142-a525-0635f7649a5c.s3.eu-central-1.amazonaws.com/koppajs/koppajs-logo-text-900x226.png',
       '<summary>Table of Contents</summary>',
-      '## Public Contract',
+      '## Usage',
       '## Generated Starters',
+      '## Requirements',
+      '## Ecosystem Fit',
       '## Community & Contribution',
       'https://github.com/koppajs/create-koppajs/blob/main/CONTRIBUTING.md',
       'https://github.com/koppajs/create-koppajs/blob/main/CODE_OF_CONDUCT.md',
+      '## License',
+    ],
+    orderedSections: [
+      '## Usage',
+      '## Generated Starters',
+      '## Requirements',
+      '## Ecosystem Fit',
+      '## Community & Contribution',
       '## License',
     ],
   },
@@ -100,6 +110,18 @@ for (const check of checks) {
     if (!content.includes(snippet)) {
       console.error(`Contract violation in ${check.file}: missing snippet -> ${snippet}`);
       failed = true;
+    }
+  }
+
+  let previousSectionIndex = -1;
+  for (const section of check.orderedSections ?? []) {
+    const sectionIndex = content.indexOf(section);
+    if (sectionIndex >= 0 && sectionIndex <= previousSectionIndex) {
+      console.error(`Contract violation in ${check.file}: ${section} is out of order.`);
+      failed = true;
+    }
+    if (sectionIndex >= 0) {
+      previousSectionIndex = sectionIndex;
     }
   }
 }

@@ -16,6 +16,23 @@ _No unreleased changes yet._
 
 ---
 
+## [1.2.9] — Router Starter and npm Discoverability
+
+**2026-09-28**
+
+### Changed
+
+- updated the generated router starter dependency baseline to
+  `@koppajs/koppajs-router@0.1.6`
+- added the required title and description metadata to every router starter
+  route so the generated app renders its pages at runtime
+- streamlined the npm-facing README around setup and starter choice, moving
+  essential CLI guidance into Usage while preserving its branded header
+- added npm keywords for the KoppaJS scaffolder, starter tooling, and optional
+  router variant
+
+---
+
 ## [1.2.8] — npm README Payload Alignment
 
 **2026-06-24**
