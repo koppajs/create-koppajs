@@ -19,9 +19,7 @@ const EXPECTED_STARTER_VERSIONS = {
   typescript: "5.9.3",
   vite: "7.3.2",
 };
-const EXPECTED_PACKAGE_MANAGER = "pnpm@10.33.2";
 const EXPECTED_NODE_ENGINE = ">=22.12.0";
-const EXPECTED_PNPM_ENGINE = ">=10.24.0";
 
 let passed = 0;
 let failed = 0;
@@ -61,7 +59,10 @@ try {
   mkdirSync(TMP, { recursive: true });
 
   // Run CLI
-  execFileSync(process.execPath, [CLI, PROJECT], { cwd: TMP, stdio: "pipe" });
+  const cliOutput = execFileSync(process.execPath, [CLI, PROJECT], { cwd: TMP, encoding: "utf8" });
+  assert(cliOutput.includes("npm install && npm run dev"), "CLI shows npm next steps");
+  assert(cliOutput.includes("yarn install && yarn dev"), "CLI shows Yarn next steps");
+  assert(cliOutput.includes("pnpm install && pnpm dev"), "CLI shows pnpm next steps");
 
   const projectDir = join(TMP, PROJECT);
 
@@ -72,9 +73,9 @@ try {
   if (existsSync(pkgPath)) {
     const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
     assert(pkg.name === PROJECT, `package.json name is "${PROJECT}"`);
-    assert(pkg.packageManager === EXPECTED_PACKAGE_MANAGER, "package.json pins the current pnpm baseline");
+    assert(pkg.packageManager === undefined, "package.json does not pin a package manager");
     assert(pkg.engines?.node === EXPECTED_NODE_ENGINE, "package.json declares the current Node baseline");
-    assert(pkg.engines?.pnpm === EXPECTED_PNPM_ENGINE, "package.json declares the current pnpm baseline");
+    assert(pkg.engines?.pnpm === undefined, "package.json does not require pnpm");
     assert(typeof pkg.scripts?.dev === "string", 'package.json defines "dev"');
     assert(typeof pkg.scripts?.build === "string", 'package.json defines "build"');
     assert(typeof pkg.scripts?.typecheck === "string", 'package.json defines "typecheck"');
@@ -196,12 +197,9 @@ try {
 
   if (existsSync(routerPkgPath)) {
     const routerPkg = JSON.parse(readFileSync(routerPkgPath, "utf-8"));
-    assert(
-      routerPkg.packageManager === EXPECTED_PACKAGE_MANAGER,
-      "router package.json pins the current pnpm baseline",
-    );
+    assert(routerPkg.packageManager === undefined, "router package.json does not pin a package manager");
     assert(routerPkg.engines?.node === EXPECTED_NODE_ENGINE, "router package.json declares the current Node baseline");
-    assert(routerPkg.engines?.pnpm === EXPECTED_PNPM_ENGINE, "router package.json declares the current pnpm baseline");
+    assert(routerPkg.engines?.pnpm === undefined, "router package.json does not require pnpm");
     assert(
       routerPkg.dependencies?.["@koppajs/koppajs-router"] === EXPECTED_STARTER_VERSIONS.router,
       'router starter depends on "@koppajs/koppajs-router"',

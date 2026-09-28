@@ -47,8 +47,8 @@ The CLI must:
 - version string for `--version`
 - a generated project directory inside the current working directory when
   scaffolding succeeds
-- next-step console output telling the user to change directory, install
-  dependencies, and run the dev server
+- next-step console output telling the user to change directory and showing
+  install and dev-server commands for pnpm, npm, and Yarn
 
 ## Constraints
 

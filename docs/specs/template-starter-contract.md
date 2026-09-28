@@ -62,8 +62,12 @@ KoppaJS starter that:
   scripts, format scripts, test scripts, or generated starter tests.
 - The starter must not include default `.gitattributes`, `.gitignore`, or
   `.npmrc` files.
-- The starter must remain compatible with its declared Node.js and pnpm engine
-  constraints.
+- The starter must remain compatible with its declared Node.js engine
+  constraint.
+- The starter must support installing and running its scripts with pnpm, npm,
+  and Yarn; it must not pin a package manager or require pnpm in its manifest.
+- The starter README must document install, dev, and build usage for each
+  supported package manager and advise users to keep only their chosen lockfile.
 
 ## Edge Cases
 
@@ -85,10 +89,10 @@ KoppaJS starter that:
    generation.
 4. The scaffolded project omits default `.gitattributes`, `.gitignore`, and
    `.npmrc` files.
-5. The scaffolded project defines `pnpm build`, `pnpm typecheck`, and
-   `pnpm serve` workflows.
-6. The scaffolded project passes its own `pnpm build` baseline on Node.js
-   `>=22.12.0`.
+5. The scaffolded project defines `dev`, `build`, `typecheck`, and `serve`
+   scripts that can be run with pnpm, npm, or Yarn.
+6. Each starter installs and passes its own `build` baseline using pnpm, npm,
+   and Yarn on Node.js `>=22.12.0`.
 
 ## Evolution Phase
 
@@ -105,7 +109,8 @@ High
 
 ## Deferred Complexity
 
-- package-manager-specific template branches
+- package-manager-specific template branches; all supported managers use the
+  same starter files and create their own lockfile on installation
 - remote template retrieval or remote post-scaffold setup
 - additional starter variants beyond the shipped `minimal` and `router`
 

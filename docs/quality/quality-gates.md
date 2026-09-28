@@ -60,7 +60,8 @@ following when relevant:
 
 - the generated README still reads correctly after placeholder replacement
 - template file changes are reflected in `README.md`, specs, and changelog
-- template build changes are covered by `pnpm run test:template-build`
+- both starters' pnpm, npm, Yarn Classic, and Yarn Modern installs and builds
+  are covered by `pnpm run test:template-build`
 - publish-payload and npm metadata changes are covered by `pnpm run test:package`,
   including the installed tarball's discoverability keywords
 - release and commit workflow docs still match `RELEASE.md`,

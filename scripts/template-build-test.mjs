@@ -10,8 +10,34 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const CLI = join(ROOT, "bin", "create-koppajs.js");
 const TMP = mkdtempSync(join(tmpdir(), "create-koppajs-template-"));
-const PNPM_BIN = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 const TEMPLATE_NODE_REQUIREMENT = ">=22.12.0";
+const NPM_BIN = process.platform === "win32" ? "npm.cmd" : "npm";
+const PACKAGE_MANAGERS = [
+  {
+    name: "pnpm",
+    command: process.platform === "win32" ? "pnpm.cmd" : "pnpm",
+    installArgs: ["install", "--no-frozen-lockfile"],
+    buildArgs: ["build"],
+  },
+  {
+    name: "npm",
+    command: NPM_BIN,
+    installArgs: ["install", "--no-audit", "--no-fund"],
+    buildArgs: ["run", "build"],
+  },
+  {
+    name: "yarn-classic",
+    command: NPM_BIN,
+    installArgs: ["exec", "--yes", "--package=yarn@1.22.22", "--", "yarn", "install", "--non-interactive"],
+    buildArgs: ["exec", "--yes", "--package=yarn@1.22.22", "--", "yarn", "build"],
+  },
+  {
+    name: "yarn-modern",
+    command: NPM_BIN,
+    installArgs: ["exec", "--yes", "--package=@yarnpkg/cli-dist@4.9.4", "--", "yarn", "install"],
+    buildArgs: ["exec", "--yes", "--package=@yarnpkg/cli-dist@4.9.4", "--", "yarn", "build"],
+  },
+];
 const STARTER_VARIANTS = [
   {
     label: "minimal",
@@ -48,21 +74,23 @@ function cleanup() {
 
 console.log("\n  Template build test: create-koppajs\n");
 
-function validateGeneratedProject(projectName, cliArgs) {
-  execFileSync(process.execPath, [CLI, projectName, ...cliArgs], {
+function validateGeneratedProject(starter, packageManager) {
+  const projectName = `${starter.projectName}-${packageManager.name}`;
+  console.log(`\n  ${starter.label} starter with ${packageManager.name}\n`);
+  execFileSync(process.execPath, [CLI, projectName, ...starter.cliArgs], {
     cwd: TMP,
     stdio: "inherit",
   });
 
   const projectDir = join(TMP, projectName);
 
-  execFileSync(PNPM_BIN, ["install", "--no-frozen-lockfile"], {
+  execFileSync(packageManager.command, packageManager.installArgs, {
     cwd: projectDir,
     env: { ...process.env, HUSKY: "0" },
     stdio: "inherit",
   });
 
-  execFileSync(PNPM_BIN, ["build"], {
+  execFileSync(packageManager.command, packageManager.buildArgs, {
     cwd: projectDir,
     stdio: "inherit",
   });
@@ -82,9 +110,11 @@ try {
     );
   }
 
-  STARTER_VARIANTS.forEach(({ projectName, cliArgs }) => {
-    validateGeneratedProject(projectName, cliArgs);
-  });
+  for (const starter of STARTER_VARIANTS) {
+    for (const packageManager of PACKAGE_MANAGERS) {
+      validateGeneratedProject(starter, packageManager);
+    }
+  }
 } finally {
   cleanup();
 }

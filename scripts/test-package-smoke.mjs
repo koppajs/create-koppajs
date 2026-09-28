@@ -22,9 +22,7 @@ const EXPECTED_STARTER_VERSIONS = {
   typescript: "5.9.3",
   vite: "7.3.2",
 };
-const EXPECTED_PACKAGE_MANAGER = "pnpm@10.33.2";
 const EXPECTED_NODE_ENGINE = ">=22.12.0";
-const EXPECTED_PNPM_ENGINE = ">=10.24.0";
 
 function runCommand(command, args, cwd, extra = {}) {
   const result = spawnSync(command, args, {
@@ -88,9 +86,11 @@ function verifyProject(projectDir, projectName) {
   const viteConfig = readFileSync(join(projectDir, "vite.config.mjs"), "utf8");
 
   assert(pkg.name === projectName, `Expected package name "${projectName}".`);
-  assert(pkg.packageManager === EXPECTED_PACKAGE_MANAGER, "Packed starter does not pin the current pnpm baseline.");
+  assert(pkg.packageManager === undefined, "Packed starter pins a package manager.");
   assert(pkg.engines?.node === EXPECTED_NODE_ENGINE, "Packed starter does not declare the current Node baseline.");
-  assert(pkg.engines?.pnpm === EXPECTED_PNPM_ENGINE, "Packed starter does not declare the current pnpm baseline.");
+  assert(pkg.engines?.pnpm === undefined, "Packed starter requires pnpm.");
+  assert(readme.includes("npm install") && readme.includes("yarn install") && readme.includes("pnpm install"),
+    "Packed starter README must document each supported package manager.");
   assert(
     pkg.dependencies?.["@koppajs/koppajs-core"] === EXPECTED_STARTER_VERSIONS.core,
     "Packed starter does not use the current @koppajs/koppajs-core baseline.",

@@ -61,13 +61,16 @@ Purpose:
 
 Purpose:
 
-- scaffold a real starter project
-- install the generated application's dependencies
-- confirm the generated app passes its own `pnpm build` baseline
+- scaffold each supported starter separately for pnpm, npm, Yarn Classic, and
+  Yarn Modern
+- install the generated application's dependencies with each package manager
+- confirm each generated app passes its own `build` script with that manager
 
 Runtime note:
 
 - this validation must run on Node.js 22.12.0 or newer
+- Yarn Classic `1.22.22` and Yarn Modern `4.9.4` run via `npm exec`, so CI
+  does not depend on a preinstalled Yarn or Corepack executable
 
 This is heavier than the default local check because it relies on registry
 access. It is therefore available locally and enforced in CI/release, but kept

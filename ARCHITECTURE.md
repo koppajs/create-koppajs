@@ -57,6 +57,7 @@ Current base characteristics:
 - Uses `@koppajs/koppajs-vite-plugin`
 - Ships a minimal sample app with `.kpa` component files
 - Defines only the scripts needed to run, build, typecheck, and preview the app
+- Supports pnpm, npm, and Yarn without selecting one in the starter manifest
 - Excludes root governance docs, release automation, Git hooks, GitHub
   workflows, changelog files, lockfiles, and lint/format/test tooling
 
@@ -101,8 +102,8 @@ Contains repository-quality utilities in addition to smoke tests:
 - `run-unit-tests.mjs` runs Node.js built-in unit tests in a platform-robust
   way
 - `template-build-test.mjs` scaffolds each supported starter, installs
-  dependencies, and runs the generated project's own `pnpm build` baseline on
-  Node.js `>=22`
+  dependencies with pnpm, npm, and Yarn, and runs the generated project's own
+  `build` baseline with each manager on Node.js `>=22.12.0`
 - `clean.mjs` removes temporary smoke, coverage, and package artifacts
 
 ### `lint-staged.config.mjs`

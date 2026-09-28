@@ -12,6 +12,7 @@ import {
   parseArgs,
   patchPackageJson,
   patchReadme,
+  printNextSteps,
   validateProjectName,
   validateStarterTemplate,
 } from "../bin/create-koppajs.js";
@@ -139,9 +140,9 @@ test("copyStarterTemplate scaffolds the default starter and patch helpers update
   const readme = readFileSync(join(target, "README.md"), "utf-8");
 
   assert.equal(pkg.name, "generated-project");
-  assert.equal(pkg.packageManager, "pnpm@10.33.2");
+  assert.equal(pkg.packageManager, undefined);
   assert.equal(pkg.engines.node, ">=22.12.0");
-  assert.equal(pkg.engines.pnpm, ">=10.24.0");
+  assert.equal(pkg.engines.pnpm, undefined);
   assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "3.0.7");
   assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "1.0.4");
   assert.equal(pkg.devDependencies["@types/node"], "25.6.0");
@@ -156,6 +157,9 @@ test("copyStarterTemplate scaffolds the default starter and patch helpers update
   assert.equal(pkg.scripts.test, undefined);
   assert.match(readme, /generated-project/);
   assert.doesNotMatch(readme, /__PROJECT_NAME__/);
+  assert.match(readme, /npm install/);
+  assert.match(readme, /yarn install/);
+  assert.match(readme, /pnpm install/);
   assert.equal(existsSync(join(target, "eslint.config.mjs")), false);
   assert.equal(existsSync(join(target, "prettier.config.mjs")), false);
   assert.equal(existsSync(join(target, "vitest.config.mjs")), false);
@@ -180,9 +184,9 @@ test("copyStarterTemplate applies the router overlay when requested", (t) => {
   const readme = readFileSync(join(target, "README.md"), "utf-8");
 
   assert.equal(pkg.name, "router-project");
-  assert.equal(pkg.packageManager, "pnpm@10.33.2");
+  assert.equal(pkg.packageManager, undefined);
   assert.equal(pkg.engines.node, ">=22.12.0");
-  assert.equal(pkg.engines.pnpm, ">=10.24.0");
+  assert.equal(pkg.engines.pnpm, undefined);
   assert.equal(pkg.dependencies["@koppajs/koppajs-core"], "3.0.7");
   assert.equal(pkg.dependencies["@koppajs/koppajs-router"], "0.1.6");
   assert.equal(pkg.devDependencies["@koppajs/koppajs-vite-plugin"], "1.0.4");
@@ -203,5 +207,21 @@ test("copyStarterTemplate applies the router overlay when requested", (t) => {
   assert.equal(existsSync(join(target, "eslint.config.mjs")), false);
   assert.equal(existsSync(join(target, "vitest.config.mjs")), false);
   assert.match(readme, /router starter project/i);
+  assert.match(readme, /npm install/);
+  assert.match(readme, /yarn install/);
+  assert.match(readme, /pnpm install/);
   assert.equal(existsSync(join(TEMPLATE_DIR, "src", "router-page.kpa")), false);
+});
+
+test("printNextSteps offers install and dev commands for each package manager", (t) => {
+  const lines = [];
+  t.mock.method(console, "log", (...args) => lines.push(args.join(" ")));
+
+  printNextSteps("demo-app");
+
+  const output = lines.join("\n");
+  assert.match(output, /cd demo-app/);
+  assert.match(output, /pnpm install && pnpm dev/);
+  assert.match(output, /npm install && npm run dev/);
+  assert.match(output, /yarn install && yarn dev/);
 });
