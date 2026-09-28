@@ -71,6 +71,8 @@ Runtime note:
 - this validation must run on Node.js 22.12.0 or newer
 - Yarn Classic `1.22.22` and Yarn Modern `4.9.4` run via `npm exec`, so CI
   does not depend on a preinstalled Yarn or Corepack executable
+- Yarn Modern uses `--no-immutable` for the initial install because CI defaults
+  to immutable installs, while freshly scaffolded projects have no lockfile
 
 This is heavier than the default local check because it relies on registry
 access. It is therefore available locally and enforced in CI/release, but kept

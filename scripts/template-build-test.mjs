@@ -34,7 +34,7 @@ const PACKAGE_MANAGERS = [
   {
     name: "yarn-modern",
     command: NPM_BIN,
-    installArgs: ["exec", "--yes", "--package=@yarnpkg/cli-dist@4.9.4", "--", "yarn", "install"],
+    installArgs: ["exec", "--yes", "--package=@yarnpkg/cli-dist@4.9.4", "--", "yarn", "install", "--no-immutable"],
     buildArgs: ["exec", "--yes", "--package=@yarnpkg/cli-dist@4.9.4", "--", "yarn", "build"],
   },
 ];
