@@ -16,6 +16,19 @@ _No unreleased changes yet._
 
 ---
 
+## [1.3.0] — Package-manager-neutral Starters
+
+**2026-09-28**
+
+### Changed
+
+- removed the pnpm-only metadata from generated minimal and router starters so
+  new projects can install and build with pnpm, npm, or Yarn
+- documented package-manager choices in the starter READMEs, CLI next steps,
+  and root README while removing its redundant Requirements section
+
+---
+
 ## [1.2.9] — Router Starter and npm Discoverability
 
 **2026-09-28**

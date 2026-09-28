@@ -5,22 +5,24 @@ KoppaJS starter project scaffolded with `create-koppajs`.
 ## Requirements
 
 - Node.js >= 22.12.0
-- pnpm >= 10.24.0
 
 ## Getting Started
 
-```bash
-pnpm install
-pnpm dev
-```
+Choose a package manager and use it consistently for this project:
+
+| Package manager | Install | Start development server |
+| --------------- | ------- | ------------------------ |
+| pnpm | `pnpm install` | `pnpm dev` |
+| npm | `npm install` | `npm run dev` |
+| Yarn | `yarn install` | `yarn dev` |
+
+The first install creates a lockfile for the package manager you chose; commit
+that lockfile and avoid mixing lockfiles from different package managers.
 
 ## Scripts
 
-```bash
-pnpm build
-pnpm typecheck
-pnpm serve
-```
+Use your chosen package manager to run `build`, `typecheck`, and `serve` (for
+example, `npm run build`, `pnpm build`, or `yarn build`).
 
 ## Project Structure
 

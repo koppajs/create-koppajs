@@ -256,8 +256,10 @@ export function patchReadme(destDir, projectName) {
 export function printNextSteps(projectName) {
   console.log("  Done! Next steps:\n");
   console.log(`    cd ${projectName}`);
-  console.log("    pnpm install");
-  console.log("    pnpm dev\n");
+  console.log("\n  Choose a package manager to install and run your app:");
+  console.log("    pnpm install && pnpm dev");
+  console.log("    npm install && npm run dev");
+  console.log("    yarn install && yarn dev\n");
 }
 
 // ── Main ────────────────────────────────────────────────────────────

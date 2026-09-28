@@ -45,7 +45,6 @@
   <ol>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#generated-starters">Generated Starters</a></li>
-    <li><a href="#requirements">Requirements</a></li>
     <li><a href="#ecosystem-fit">Ecosystem Fit</a></li>
     <li><a href="#community-contribution">Community & Contribution</a></li>
     <li><a href="#license">License</a></li>
@@ -59,24 +58,31 @@
 Create a project with the default starter:
 
 ```bash
-pnpm create koppajs@latest my-app
+npx create-koppajs@latest my-app
 ```
 
 Or choose the router starter:
 
 ```bash
-pnpm create koppajs@latest my-app --template router
+npx create-koppajs@latest my-app --template router
 ```
 
-Then start your app:
+You can also scaffold with `npm create koppajs my-app` or
+`pnpm create koppajs@latest my-app`.
+
+Then run your app with your preferred package manager:
 
 ```bash
 cd my-app
-pnpm install
-pnpm dev
 ```
 
-`npm create koppajs my-app` and `npx create-koppajs my-app` are also supported.
+| Package manager | Install | Start development server |
+| --------------- | ------- | ------------------------ |
+| npm | `npm install` | `npm run dev` |
+| pnpm | `pnpm install` | `pnpm dev` |
+| Yarn | `yarn install` | `yarn dev` |
+
+Choose one package manager per project and keep its generated lockfile.
 
 Omit the project name to be prompted for one. In an interactive terminal, the
 CLI asks which starter to use unless you pass `--template` or the `--router`
@@ -95,13 +101,6 @@ options or `--version` to check the CLI version.
 Both starters include their own setup README. They do not add this repository's
 release workflows, governance files, lockfile, or lint and test tooling to your
 new project.
-
----
-
-## Requirements
-
-Node.js `>=22.12.0` and pnpm `>=10.24.0` are required for the CLI and the
-generated starters.
 
 ---
 

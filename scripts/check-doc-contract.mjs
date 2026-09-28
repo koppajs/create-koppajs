@@ -13,17 +13,16 @@ const checks = [
       '<summary>Table of Contents</summary>',
       '## Usage',
       '## Generated Starters',
-      '## Requirements',
       '## Ecosystem Fit',
       '## Community & Contribution',
       'https://github.com/koppajs/create-koppajs/blob/main/CONTRIBUTING.md',
       'https://github.com/koppajs/create-koppajs/blob/main/CODE_OF_CONDUCT.md',
       '## License',
     ],
+    forbiddenSnippets: ['## Requirements', 'href="#requirements"'],
     orderedSections: [
       '## Usage',
       '## Generated Starters',
-      '## Requirements',
       '## Ecosystem Fit',
       '## Community & Contribution',
       '## License',
@@ -109,6 +108,13 @@ for (const check of checks) {
   for (const snippet of check.snippets) {
     if (!content.includes(snippet)) {
       console.error(`Contract violation in ${check.file}: missing snippet -> ${snippet}`);
+      failed = true;
+    }
+  }
+
+  for (const snippet of check.forbiddenSnippets ?? []) {
+    if (content.includes(snippet)) {
+      console.error(`Contract violation in ${check.file}: forbidden snippet -> ${snippet}`);
       failed = true;
     }
   }

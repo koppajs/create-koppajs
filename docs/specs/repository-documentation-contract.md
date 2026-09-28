@@ -31,8 +31,8 @@ Changes to the structure of those files require updating this spec, the local va
 - render the shared KoppaJS logo and centered title block
 - include a badge row that matches the repository surface
 - include a Table of Contents block
-- lead after the table of contents with `Usage`, then present `Generated Starters`,
-  `Requirements`, and `Ecosystem Fit` in that order
+- lead after the table of contents with `Usage`, then present `Generated Starters`
+  and `Ecosystem Fit` in that order, without a separate `Requirements` section
 - explain essential CLI usage and supported starters concisely, linking to
   repository architecture or specs for internal contract details
 - end with `Community & Contribution` and `License` sections
