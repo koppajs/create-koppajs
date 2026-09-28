@@ -43,13 +43,9 @@
 <details>
 <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#purpose">Purpose</a></li>
-    <li><a href="#repository-classification">Repository Classification</a></li>
-    <li><a href="#ownership-boundaries">Ownership Boundaries</a></li>
-    <li><a href="#public-contract">Public Contract</a></li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#requirements">Requirements</a></li>
     <li><a href="#generated-starters">Generated Starters</a></li>
+    <li><a href="#requirements">Requirements</a></li>
     <li><a href="#ecosystem-fit">Ecosystem Fit</a></li>
     <li><a href="#community-contribution">Community & Contribution</a></li>
     <li><a href="#license">License</a></li>
@@ -58,102 +54,21 @@
 
 ---
 
-## Purpose
-
-This repository exists to do one job well:
-
-- create a fresh project directory
-- copy the current supported KoppaJS starter baseline
-- optionally add a supported starter variant such as `router`
-- preserve a stable, inspectable bootstrap path for new KoppaJS applications
-
-It is not a runtime package and it does not own application behavior after
-generation.
-
----
-
-## Repository Classification
-
-- Repo type: CLI scaffolding package with a bundled starter family
-- Runtime responsibility: one-shot filesystem scaffolding through
-  `bin/create-koppajs.js`
-- Build-time responsibility: publish the starter assets, protect the contract,
-  and validate tagged releases
-- UI surface: none at the repository root; the generated starter owns the UI
-- Maturity level: stable, contract-governed, maintenance-first
-
----
-
-## Ownership Boundaries
-
-- `bin/create-koppajs.js` owns argument parsing, prompting, validation, starter
-  selection, template copy, placeholder patching, and next-step output.
-- `template/` owns the default `minimal` starter baseline and is the single
-  source of truth for that starter.
-- `template-overlays/` owns the files that differ for opt-in starter variants.
-  Together with `template/`, they define the only source of truth for
-  generated starter output.
-- `scripts/` and `.github/workflows/` own repository-quality and release
-  verification.
-- Root governance files own the repository doctrine and must stay aligned with
-  code and workflows.
-
-The root package must not take on runtime concerns that belong in generated
-applications, and generated applications must not depend on unpublished root
-files after scaffold completion.
-
----
-
-## Public Contract
-
-The stable public contract of this repository is:
-
-- the `create-koppajs` command and its `--help` / `--version` flags
-- the optional project-name argument and prompt fallback when omitted
-- the optional `--template <name>` and `--router` starter-selection flags
-- the interactive starter-template prompt when no template flag is provided in
-  an interactive terminal
-- rejection of invalid project names, invalid template names, and non-empty
-  target directories
-- recursive copying of the bundled `template/` directory plus any selected
-  overlay
-- patching of generated `package.json` and `README.md`
-- the generated starter baselines defined by `template/` and
-  `template-overlays/`
-- the npm package payload: `bin/`, `template/`, `template-overlays/`,
-  `README.md`, `CHANGELOG.md`, and `LICENSE`
-
----
-
 ## Usage
 
-Default starter:
+Create a project with the default starter:
 
 ```bash
 pnpm create koppajs@latest my-app
 ```
 
-Router starter:
+Or choose the router starter:
 
 ```bash
 pnpm create koppajs@latest my-app --template router
 ```
 
-Alternative entrypoints:
-
-```bash
-npm create koppajs my-app
-```
-
-```bash
-npx create-koppajs my-app
-```
-
-If the target directory name is omitted, the CLI prompts for one. If no
-template flag is provided in an interactive terminal, the CLI also prompts for
-starter selection. Non-interactive runs default to `minimal`.
-
-After generation:
+Then start your app:
 
 ```bash
 cd my-app
@@ -161,53 +76,42 @@ pnpm install
 pnpm dev
 ```
 
----
+`npm create koppajs my-app` and `npx create-koppajs my-app` are also supported.
 
-## Requirements
-
-- for `create-koppajs`: Node.js `>=22.12.0` and pnpm `>=10.24.0`
-- for generated starter projects: Node.js `>=22.12.0` and pnpm `>=10.24.0`
+Omit the project name to be prompted for one. In an interactive terminal, the
+CLI asks which starter to use unless you pass `--template` or the `--router`
+shortcut; non-interactive runs default to `minimal`. Invalid names, unknown
+starters, and non-empty target directories are rejected. Use `--help` for all
+options or `--version` to check the CLI version.
 
 ---
 
 ## Generated Starters
 
-The generated project includes one of two supported starters:
+- **minimal** (default): a small KoppaJS app with Vite and TypeScript.
+- **router**: the same foundation plus `@koppajs/koppajs-router`, two pages,
+  navigation, and a not-found fallback.
 
-- `minimal` by default: a small KoppaJS application built on Vite and
-  TypeScript
-- `router` as opt-in: the same baseline plus `@koppajs/koppajs-router`, a
-  simple two-page navigation flow, and an explicit fallback route
+Both starters include their own setup README. They do not add this repository's
+release workflows, governance files, lockfile, or lint and test tooling to your
+new project.
 
-Every starter also includes:
+---
 
-- a focused README with setup, scripts, and project structure
+## Requirements
 
-The generated project intentionally excludes repository governance files,
-release automation, GitHub workflows, Git hooks, changelog files, lockfiles,
-default dotfiles, and lint/format/test tooling. Those files belong to this
-scaffolder repository or to project-specific app decisions, not to every new
-application created from it.
-
-The root repository treats those starters as versioned product surface, not
-test data. `template/` plus the supported overlays are the only source of truth
-for starter behavior.
+Node.js `>=22.12.0` and pnpm `>=10.24.0` are required for the CLI and the
+generated starters.
 
 ---
 
 ## Ecosystem Fit
 
-`create-koppajs` is the canonical entry point for starting a new KoppaJS
-application. It complements:
-
-- `@koppajs/koppajs-core` for runtime behavior
-- `@koppajs/koppajs-router` for optional route orchestration in scaffolded apps
-- `@koppajs/koppajs-vite-plugin` for build integration
-- the maintained KoppaJS starter conventions reflected in `template/` and
-  `template-overlays/`
-
-The repository stays intentionally narrow so the CLI, starter contract, and
-governance baseline can evolve together without hidden behavior.
+`create-koppajs` scaffolds the app; the generated project owns its runtime.
+KoppaJS Core powers the app, the Vite plugin builds it, and the optional router
+handles navigation. For implementation details, see the
+[architecture](https://github.com/koppajs/create-koppajs/blob/main/ARCHITECTURE.md)
+and [CLI specification](https://github.com/koppajs/create-koppajs/blob/main/docs/specs/cli-scaffolding.md).
 
 ---
 

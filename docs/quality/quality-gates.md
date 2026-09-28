@@ -14,13 +14,15 @@ Changes should satisfy the following repository checks:
 
 `pnpm run check` currently includes:
 
-1. required meta-layer source-of-truth files exist
-2. repository syntax checks
-3. repository formatting hygiene checks
-4. CLI metadata command checks
-5. Node.js built-in unit tests
-6. smoke integration tests
-7. package dry-run validation
+1. documentation contract checks, including the root README's required sections
+   and reader-first order
+2. required meta-layer source-of-truth files exist
+3. repository syntax checks
+4. repository formatting hygiene checks
+5. CLI metadata command checks
+6. Node.js built-in unit tests
+7. smoke integration tests
+8. package dry-run validation
 
 These are enforced in `.github/workflows/ci.yml` on Node 22 and 24.
 
@@ -59,7 +61,8 @@ following when relevant:
 - the generated README still reads correctly after placeholder replacement
 - template file changes are reflected in `README.md`, specs, and changelog
 - template build changes are covered by `pnpm run test:template-build`
-- publish-payload changes are covered by `pnpm run test:package`
+- publish-payload and npm metadata changes are covered by `pnpm run test:package`,
+  including the installed tarball's discoverability keywords
 - release and commit workflow docs still match `RELEASE.md`,
   `commitlint.config.mjs`, and `.husky/*`
 - release process changes are recorded in ADRs and contributor docs

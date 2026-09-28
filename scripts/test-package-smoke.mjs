@@ -17,7 +17,7 @@ const consumerDir = join(tempRoot, "consumer");
 const EXPECTED_STARTER_VERSIONS = {
   core: "3.0.7",
   vitePlugin: "1.0.4",
-  router: "0.1.5",
+  router: "0.1.6",
   typesNode: "25.6.0",
   typescript: "5.9.3",
   vite: "7.3.2",
@@ -230,6 +230,13 @@ try {
 
   assert(existsSync(cliPath), "Installed tarball did not expose the create-koppajs binary.");
   assert(existsSync(packagedEntrypointPath), "Installed tarball is missing the packaged CLI entrypoint.");
+
+  const packagedManifest = readJson(join(consumerDir, "node_modules", "create-koppajs", "package.json"));
+  assert(
+    Array.isArray(packagedManifest.keywords) &&
+      ["koppajs", "scaffolding", "starter", "router"].every((keyword) => packagedManifest.keywords.includes(keyword)),
+    "Installed tarball must include KoppaJS scaffolding and starter keywords.",
+  );
 
   const minimalProjectDir = scaffoldProject(cliPath, "packed-minimal-app");
   verifyProject(minimalProjectDir, "packed-minimal-app");

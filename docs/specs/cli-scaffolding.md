@@ -54,6 +54,8 @@ The CLI must:
 
 - The CLI must support Node.js 22.12.0+.
 - The CLI must not require network access.
+- The published `create-koppajs` package must declare relevant npm keywords for
+  KoppaJS, scaffolding, starter generation, and the optional router variant.
 - The CLI must refuse empty project names.
 - The CLI must reject unknown starter template names.
 - The CLI must reject `--template` when no template value is provided.
@@ -97,6 +99,8 @@ The CLI must:
    rejected.
 8. Running the CLI again for the same non-empty directory fails.
 9. `create-koppajs --help` and `create-koppajs --version` exit successfully.
+10. The packed npm package retains its discoverability keywords after
+    installation by a consumer.
 
 ## Evolution Phase
 

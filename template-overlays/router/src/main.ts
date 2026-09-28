@@ -16,14 +16,20 @@ const ROUTE_LINK_SELECTOR = "a[data-route]";
 const routes = [
   {
     path: "/",
+    title: "Home | KoppaJS Router Starter",
+    description: "Home page for the KoppaJS router starter.",
     componentTag: "home-page",
   },
   {
     path: "/router",
+    title: "Router | KoppaJS Router Starter",
+    description: "Routing example for the KoppaJS router starter.",
     componentTag: "router-page",
   },
   {
     path: "*",
+    title: "Page not found | KoppaJS Router Starter",
+    description: "The requested page could not be found.",
     componentTag: "not-found-page",
   },
 ] satisfies readonly RouteDefinition[];
