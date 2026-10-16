@@ -16,6 +16,17 @@ _No unreleased changes yet._
 
 ---
 
+## [1.3.1] — Router Baseline Refresh
+
+**2026-10-16**
+
+### Changed
+
+- updated the generated router starter dependency baseline to
+  `@koppajs/koppajs-router@0.1.7`
+
+---
+
 ## [1.3.0] — Package-manager-neutral Starters
 
 **2026-09-28**
