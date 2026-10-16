@@ -16,6 +16,17 @@ _No unreleased changes yet._
 
 ---
 
+## [1.3.2] — Core Baseline Refresh
+
+**2026-10-16**
+
+### Changed
+
+- updated the generated minimal and router starter dependency baseline from
+  `@koppajs/koppajs-core@3.0.7` to `@koppajs/koppajs-core@3.0.10`
+
+---
+
 ## [1.3.1] — Router Baseline Refresh
 
 **2026-10-16**
