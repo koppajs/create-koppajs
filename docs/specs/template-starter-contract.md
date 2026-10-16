@@ -51,7 +51,7 @@ KoppaJS starter that:
 - The starter must include its runtime and build configuration:
   `package.json`, `tsconfig.json`, and `vite.config.mjs`.
 - The `router` starter `package.json` must declare
-  `@koppajs/koppajs-router`.
+  `@koppajs/koppajs-router` pinned to `0.1.7`.
 - Every final renderable route in the `router` starter, including the wildcard
   fallback, must declare a non-empty `title`, `description`, and `componentTag`.
 - The starter must expose `dev`, `build`, `typecheck`, and `serve` scripts in
