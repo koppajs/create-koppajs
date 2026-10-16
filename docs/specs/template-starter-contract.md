@@ -50,6 +50,8 @@ KoppaJS starter that:
   `src/router-page.kpa`, and `src/not-found-page.kpa`.
 - The starter must include its runtime and build configuration:
   `package.json`, `tsconfig.json`, and `vite.config.mjs`.
+- Every starter `package.json` must declare `@koppajs/koppajs-core` pinned to
+  `3.0.10`.
 - The `router` starter `package.json` must declare
   `@koppajs/koppajs-router` pinned to `0.1.7`.
 - Every final renderable route in the `router` starter, including the wildcard

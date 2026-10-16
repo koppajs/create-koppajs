@@ -12,7 +12,7 @@ const CLI = join(ROOT, "bin", "create-koppajs.js");
 const PROJECT = "test-app";
 const ROUTER_PROJECT = "router-test-app";
 const EXPECTED_STARTER_VERSIONS = {
-  core: "3.0.7",
+  core: "3.0.10",
   vitePlugin: "1.0.4",
   router: "0.1.7",
   typesNode: "25.6.0",

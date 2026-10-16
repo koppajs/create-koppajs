@@ -23,7 +23,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@koppajs/koppajs-core": "3.0.7",
+    "@koppajs/koppajs-core": "3.0.10",
     "@koppajs/koppajs-router": "0.1.7"
   },
   "devDependencies": {
